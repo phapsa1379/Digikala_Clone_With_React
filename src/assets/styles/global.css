@@ -1,0 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: vasir;
+  user-select: none;
+}
+
+@font-face {
+  font-family: vasir;
+  src: url("../fonts/Vazir-Medium.ttf");
+}
+
+html {
+  font-size: 62.5%;
+}
