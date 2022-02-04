@@ -6,5 +6,5 @@ export { ManageEntityProductsPage } from "./ManageEntityProducts/ManageEntityPro
 export { ManageProductsPage } from "./ManageProducts/ManageProducts.page";
 export { OrderDetailsPage } from "./OrderDetails/OrderDetails.page";
 export { PaymentResultPage } from "./PaymentResult/PaymentResult.page";
-export { productDetailsPage } from "./productDetails/productDetails.page";
-export { ProductslistPage } from "./ProductsList/ProductsList.page";
+export { ProductDetailsPage } from "./ProductDetails/ProductDetails.page";
+export { ProductsListPage } from "./ProductsList/ProductsList.page";

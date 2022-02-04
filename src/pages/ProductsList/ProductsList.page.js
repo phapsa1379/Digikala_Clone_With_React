@@ -1,8 +1,8 @@
 import React from "react";
 import style from "./ProductsList.module.css";
 
-const ProductslistPage = (props) => {
+const ProductsListPage = (props) => {
   return <div></div>;
 };
 
-export { ProductslistPage };
+export { ProductsListPage };
