@@ -22,6 +22,7 @@
 
 .subHeader {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   align-items: center;
   transition: 1s;
@@ -80,11 +81,11 @@
 }
 
 .navBar2 {
-  display: block;
+  display: none;
 }
 
 .activeItem {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color) !important;
 
   position: relative;
 }
@@ -99,27 +100,25 @@
   transition: 1s;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1300px) {
   .header {
     padding: 2rem;
   }
-  .logo {
-    max-width: 15rem;
+  .title {
+    max-width: 100%;
   }
 
-  .serachBar {
+  .back {
     width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
   }
-  .serachBarInput {
-    font-size: 1.5rem;
-  }
-  .serachBarIcon {
-    font-size: 4rem;
-  }
+
   .navBar {
     display: none;
   }
   .navBar2 {
+    display: block;
     width: 100%;
     transition: 0.5s;
   }
@@ -135,17 +134,15 @@
     border-radius: 2rem;
   }
 
-  .cartLink::after {
-    top: 50%;
-    left: 15px;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
+  .navLink {
+    font-size: 2rem !important;
+    padding: 1rem;
   }
   .subHeader {
     display: flex;
     flex-direction: column;
     display: none;
-    gap: 2rem;
+    gap: 4rem;
   }
   .navLink {
     font-size: 3rem;
@@ -160,7 +157,7 @@
   }
 }
 
-@media (min-width: 1051px) {
+@media (min-width: 1301px) {
   .navBar2 {
     display: none;
   }

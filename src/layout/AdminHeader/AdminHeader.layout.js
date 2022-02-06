@@ -16,21 +16,30 @@ const handleClickMenu = () => {
     : (navBar2.current.style.display = "flex");
 };
 const handleProducts = () => {
-  products.current.classList.add("activeItem");
-  entities.current.classList.remove("activeItem");
-  orders.current.classList.remove("activeItem");
+  products.current.classList.add(style.activeItem);
+  entities.current.classList.remove(style.activeItem);
+  orders.current.classList.remove(style.activeItem);
+  orders.current.firstChild.firstChild.classList.remove(style.activeText);
+  entities.current.firstChild.firstChild.classList.remove(style.activeText);
+  products.current.firstChild.firstChild.classList.add(style.activeText);
 };
 
 const handleEntites = () => {
-  entities.current.classList.add("activeItem");
-  orders.current.classList.remove("activeItem");
-  products.current.classList.remove("activeItem");
+  entities.current.classList.add(style.activeItem);
+  orders.current.classList.remove(style.activeItem);
+  products.current.classList.remove(style.activeItem);
+  orders.current.firstChild.firstChild.classList.remove(style.activeText);
+  products.current.firstChild.firstChild.classList.remove(style.activeText);
+  entities.current.firstChild.firstChild.classList.add(style.activeText);
 };
 
 const handleOrders = () => {
-  orders.current.classList.add("activeItem");
-  entities.current.classList.remove("activeItem");
-  products.current.classList.remove("activeItem");
+  orders.current.classList.add(style.activeItem);
+  entities.current.classList.remove(style.activeItem);
+  products.current.classList.remove(style.activeItem);
+  entities.current.firstChild.firstChild.classList.remove(style.activeText);
+  products.current.firstChild.firstChild.classList.remove(style.activeText);
+  orders.current.firstChild.firstChild.classList.add(style.activeText);
 };
 const AdminHeaderLayout = () => {
   return (
@@ -74,22 +83,41 @@ const AdminHeaderLayout = () => {
             بازگشت به سایت
           </a>
         </div>
-      </div>
 
-      <nav className={style.navBar2}>
-        <ul className={style.navList}>
-          <li className={style.navItem}>
-            <a className={`${style.navLink} ${style.adminLinkLogin}`} href="#">
-              مدیریت
-            </a>
-          </li>
-          <li className={style.navItem}>
-            <a className={`${style.navLink} ${style.cartLink}`} href="#">
-              سبد خرید
-            </a>
-          </li>
-        </ul>
-      </nav>
+        <nav className={style.navBar2}>
+          <ul className={style.navList}>
+            <li
+              className={`${style.navItem} ${style.activeItem}`}
+              // ref={products}
+              // onClick={handleProducts}
+            >
+              <a className={`${style.navLink} ${style.products}`} href="#">
+                <span className={`${style.navText} ${style.activeText}`}>
+                  کالاها
+                </span>
+              </a>
+            </li>
+            <li
+              className={style.navItem}
+              // ref={entities}
+              // onClick={handleEntites}
+            >
+              <a className={`${style.navLink} ${style.entities}`} href="#">
+                <span className={`${style.navText}`}>موجودی و قیمت ها</span>
+              </a>
+            </li>
+            <li
+              className={style.navItem}
+              // ref={orders}
+              // onClick={handleOrders}
+            >
+              <a className={`${style.navLink} ${style.orders}`} href="#">
+                <span className={`${style.navText}`}>سفارش ها</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 };
