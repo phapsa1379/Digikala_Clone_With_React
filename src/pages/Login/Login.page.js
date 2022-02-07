@@ -11,6 +11,7 @@ import { prefixer } from "stylis";
 import { colors } from "assets/colors";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 let navigate;
 const cacheRtl = createCache({
@@ -39,8 +40,12 @@ const submitHandler = (e) => {
   let userName, password;
   userName = e.target[0].value;
   password = e.target[1].value;
-  alert(userName);
-  alert(password);
+  if (!(userName && password))
+    swal({
+      title: "هشدار",
+      text: "لطفا تمامی فیلد ها را پر کنید",
+      icon: "warning",
+    });
 };
 
 const LoginPage = (props) => {
