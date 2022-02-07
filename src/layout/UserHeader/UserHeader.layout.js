@@ -1,11 +1,12 @@
 import React from "react";
 import style from "./UserHeader.module.css";
-import logo from "assets/icons/digikala.svg";
+import { digikalaLogo } from "assets/icons";
 import { BiSearch, FaShoppingCart, FaUser, FiMenu } from "assets/icons/index";
 import { adv1, adv2 } from "assets/images/index";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+
 const navBar2 = React.createRef();
 const theme = createTheme({
   typography: {
@@ -28,7 +29,7 @@ const UserHeaderLayout = () => {
       </div>
       <div className={style.headerTop} ref={navBar2}>
         <div className={style.logo}>
-          <img src={logo} alt="logo" className={style.logo} />
+          <img src={digikalaLogo} alt="logo" className={style.logo} />
         </div>
         <div className={style.serachBar}>
           <span className={style.serachBarIcon}>

@@ -6,6 +6,17 @@
   user-select: none;
 }
 
+:root {
+  --text-color: #424750;
+  --primary-color: #eb3b5a;
+  --secondary-color: #ff9100;
+  --button-color: #0652dd;
+  --white-color: #fff;
+  --red-color: #ea2027;
+  --gray-color: #dfe4ea;
+  --orange-color: #d35400;
+}
+
 @font-face {
   font-family: vazir;
   src: url("../fonts/Vazir-Medium.ttf");
