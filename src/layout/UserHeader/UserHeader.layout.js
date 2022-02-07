@@ -6,6 +6,7 @@ import { adv1, adv2 } from "assets/images/index";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const navBar2 = React.createRef();
 const theme = createTheme({
@@ -29,7 +30,9 @@ const UserHeaderLayout = () => {
       </div>
       <div className={style.headerTop} ref={navBar2}>
         <div className={style.logo}>
-          <img src={digikalaLogo} alt="logo" className={style.logo} />
+          <Link to="/">
+            <img src={digikalaLogo} alt="logo" className={style.logo} />
+          </Link>
         </div>
         <div className={style.serachBar}>
           <span className={style.serachBarIcon}>
@@ -46,7 +49,7 @@ const UserHeaderLayout = () => {
             <li className={style.navItem}>
               <a
                 className={`${style.navLink} ${style.adminLinkLogin}`}
-                href="#"
+                href="/login"
               >
                 <ThemeProvider theme={theme}>
                   <Tooltip title="مدیریت">

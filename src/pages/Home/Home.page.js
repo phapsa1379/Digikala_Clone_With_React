@@ -1,10 +1,13 @@
 import React from "react";
 import style from "./Home.module.css";
+import { UserHeaderLayout } from "layout";
 
 const HomePage = (props) => {
   return (
     <div>
-      <h1>Home Page</h1>
+      <div className={style.header}>
+        <UserHeaderLayout />
+      </div>
     </div>
   );
 };
