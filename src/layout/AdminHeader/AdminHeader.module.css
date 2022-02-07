@@ -13,6 +13,7 @@
   font-weight: bold;
   cursor: pointer;
   color: var(--text-color);
+  text-decoration: none;
 }
 
 .subHeader {

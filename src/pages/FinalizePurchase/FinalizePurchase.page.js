@@ -1,8 +1,15 @@
 import React from "react";
 import style from "./FinalizePurchase.module.css";
+import { UserHeaderLayout } from "layout";
 
-export default function FinalizePurchasePage(props) {
-  return <div></div>;
+function FinalizePurchasePage(props) {
+  return (
+    <div>
+      <div className={style.header}>
+        <UserHeaderLayout />
+      </div>
+    </div>
+  );
 }
 
 export { FinalizePurchasePage };

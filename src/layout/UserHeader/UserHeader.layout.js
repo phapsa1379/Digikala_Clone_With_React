@@ -7,6 +7,7 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const navBar2 = React.createRef();
 const theme = createTheme({
@@ -23,6 +24,15 @@ const handleClickMenu = () => {
 };
 
 const UserHeaderLayout = () => {
+  const [login, setLogin] = useState(false);
+  useEffect(() => {
+    let currentUser = localStorage.getItem("currentUser");
+    currentUser = JSON.parse(currentUser);
+    if (currentUser)
+      if (currentUser.userName !== null && currentUser.userName !== undefined) {
+        setLogin(true);
+      }
+  }, []);
   return (
     <header className={style.header}>
       <div className={style.menu} onClick={handleClickMenu}>
@@ -49,7 +59,7 @@ const UserHeaderLayout = () => {
             <li className={style.navItem}>
               <a
                 className={`${style.navLink} ${style.adminLinkLogin}`}
-                href="/login"
+                href={login === true ? "/manage-products" : "/login"}
               >
                 <ThemeProvider theme={theme}>
                   <Tooltip title="مدیریت">
@@ -64,7 +74,7 @@ const UserHeaderLayout = () => {
               </a>
             </li>
             <li className={style.navItem}>
-              <a className={`${style.navLink} ${style.cartLink}`} href="#">
+              <a className={`${style.navLink} ${style.cartLink}`} href="/cart">
                 <ThemeProvider theme={theme}>
                   <Tooltip title="سبد خرید">
                     <IconButton>
@@ -84,13 +94,13 @@ const UserHeaderLayout = () => {
             <li className={style.navItem}>
               <a
                 className={`${style.navLink} ${style.adminLinkLogin}`}
-                href="#"
+                href={login === true ? "/manage-products" : "/login"}
               >
                 مدیریت
               </a>
             </li>
             <li className={style.navItem}>
-              <a className={`${style.navLink} ${style.cartLink}`} href="#">
+              <a className={`${style.navLink} ${style.cartLink}`} href="/cart">
                 سبد خرید
               </a>
             </li>

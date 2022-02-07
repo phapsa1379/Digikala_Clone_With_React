@@ -15,65 +15,100 @@ const handleClickMenu = () => {
     ? (navBar2.current.style.display = "none")
     : (navBar2.current.style.display = "flex");
 };
-const handleProducts = () => {
-  products.current.classList.add(style.activeItem);
-  entities.current.classList.remove(style.activeItem);
-  orders.current.classList.remove(style.activeItem);
-  orders.current.firstChild.firstChild.classList.remove(style.activeText);
-  entities.current.firstChild.firstChild.classList.remove(style.activeText);
-  products.current.firstChild.firstChild.classList.add(style.activeText);
-};
+// const handleProducts = () => {
+//   products.current.classList.add(style.activeItem);
+//   entities.current.classList.remove(style.activeItem);
+//   orders.current.classList.remove(style.activeItem);
+//   orders.current.firstChild.firstChild.classList.remove(style.activeText);
+//   entities.current.firstChild.firstChild.classList.remove(style.activeText);
+//   products.current.firstChild.firstChild.classList.add(style.activeText);
+// };
 
-const handleEntites = () => {
-  entities.current.classList.add(style.activeItem);
-  orders.current.classList.remove(style.activeItem);
-  products.current.classList.remove(style.activeItem);
-  orders.current.firstChild.firstChild.classList.remove(style.activeText);
-  products.current.firstChild.firstChild.classList.remove(style.activeText);
-  entities.current.firstChild.firstChild.classList.add(style.activeText);
-};
+// const handleEntites = () => {
+//   entities.current.classList.add(style.activeItem);
+//   orders.current.classList.remove(style.activeItem);
+//   products.current.classList.remove(style.activeItem);
+//   orders.current.firstChild.firstChild.classList.remove(style.activeText);
+//   products.current.firstChild.firstChild.classList.remove(style.activeText);
+//   entities.current.firstChild.firstChild.classList.add(style.activeText);
+// };
 
-const handleOrders = () => {
-  orders.current.classList.add(style.activeItem);
-  entities.current.classList.remove(style.activeItem);
-  products.current.classList.remove(style.activeItem);
-  entities.current.firstChild.firstChild.classList.remove(style.activeText);
-  products.current.firstChild.firstChild.classList.remove(style.activeText);
-  orders.current.firstChild.firstChild.classList.add(style.activeText);
-};
-const AdminHeaderLayout = () => {
+// const handleOrders = () => {
+//   orders.current.classList.add(style.activeItem);
+//   entities.current.classList.remove(style.activeItem);
+//   products.current.classList.remove(style.activeItem);
+//   entities.current.firstChild.firstChild.classList.remove(style.activeText);
+//   products.current.firstChild.firstChild.classList.remove(style.activeText);
+//   orders.current.firstChild.firstChild.classList.add(style.activeText);
+// };
+const AdminHeaderLayout = (props) => {
+  const currentTab = props.tab;
   return (
     <header className={style.header}>
       <div className={style.menu} onClick={handleClickMenu}>
         <FiMenu />
       </div>
       <div className={style.subHeader} ref={navBar2}>
-        <div className={style.title}>پنل مدیریت فروشگاه</div>
+        <a href="/manage-products" className={style.title}>
+          پنل مدیریت فروشگاه
+        </a>
         <nav className={style.navBar}>
           <ul className={style.navList}>
             <li
-              className={`${style.navItem} ${style.activeItem}`}
+              className={`${style.navItem} ${
+                currentTab === "products" ? style.activeItem : ""
+              }`}
               ref={products}
-              onClick={handleProducts}
+              // onClick={handleProducts}
             >
-              <a className={`${style.navLink} ${style.products}`} href="#">
-                <span className={`${style.navText} ${style.activeText}`}>
+              <a
+                className={`${style.navLink} ${style.products}`}
+                href="/manage-products"
+              >
+                <span
+                  className={`${style.navText} ${
+                    currentTab === "products" ? style.activeText : ""
+                  }`}
+                >
                   کالاها
                 </span>
               </a>
             </li>
             <li
-              className={style.navItem}
+              className={`${style.navItem} ${
+                currentTab === "entities" ? style.activeItem : ""
+              }`}
               ref={entities}
-              onClick={handleEntites}
+              // onClick={handleEntites}
             >
-              <a className={`${style.navLink} ${style.entities}`} href="#">
-                <span className={`${style.navText}`}>موجودی و قیمت ها</span>
+              <a
+                className={`${style.navLink} ${style.entities}`}
+                href="/manage-entity-products"
+              >
+                <span
+                  className={`${style.navText} ${
+                    currentTab === "entities" ? style.activeText : ""
+                  }`}
+                >
+                  موجودی و قیمت ها
+                </span>
               </a>
             </li>
-            <li className={style.navItem} ref={orders} onClick={handleOrders}>
-              <a className={`${style.navLink} ${style.orders}`} href="#">
-                <span className={`${style.navText}`}>سفارش ها</span>
+            <li
+              className={`${style.navItem} ${
+                currentTab === "orders" ? style.activeItem : ""
+              }`}
+              ref={orders}
+              // onClick={handleOrders}
+            >
+              <a className={`${style.navLink} ${style.orders}`} href="/order">
+                <span
+                  className={`${style.navText} ${
+                    currentTab === "orders" ? style.activeText : ""
+                  }`}
+                >
+                  سفارش ها
+                </span>
               </a>
             </li>
           </ul>
@@ -91,7 +126,10 @@ const AdminHeaderLayout = () => {
               // ref={products}
               // onClick={handleProducts}
             >
-              <a className={`${style.navLink} ${style.products}`} href="#">
+              <a
+                className={`${style.navLink} ${style.products}`}
+                href="/manage-products"
+              >
                 <span className={`${style.navText} ${style.activeText}`}>
                   کالاها
                 </span>
@@ -102,7 +140,10 @@ const AdminHeaderLayout = () => {
               // ref={entities}
               // onClick={handleEntites}
             >
-              <a className={`${style.navLink} ${style.entities}`} href="#">
+              <a
+                className={`${style.navLink} ${style.entities}`}
+                href="/manage-entity-products"
+              >
                 <span className={`${style.navText}`}>موجودی و قیمت ها</span>
               </a>
             </li>
@@ -111,7 +152,7 @@ const AdminHeaderLayout = () => {
               // ref={orders}
               // onClick={handleOrders}
             >
-              <a className={`${style.navLink} ${style.orders}`} href="#">
+              <a className={`${style.navLink} ${style.orders}`} href="/order">
                 <span className={`${style.navText}`}>سفارش ها</span>
               </a>
             </li>

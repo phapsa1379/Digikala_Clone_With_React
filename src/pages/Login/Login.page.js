@@ -12,7 +12,10 @@ import { colors } from "assets/colors";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useEffect } from "react";
+import axios from "axios";
 
+const BASE_URL = "http://localhost:3002";
 let navigate;
 const cacheRtl = createCache({
   key: "muirtl",
@@ -46,10 +49,40 @@ const submitHandler = (e) => {
       text: "لطفا تمامی فیلد ها را پر کنید",
       icon: "warning",
     });
+  else if (userName === "admin" && password === "admin") {
+    swal({
+      title: "موفقیت",
+      text: `${userName} خوش آمدید`,
+      icon: "success",
+    }).then((res) => {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({ userName, password })
+      );
+      navigate("/manage-products");
+    });
+  } else {
+    swal({
+      title: "خطا",
+      text: "نام کاربری یا رمز عبور اشتباه است",
+      icon: "error",
+    });
+  }
 };
 
 const LoginPage = (props) => {
   navigate = useNavigate();
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/users`)
+  //     .then((res) => {
+  //       const users = res.data;
+  //       console.log(users);
+  //     })
+  //     .catch((err) => {
+  //       console.log("Something went wrong");
+  //     });
+  // }, []);
   return (
     <div className={style.loginPageContainer}>
       <div className={style.loginFormContainer}>
