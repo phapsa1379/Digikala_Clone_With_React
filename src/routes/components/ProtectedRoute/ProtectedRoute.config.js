@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-export const DEFAULT_PROPS = {
-  hasLayout: false
-};
+// export const DEFAULT_PROPS = {
+//   hasLayout: false
+// };
 
-export const PROP_TYPES = {
-  hasLayout: PropTypes.bool,
-  component: PropTypes.func.isRequired,
-  test: PropTypes.string
-};
+// export const PROP_TYPES = {
+//   hasLayout: PropTypes.bool,
+//   component: PropTypes.func.isRequired,
+//   test: PropTypes.string
+// };

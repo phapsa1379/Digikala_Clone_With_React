@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./Login.module.css";
 import { loginBackground } from "assets/images";
-import { digikalaLogo } from "assets/icons";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
@@ -11,8 +10,9 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import { colors } from "assets/colors";
 import Button from "@mui/material/Button";
-import { navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+let navigate;
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -44,28 +44,14 @@ const submitHandler = (e) => {
 };
 
 const LoginPage = (props) => {
+  navigate = useNavigate();
   return (
     <div className={style.loginPageContainer}>
       <div className={style.loginFormContainer}>
-        <div className={style.title}>
-          {/* <img src={digikalaLogo} alt="logo" className={style.logo} /> */}
-          ورود به پنل مدیریت فروشگاه دیجیکالا
-        </div>
+        <div className={style.title}>ورود به پنل مدیریت فروشگاه دیجیکالا</div>
         <form className={style.form} onSubmit={submitHandler}>
           <CacheProvider value={cacheRtl}>
             <ThemeProvider theme={theme}>
-              {/* <Box
-                
-                component="form"
-                sx={{
-                  "& > :not(style)": { my: 3, width: "40rem" },
-                  color: "#fff",
-                  
-                }}
-                Validate
-                autoComplete="off"
-                style={{ display: "flex", flexDirection: "column" }}
-              > */}
               <TextField
                 sx={{
                   input: { color: colors.secondary, fontSize: "20px" },
@@ -119,7 +105,6 @@ const LoginPage = (props) => {
               >
                 ورود
               </Button>
-              {/* </Box> */}
             </ThemeProvider>
           </CacheProvider>
         </form>
@@ -127,6 +112,9 @@ const LoginPage = (props) => {
         <div className={style.backBtn}>
           <ThemeProvider theme={theme}>
             <Button
+              onClick={() => {
+                navigate("/");
+              }}
               variant="contained"
               link="/"
               sx={{
