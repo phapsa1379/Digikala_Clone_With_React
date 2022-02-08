@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PATHS } from "configs/routes.config";
 import * as Page from "pages";
 // import { ProtectedRoute, PublicRoute, PrivateRoute } from "./components";
+import { ProtectedRoute, PrivateRoute } from "./components";
 
 function AppRoute(props) {
   return (
@@ -93,10 +94,21 @@ function AppRoute(props) {
     /****************************** */
     <BrowserRouter>
       <Routes>
-        <Route
-          path={PATHS.ORDER_DETAILS}
-          element={<Page.OrderDetailsPage {...props} />}
-        />
+        <Route element={<PrivateRoute />}>
+          <Route
+            path={PATHS.ORDER_DETAILS}
+            element={<Page.OrderDetailsPage {...props} />}
+          />
+          <Route
+            path={PATHS.MANAGE_ENTITY_PRODUCTS}
+            element={<Page.ManageEntityProductsPage {...props} />}
+          />
+          <Route
+            path={PATHS.MANAGE_PRODUCTS}
+            element={<Page.ManageProductsPage {...props} />}
+          />
+        </Route>
+
         <Route
           path={PATHS.PRODUCTS_LIST}
           element={<Page.ProductsListPage {...props} />}
@@ -105,10 +117,7 @@ function AppRoute(props) {
           path={PATHS.PRODUCT_DETAILS}
           element={<Page.ProductDetailsPage {...props} />}
         />
-        <Route
-          path={PATHS.MANAGE_PRODUCTS}
-          element={<Page.ManageProductsPage {...props} />}
-        />
+
         <Route
           path={PATHS.FINALIZE_PURCHASE}
           element={<Page.FinalizePurchasePage {...props} />}
@@ -118,13 +127,12 @@ function AppRoute(props) {
           element={<Page.PaymentResultPage {...props} />}
         />
         <Route path={PATHS.CART} element={<Page.CartPage {...props} />} />
-        <Route
-          path={PATHS.MANAGE_ENTITY_PRODUCTS}
-          element={<Page.ManageEntityProductsPage {...props} />}
-        />
 
         <Route path={PATHS.HOME} element={<Page.HomePage {...props} />} />
-        <Route path={PATHS.LOGIN} element={<Page.LoginPage {...props} />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path={PATHS.LOGIN} element={<Page.LoginPage {...props} />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

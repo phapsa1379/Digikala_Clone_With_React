@@ -59,6 +59,8 @@ const submitHandler = (e) => {
         "currentUser",
         JSON.stringify({ userName, password })
       );
+      localStorage.setItem("isLoggedIn", JSON.stringify(true));
+
       navigate("/manage-products");
     });
   } else {

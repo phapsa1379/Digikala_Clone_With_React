@@ -28,10 +28,15 @@ const UserHeaderLayout = () => {
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUser");
     currentUser = JSON.parse(currentUser);
-    if (currentUser)
-      if (currentUser.userName !== null && currentUser.userName !== undefined) {
-        setLogin(true);
-      }
+    let isLoggedIn = localStorage.getItem("isLoggedIn");
+    isLoggedIn = JSON.parse(isLoggedIn);
+    // if (currentUser)
+    //   if (currentUser.userName !== null && currentUser.userName !== undefined) {
+    //     setLogin(true);
+    //   }
+    if (isLoggedIn === true) {
+      setLogin(true);
+    }
   }, []);
   return (
     <header className={style.header}>
