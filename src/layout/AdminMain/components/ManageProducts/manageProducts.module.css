@@ -1,0 +1,25 @@
+.manageProductsContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  /* justify-content: center;
+  align-items: center; */
+}
+.headerPart {
+  display: flex;
+  padding: 5rem 10rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerPartTitle {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-color);
+}
+.headerPartButton {
+}
+.tablePart {
+  margin: 1rem 10rem 5rem 10rem;
+}

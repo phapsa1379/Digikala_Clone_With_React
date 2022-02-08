@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.adminMainContainer {
+  background-color: #f0f0f1;
+  flex-grow: 1 !important;
+}
