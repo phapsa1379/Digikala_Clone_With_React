@@ -24,6 +24,10 @@ import { TableComponent } from "components";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Stack from "@mui/material/Stack";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -111,6 +115,7 @@ class ManageProductsLayout extends React.Component {
     data: [],
     filter: "default",
     allCategories: [],
+    filterSelection: "",
   };
   dataArray = [];
 
@@ -140,8 +145,8 @@ class ManageProductsLayout extends React.Component {
               all: "",
               priceAsce: `?_sort=price&_order=asc`,
               priceDesc: `?_sort=price&_order=desc`,
-              createAtAsce: `?_sort=createAt&_order=asc`,
-              createAtDesc: `?_sort=createAt&_order=desc`,
+              createAtAsce: `?_sort=createdAt&_order=asc`,
+              createAtDesc: `?_sort=createdAt&_order=desc`,
             };
             axios
               .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
@@ -203,10 +208,54 @@ class ManageProductsLayout extends React.Component {
         this.componentDidMount();
       });
     };
+    const handleChangeFilter = (event) => {
+      console.log("value is : ", event.target.value);
+      this.setState({ ...this.state, filter: event.target.value }, () => {
+        this.componentDidMount();
+      });
+    };
     return (
       <div className={style.manageProductsContainer}>
         <div className={style.headerPart}>
           <div className={style.headerPartTitle}>مدیریت کالا ها</div>
+          <div className={style.headerPartFilter}>
+            <CacheProvider value={cacheRtl}>
+              <ThemeProvider theme={theme}>
+                <Box sx={{ minWidth: 300 }}>
+                  <FormControl sx={{ color: "#000" }} fullWidth>
+                    <InputLabel
+                      sx={{ color: "#000" }}
+                      id="demo-simple-select-label"
+                    >
+                      فیلتر بر اساس
+                    </InputLabel>
+                    <Select
+                      sx={{ color: "#000" }}
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={this.state.filter}
+                      label="Age"
+                      onChange={handleChangeFilter}
+                    >
+                      <MenuItem sx={{ color: "#000" }} value={"default"}>
+                        بدون فیلتر
+                      </MenuItem>
+                      <MenuItem sx={{ color: "#000" }} value={"priceAsce"}>
+                        قیمت (صعودی)
+                      </MenuItem>
+                      <MenuItem value={"priceDesc"}> قیمت (نزولی)</MenuItem>
+                      <MenuItem value={"createAtAsce"}>
+                        زمان ایجاد (صعودی)
+                      </MenuItem>
+                      <MenuItem value={"createAtDesc"}>
+                        زمان ایجاد (نزولی)
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </ThemeProvider>
+            </CacheProvider>
+          </div>
           <div className={style.headerPartButton}>
             <ThemeProvider theme={theme}>
               <Button

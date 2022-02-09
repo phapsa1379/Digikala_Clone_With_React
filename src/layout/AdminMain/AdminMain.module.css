@@ -6,5 +6,6 @@
 
 .adminMainContainer {
   background-color: #f0f0f1;
+
   flex-grow: 1 !important;
 }
