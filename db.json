@@ -10,68 +10,53 @@
       "thumbnail": "65ddd8b1bbce4d8396b62611147fa1d6",
       "price": "40000000",
       "count": 20,
-      "createdAt": 1643373068134,
-      "id": 4,
-      "discription": "16GB رم",
-      "category": {
-        "id": 14,
-        "name": "Laptop",
-        "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-      }
+      "createdAt": 1644442327267,
+      "discription": "64GB رم",
+      "categoryId": 14,
+      "id": 1
     },
     {
-      "firstName": "Surface Book 3-F",
-      "brand": "Microsoft",
+      "firstName": "pgs",
+      "brand": "Asus",
       "image": [
         "65ddd8b1bbce4d8396b62611147fa1d6",
         "65ddd8b1bbce4d8396b62611147fa1d6"
       ],
       "thumbnail": "65ddd8b1bbce4d8396b62611147fa1d6",
-      "price": "93000000",
-      "count": 5,
-      "createdAt": 1643373068134,
-      "id": 5,
-      "discription": "32GB رم",
-      "category": {
-        "id": 14,
-        "name": "Laptop",
-        "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-      }
+      "price": "40000000",
+      "count": 20,
+      "createdAt": 1644442365074,
+      "discription": "64GB رم",
+      "categoryId": 16,
+      "id": 2
     },
     {
-      "firstName": "V15 IIL - AB",
-      "brand": "Lenovo",
+      "firstName": "ali",
+      "brand": "Asus",
       "image": [
         "65ddd8b1bbce4d8396b62611147fa1d6",
         "65ddd8b1bbce4d8396b62611147fa1d6"
       ],
       "thumbnail": "65ddd8b1bbce4d8396b62611147fa1d6",
-      "price": "18000000",
-      "count": 8,
-      "createdAt": 1643373068134,
-      "id": 6,
-      "discription": "4GB رم",
-      "category": {
-        "id": 14,
-        "name": "Laptop",
-        "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-      }
+      "price": "40000000",
+      "count": 20,
+      "createdAt": 1644442376582,
+      "discription": "64GB رم",
+      "categoryId": 16,
+      "id": 3
     }
   ],
   "category": [
     {
       "id": 14,
-      "name": "Laptop",
-      "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
+      "name": "Laptop"
     },
     {
       "id": 16,
-      "name": "Phone",
-      "icon": null
+      "name": "Phone"
     },
     {
       "name": "playstation",
-      "icon": 1643375019984,
       "id": 17
     }
   ],

@@ -1,0 +1,32 @@
+.table {
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.tableContainer {
+  overflow-x: scroll !important;
+}
+
+.table,
+.tableTitle,
+.eachRow,
+.eachColumn {
+  border-collapse: collapse;
+  border: 3px solid black;
+  text-align: center;
+}
+/* .eachColumn,
+.tableTitle {
+  flex-grow: 1;
+} */
+.tableTitle {
+  padding: 3rem 3rem;
+  font-size: 2rem;
+  font-weight: bold;
+  align-items: center;
+}
+
+.eachColumn {
+  font-size: 2rem;
+  padding: 3rem 3rem;
+}

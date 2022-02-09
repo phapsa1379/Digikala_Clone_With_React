@@ -21,6 +21,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableComponent } from "components";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import Stack from "@mui/material/Stack";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -40,7 +43,7 @@ const theme = createTheme({
   },
 });
 
-const titleArray = ["تصویر", "نام کالا", "دسته بندی", "عملیات"];
+const titleArray = ["تصویر", "نام کالا", "دسته بندی", "ویرایش", ["حذف"]];
 
 /****Table */
 
@@ -86,77 +89,161 @@ const cacheRtl = createCache({
 // ];
 /****Table */
 
-const ManageProductsLayout = () => {
-  let [products, setProducts] = useState([]);
-  let [data, setData] = useState([]);
-  let dataArray = [];
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/products`)
-      .then((res) => {
-        const productsArray = res.data;
+class ManageProductsLayout extends React.Component {
+  state = {
+    allProducts: [],
+    products: [],
+    inPerPage: 2,
+    pageNumber: 1,
+    data: [],
+    filter: "default",
+    allCategories: [],
+  };
+  dataArray = [];
 
-        setProducts(productsArray, () => {
-          console.log("productsArray:", productsArray, ",prodcuts: ", products);
+  productsArray = [];
+  numberOfPage = 1;
+
+  findCategoryNameById = (id) => {
+    let categoryName = "";
+    this.state.allCategories.forEach((category) => {
+      if (category.id === id) {
+        categoryName = category.name;
+      }
+    });
+
+    return categoryName;
+  };
+
+  componentDidMount() {
+    axios.get(`${BASE_URL}/category`).then((res) => {
+      const allCategoriesArray = res.data;
+      this.setState({ allCategories: allCategoriesArray }, () => {
+        axios.get(`${BASE_URL}/products`).then((res) => {
+          const allProductsArray = res.data;
+          this.setState({ allProducts: allProductsArray }, () => {
+            let howGet = {
+              default: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}`,
+              all: "",
+              priceAsce: `?_sort=price&_order=asc`,
+              priceDesc: `?_sort=price&_order=desc`,
+              createAtAsce: `?_sort=createAt&_order=asc`,
+              createAtDesc: `?_sort=createAt&_order=desc`,
+            };
+            axios
+              .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
+              .then((res) => {
+                const productsArray = res.data;
+
+                this.setState(
+                  { ...this.state, products: productsArray },
+                  () => {
+                    let length = this.state.products.length;
+                    let totalLength = this.state.allProducts.length;
+
+                    this.numberOfPage = Math.ceil(
+                      totalLength / this.state.inPerPage
+                    );
+                    this.dataArray = [];
+
+                    for (let i = 0; i < length; i++) {
+                      this.dataArray[i] = [];
+                    }
+
+                    console.log("dataArray2: ", this.dataArray);
+                    console.log("currentStateProducts", this.state.products);
+                    console.log("thisLength:", length);
+                    for (let index = 0; index < length; index++) {
+                      for (let property in this.state.products[index]) {
+                        if (property === "thumbnail") {
+                          this.dataArray[index][0] =
+                            this.state.products[index][property];
+                          console.log("in for:", this.dataArray);
+                        } else if (property === "firstName") {
+                          this.dataArray[index][1] =
+                            this.state.products[index][property];
+                        } else if (property === "categoryId") {
+                          this.dataArray[index][2] = this.findCategoryNameById(
+                            this.state.products[index][property]
+                          );
+                        }
+                        this.dataArray[index][3] = "ویرایش";
+                        this.dataArray[index][4] = "حذف";
+                      }
+                    }
+                    console.log(this.dataArray);
+                    this.setState(
+                      {
+                        ...this.state,
+                        data: this.dataArray,
+                      },
+                      () => {
+                        console.log("data", this.state.data);
+                      }
+                    );
+                  }
+                );
+              })
+              .catch((err) => {
+                console.log("Something went wrong");
+              });
+          });
         });
-      })
-      .then((res) => {
-        console.log("products", products);
-        for (let index = 0; index < products.length; index++) {
-          for (const property in products) {
-            if (property === "thumbnail") {
-              dataArray[index][0] = products[property];
-            } else if (property === "firstName") {
-              dataArray[index][1] = products[property];
-            } else if (property === "category") {
-              dataArray[index][2] = products[property].name;
-            }
-            dataArray[index][3] = "ویرایش / حذف";
-          }
-        }
-        setData(dataArray);
-        console.log("data", data);
-      })
-      .catch((err) => {
-        console.log("Something went wrong");
       });
-  }, []);
-
-  return (
-    <div className={style.manageProductsContainer}>
-      <div className={style.headerPart}>
-        <div className={style.headerPartTitle}>مدیریت کالا ها</div>
-        <div className={style.headerPartButton}>
-          <ThemeProvider theme={theme}>
-            <Button
-              onClick={() => {}}
-              variant="contained"
-              link="/"
-              sx={{
-                color: colors.white,
-                backgroundColor: colors.greenButton,
-                borderRadius: "1rem",
-                width: "15rem",
-                height: "5rem",
-                justifySelf: "flex-end",
-                fontSize: "2rem",
-                marginBottom: "2rem",
-                transition: "0.5s",
-                "&:hover": {
-                  backgroundColor: colors.primary,
-                  opacity: 0.8,
-                },
-              }}
-            >
-              افزودن کالا
-            </Button>
-          </ThemeProvider>
+    });
+  }
+  render() {
+    const handleChange = (event, value) => {
+      this.setState({ ...this.state, pageNumber: value }, () => {
+        this.componentDidMount();
+      });
+    };
+    return (
+      <div className={style.manageProductsContainer}>
+        <div className={style.headerPart}>
+          <div className={style.headerPartTitle}>مدیریت کالا ها</div>
+          <div className={style.headerPartButton}>
+            <ThemeProvider theme={theme}>
+              <Button
+                onClick={() => {}}
+                variant="contained"
+                link="/"
+                sx={{
+                  color: colors.white,
+                  backgroundColor: colors.greenButton,
+                  borderRadius: "1rem",
+                  width: "15rem",
+                  height: "5rem",
+                  justifySelf: "flex-end",
+                  fontSize: "2rem",
+                  marginBottom: "2rem",
+                  transition: "0.5s",
+                  "&:hover": {
+                    backgroundColor: colors.primary,
+                    opacity: 0.8,
+                  },
+                }}
+              >
+                افزودن کالا
+              </Button>
+            </ThemeProvider>
+          </div>
         </div>
-      </div>
-      <div className={style.tablePart}>
-        <TableComponent data={data} titlesArray={titleArray} perPage={false} />
-        {console.log(data)}
-        {/* <CacheProvider value={cacheRtl}>
+        {this.state.products.length ? (
+          <div className={style.tablePart}>
+            <TableComponent
+              data={this.state.data}
+              titlesArray={titleArray}
+              perPage={false}
+              clickable={[false, false, false, true, true]}
+              doubleClickable={[false, false, false, false, false]}
+              clickFunc={(x) => {
+                alert(x);
+              }}
+              doubleClickFunc={null}
+            />
+
+            {/* <CacheProvider value={cacheRtl}>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -192,10 +279,35 @@ const ManageProductsLayout = () => {
             </Table>
           </TableContainer>
         </CacheProvider> */}
+          </div>
+        ) : (
+          <div className={style.noProducts}>
+            محتوایی جهت نمایش وجود ندارد :)
+          </div>
+        )}
+        {this.state.filter !== "all" && this.state.products.length ? (
+          <div className={style.paginationPart}>
+            <CacheProvider value={cacheRtl}>
+              <ThemeProvider theme={theme}>
+                <Stack spacing={2}>
+                  <Pagination
+                    count={this.numberOfPage}
+                    color="secondary"
+                    size="large"
+                    onChange={handleChange}
+                    sx={{
+                      color: colors.primary,
+                      direction: "rtl!important",
+                    }}
+                  />
+                </Stack>
+              </ThemeProvider>
+            </CacheProvider>
+          </div>
+        ) : null}
       </div>
-      <div className={style.paginationPart}></div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export { ManageProductsLayout };

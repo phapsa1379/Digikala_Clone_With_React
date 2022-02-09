@@ -23,3 +23,18 @@
 .tablePart {
   margin: 1rem 10rem 5rem 10rem;
 }
+.paginationPart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem 0;
+}
+.noProducts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  font-weight: 900;
+  color: gray;
+  margin: 5rem 0;
+}
