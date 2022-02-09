@@ -143,10 +143,10 @@ class ManageProductsLayout extends React.Component {
             let howGet = {
               default: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}`,
               all: "",
-              priceAsce: `?_sort=price&_order=asc`,
-              priceDesc: `?_sort=price&_order=desc`,
-              createAtAsce: `?_sort=createdAt&_order=asc`,
-              createAtDesc: `?_sort=createdAt&_order=desc`,
+              priceAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=asc`,
+              priceDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=desc`,
+              createAtAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=asc`,
+              createAtDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=desc`,
             };
             axios
               .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
