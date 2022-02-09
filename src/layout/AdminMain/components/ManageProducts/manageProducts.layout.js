@@ -43,6 +43,19 @@ const theme = createTheme({
   },
 });
 
+const theme2 = createTheme({
+  direction: "ltr",
+  typography: {
+    fontFamily: "vazir",
+    fontSize: 40,
+  },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
+});
+
 const titleArray = ["تصویر", "نام کالا", "دسته بندی", "ویرایش", ["حذف"]];
 
 /****Table */
@@ -150,9 +163,6 @@ class ManageProductsLayout extends React.Component {
                       this.dataArray[i] = [];
                     }
 
-                    console.log("dataArray2: ", this.dataArray);
-                    console.log("currentStateProducts", this.state.products);
-                    console.log("thisLength:", length);
                     for (let index = 0; index < length; index++) {
                       for (let property in this.state.products[index]) {
                         if (property === "thumbnail") {
@@ -172,15 +182,10 @@ class ManageProductsLayout extends React.Component {
                       }
                     }
                     console.log(this.dataArray);
-                    this.setState(
-                      {
-                        ...this.state,
-                        data: this.dataArray,
-                      },
-                      () => {
-                        console.log("data", this.state.data);
-                      }
-                    );
+                    this.setState({
+                      ...this.state,
+                      data: this.dataArray,
+                    });
                   }
                 );
               })
@@ -210,7 +215,7 @@ class ManageProductsLayout extends React.Component {
                 link="/"
                 sx={{
                   color: colors.white,
-                  backgroundColor: colors.greenButton,
+                  backgroundColor: colors.ligthPrimary,
                   borderRadius: "1rem",
                   width: "15rem",
                   height: "5rem",
@@ -232,6 +237,8 @@ class ManageProductsLayout extends React.Component {
         {this.state.products.length ? (
           <div className={style.tablePart}>
             <TableComponent
+              titleBgColor={colors.primary}
+              titleColor={colors.white}
               data={this.state.data}
               titlesArray={titleArray}
               perPage={false}
@@ -288,13 +295,15 @@ class ManageProductsLayout extends React.Component {
         {this.state.filter !== "all" && this.state.products.length ? (
           <div className={style.paginationPart}>
             <CacheProvider value={cacheRtl}>
-              <ThemeProvider theme={theme}>
+              <ThemeProvider theme={theme2}>
                 <Stack spacing={2}>
                   <Pagination
                     count={this.numberOfPage}
-                    color="secondary"
+                    color="primary"
                     size="large"
                     onChange={handleChange}
+                    showFirstButton
+                    showLastButton
                     sx={{
                       color: colors.primary,
                       direction: "rtl!important",

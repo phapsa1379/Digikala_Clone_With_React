@@ -16,7 +16,7 @@
 .headerPartTitle {
   font-size: 3rem;
   font-weight: 900;
-  color: var(--text-color);
+  color: var(--primary-color);
 }
 .headerPartButton {
 }

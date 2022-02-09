@@ -7,4 +7,5 @@ export const colors = {
   greenButton:"#079992",
   white: "#fff",
   red: "#EA2027",
+  ligthPrimary:"#fc5c65",
 };

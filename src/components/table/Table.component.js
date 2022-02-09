@@ -7,6 +7,7 @@ const TableComponent = (props) => {
     perPage,
     titlesArray,
     data,
+    titleBgColor,
     titleColor,
     oddColor,
     evenColor,
@@ -24,7 +25,10 @@ const TableComponent = (props) => {
         <thead className={style.headerTable}>
           <tr
             className={style.eachRow}
-            style={{ backgroundColor: titleColor ? titleColor : "#C1C1C1" }}
+            style={{
+              backgroundColor: titleBgColor ? titleBgColor : "#C1C1C1",
+              color: titleColor ? titleColor : "#000",
+            }}
           >
             {titlesArray.map((title, index) => {
               return (
