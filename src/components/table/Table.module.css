@@ -30,3 +30,9 @@
   font-size: 2rem;
   padding: 3rem 3rem;
 }
+.imageInTable {
+  height: 200px;
+  width: 200px;
+  border-radius: 2rem;
+  box-shadow: 5px 5px 5px 0 #888888;
+}

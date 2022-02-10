@@ -15,6 +15,7 @@ const TableComponent = (props) => {
     clickable,
     clickFunc,
     doubleClickFunc,
+    img,
   } = props;
 
   return (
@@ -82,7 +83,15 @@ const TableComponent = (props) => {
                             }
                           }}
                         >
-                          {column}
+                          {img[index] ? (
+                            <img
+                              className={style.imageInTable}
+                              src={`http://localhost:3002${column}`}
+                              alt="img"
+                            />
+                          ) : (
+                            column
+                          )}
                         </td>
                       );
                     })}
@@ -132,7 +141,15 @@ const TableComponent = (props) => {
                             }
                           }}
                         >
-                          {column}
+                          {img[index] ? (
+                            <img
+                              className={style.imageInTable}
+                              src={`http://localhost:3002${column}`}
+                              alt="img"
+                            />
+                          ) : (
+                            column
+                          )}
                         </td>
                       );
                     })}

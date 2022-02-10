@@ -127,7 +127,7 @@ class ManageProductsLayout extends React.Component {
   state = {
     allProducts: [],
     products: [],
-    inPerPage: 2,
+    inPerPage: 4,
     pageNumber: 1,
     data: [],
     filter: "default",
@@ -311,6 +311,7 @@ class ManageProductsLayout extends React.Component {
               perPage={false}
               clickable={[false, false, false, true, true]}
               doubleClickable={[false, false, false, false, false]}
+              img={[true, false, false, false, false]}
               clickFunc={(x) => {
                 alert(x);
               }}

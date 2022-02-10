@@ -88,7 +88,7 @@ class ManageEntitiesLayout extends React.Component {
   state = {
     allProducts: [],
     products: [],
-    inPerPage: 2,
+    inPerPage: 4,
     pageNumber: 1,
     data: [],
     filter: "default",
@@ -275,6 +275,7 @@ class ManageEntitiesLayout extends React.Component {
               perPage={false}
               clickable={[false, false, false]}
               doubleClickable={[false, true, true]}
+              img={[false, false, false]}
               doubleClickFunc={(x) => {
                 alert(x);
               }}
