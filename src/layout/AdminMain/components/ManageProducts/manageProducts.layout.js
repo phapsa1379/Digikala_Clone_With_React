@@ -164,6 +164,7 @@ class ManageProductsLayout extends React.Component {
               priceDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=desc`,
               createAtAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=asc`,
               createAtDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=desc`,
+              category: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=categoryId&_order=asc`,
             };
             axios
               .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
@@ -268,6 +269,7 @@ class ManageProductsLayout extends React.Component {
                       <MenuItem value={"createAtDesc"}>
                         زمان ایجاد (نزولی)
                       </MenuItem>
+                      <MenuItem value={"category"}>دسته بندی</MenuItem>
                     </Select>
                   </FormControl>
                 </Box>
