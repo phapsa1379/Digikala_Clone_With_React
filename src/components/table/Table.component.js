@@ -12,8 +12,6 @@ const TableComponent = (props) => {
     oddColor,
     evenColor,
     doubleClickable,
-    filterBasedOnWhichColumn,
-    asOrdis, //0->desending,1->asending
     clickable,
     clickFunc,
     doubleClickFunc,
@@ -129,7 +127,7 @@ const TableComponent = (props) => {
                             }
                           }}
                           onDoubleClick={() => {
-                            if (doubleClickable) {
+                            if (doubleClickable[index]) {
                               doubleClickFunc(column);
                             }
                           }}

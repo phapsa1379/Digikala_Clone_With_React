@@ -1,10 +1,15 @@
 import React from "react";
 import style from "./AdminMain.module.css";
-import { ManageProductsLayout } from "./components";
+import { ManageProductsLayout, ManageEntitiesLayout } from "./components";
 const AdminMainLayout = (props) => {
+  let { mainTab } = props;
   return (
     <div className={style.adminMainContainer}>
-      <ManageProductsLayout />
+      {mainTab === "mainProducts" ? (
+        <ManageProductsLayout />
+      ) : (
+        <ManageEntitiesLayout />
+      )}
     </div>
   );
 };

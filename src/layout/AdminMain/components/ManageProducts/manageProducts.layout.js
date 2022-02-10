@@ -60,6 +60,23 @@ const theme2 = createTheme({
   },
 });
 
+const theme3 = createTheme({
+  multilineColor: {
+    color: "red",
+  },
+
+  direction: "rtl",
+  typography: {
+    fontFamily: "vazir",
+    fontSize: 30,
+  },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
+});
+
 const titleArray = ["تصویر", "نام کالا", "دسته بندی", "ویرایش", ["حذف"]];
 
 /****Table */
@@ -220,27 +237,28 @@ class ManageProductsLayout extends React.Component {
           <div className={style.headerPartTitle}>مدیریت کالا ها</div>
           <div className={style.headerPartFilter}>
             <CacheProvider value={cacheRtl}>
-              <ThemeProvider theme={theme}>
-                <Box sx={{ minWidth: 300 }}>
-                  <FormControl sx={{ color: "#000" }} fullWidth>
-                    <InputLabel
-                      sx={{ color: "#000" }}
-                      id="demo-simple-select-label"
-                    >
+              <ThemeProvider theme={theme3}>
+                <Box
+                  sx={{
+                    minWidth: 300,
+                  }}
+                >
+                  <FormControl sx={{}} fullWidth>
+                    <InputLabel sx={{}} id="demo-simple-select-label">
                       فیلتر بر اساس
                     </InputLabel>
                     <Select
-                      sx={{ color: "#000" }}
+                      sx={{}}
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={this.state.filter}
                       label="Age"
                       onChange={handleChangeFilter}
                     >
-                      <MenuItem sx={{ color: "#000" }} value={"default"}>
+                      <MenuItem sx={{ color: colors.text }} value={"default"}>
                         بدون فیلتر
                       </MenuItem>
-                      <MenuItem sx={{ color: "#000" }} value={"priceAsce"}>
+                      <MenuItem sx={{ color: colors.text }} value={"priceAsce"}>
                         قیمت (صعودی)
                       </MenuItem>
                       <MenuItem value={"priceDesc"}> قیمت (نزولی)</MenuItem>

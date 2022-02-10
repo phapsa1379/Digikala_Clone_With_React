@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./ManageProducts.module.css";
-import { AdminHeaderLayout } from "layout";
-import { AdminMainLayout } from "layout";
+import { AdminHeaderLayout, AdminMainLayout } from "layout";
+
 const ManageProductsPage = (props) => {
   return (
     <div>
@@ -9,7 +9,7 @@ const ManageProductsPage = (props) => {
         <AdminHeaderLayout tab="products" />
       </div>
       <div className={style.mainPart}>
-        <AdminMainLayout />
+        <AdminMainLayout mainTab="mainProducts" />
       </div>
     </div>
   );
