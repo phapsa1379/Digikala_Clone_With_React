@@ -107,28 +107,136 @@
       "image": "/files/d10d60eeb06c09d081479885c90546a0",
       "createdAt": 1644514518800,
       "id": 9
+    },
+    {
+      "firstName": "Samsung A20",
+      "brand": "Samsung",
+      "price": 10000000,
+      "count": 19,
+      "discription": "4GB رم",
+      "categoryId": 16,
+      "thumbnail": "/files/b2ac72e85abdd15b030905212410469e",
+      "image": "/files/b2ac72e85abdd15b030905212410469e",
+      "createdAt": 1644519053958,
+      "id": 10
+    },
+    {
+      "firstName": "Samsung A70",
+      "brand": "Samsung",
+      "price": 13450000,
+      "count": 14,
+      "discription": "4GB رم",
+      "categoryId": 16,
+      "thumbnail": "/files/1e6179b9fb82d44224eef8f6ca93b012",
+      "image": "/files/1e6179b9fb82d44224eef8f6ca93b012",
+      "createdAt": 1644519126531,
+      "id": 11
+    },
+    {
+      "firstName": "Apple Ultra+13",
+      "brand": "Apple",
+      "price": 30450000,
+      "count": 10,
+      "discription": "8GB رم",
+      "categoryId": 16,
+      "thumbnail": "/files/aa313172352d118523434f412b1014b0",
+      "image": "/files/aa313172352d118523434f412b1014b0",
+      "createdAt": 1644519219628,
+      "id": 12
+    },
+    {
+      "firstName": "Playstation 5",
+      "brand": "Sony",
+      "price": 27250000,
+      "count": 12,
+      "discription": "حافظه 1 TB",
+      "categoryId": 17,
+      "thumbnail": "/files/45de0cc73cd205576e538dd612fbfe11",
+      "image": "/files/45de0cc73cd205576e538dd612fbfe11",
+      "createdAt": 1644519369242,
+      "id": 13
+    },
+    {
+      "firstName": "Apple lx16",
+      "brand": "Apple",
+      "price": 38300000,
+      "count": 6,
+      "discription": "رم 16GB",
+      "categoryId": 14,
+      "thumbnail": "/files/696c4536901218ef0a8b976d5191ba1d",
+      "image": "/files/696c4536901218ef0a8b976d5191ba1d",
+      "createdAt": 1644519717930,
+      "id": 14
+    },
+    {
+      "firstName": "Asus Rog",
+      "brand": "Asus",
+      "price": 56300000,
+      "count": 7,
+      "discription": "رم 32GB",
+      "categoryId": 14,
+      "thumbnail": "/files/7aa02c9bda66178fa2c8c2ede4a76ef9",
+      "image": "/files/7aa02c9bda66178fa2c8c2ede4a76ef9",
+      "createdAt": 1644519795886,
+      "id": 15
+    },
+    {
+      "firstName": "Playstation 4",
+      "brand": "Sony",
+      "price": 12400000,
+      "count": 23,
+      "discription": "ظرفیت 1TB",
+      "categoryId": 17,
+      "thumbnail": "/files/b4122e9a1851dd5ec260152ef5513c06",
+      "image": "/files/b4122e9a1851dd5ec260152ef5513c06",
+      "createdAt": 1644519890487,
+      "id": 16
+    },
+    {
+      "firstName": "Playstation 4",
+      "brand": "Sony",
+      "price": 10400000,
+      "count": 13,
+      "discription": "ظرفیت 1TB",
+      "categoryId": 17,
+      "thumbnail": "/files/27b2ec25984f3c036276563a1b1aa873",
+      "image": "/files/27b2ec25984f3c036276563a1b1aa873",
+      "createdAt": 1644519933753,
+      "id": 17
+    },
+    {
+      "firstName": "Apple iPhone",
+      "brand": "Apple",
+      "price": 14400000,
+      "count": 3,
+      "discription": "12GB رم",
+      "categoryId": 16,
+      "thumbnail": "/files/ec071064841caf1794973c1f320e6c47",
+      "image": "/files/ec071064841caf1794973c1f320e6c47",
+      "createdAt": 1644520106097,
+      "id": 18
     }
   ],
   "category": [
     {
       "id": 14,
       "name": "Laptop",
-      "icon": "65ddd8b1bbce4d8396b62611147fa1d6"
-    },
-    {
-      "id": 16,
-      "name": "Laptop",
       "icon": null
     },
     {
-      "name": "sssss",
-      "createdAt": 1643375019984,
+      "id": 16,
+      "name": "Phone",
+      "icon": null
+    },
+    {
+      "name": "Playstation",
+      "icon": null,
       "id": 17
     }
   ],
   "users": [
     {
-      "name": "Jamshid Mashayekhi",
+      "name": "Pasha Ahmadi",
       "username": "admin",
       "password": "admin",
       "role": "admin"
