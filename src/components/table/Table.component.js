@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import style from "./Table.module.css";
 import { colors } from "assets/colors";
 
@@ -16,8 +16,48 @@ const TableComponent = (props) => {
     clickFunc,
     doubleClickFunc,
     img,
+    priceType,
+    inputType,
+    input,
+    checkChangeFlag,
+    eventIsDone, //click on save button in manageEntities.lout
+    getDataFromTable,
+    hiddenColumn,
   } = props;
 
+  let changeFlag = false;
+  // let [rowsThatChange, setRowsThatChange] = useState([]);
+  const [transferData, setTransferData] = useState(eventIsDone);
+  let [changesArray, setChangesArray] = useState([]);
+  let [inputChanges, setInputChanges] = useState([]);
+  let hiddenIdCol;
+  useEffect(() => {
+    setTransferData(eventIsDone);
+  }, [eventIsDone]);
+
+  const handleChangeInput = (e) => {
+    let row, col;
+    row = e.target.getAttribute("data-row");
+    col = e.target.getAttribute("data-col");
+    row = Number(row);
+    col = Number(col);
+    console.log("row is: ", row, "col is : ", col);
+    data[row][col] = Number(e.target.value);
+    // rowsThatChange.push(row);
+    // setRowsThatChange(rowsThatChange);
+    setInputChanges([...inputChanges, e.target]);
+    setChangesArray([...changesArray, data[row]]);
+    changeFlag = true;
+    checkChangeFlag(changeFlag);
+  };
+
+  if (transferData) {
+    // getDataFromTable({ data: data, rowsThatChange: rowsThatChange });
+    getDataFromTable(changesArray);
+    inputChanges.forEach((input) => {
+      input.style.display = "none";
+    });
+  }
   return (
     <div className={style.tableContainer}>
       <table className={style.table}>
@@ -30,24 +70,29 @@ const TableComponent = (props) => {
             }}
           >
             {titlesArray.map((title, index) => {
-              return (
-                <th className={style.tableTitle} key={index}>
-                  {title}
-                </th>
-              );
+              if (title !== hiddenColumn) {
+                return (
+                  <th className={style.tableTitle} key={index}>
+                    {title}
+                  </th>
+                );
+              } else {
+                hiddenIdCol = index;
+                return "";
+              }
             })}
           </tr>
         </thead>
         <tbody className={style.bodyTable}>
           {perPage === false
-            ? data.map((row, index) => {
+            ? data.map((row, rindex) => {
                 return (
                   <tr
                     className={style.eachRow}
-                    key={index}
+                    key={rindex}
                     style={{
                       backgroundColor:
-                        index % 2 === 0
+                        rindex % 2 === 0
                           ? oddColor
                             ? oddColor
                             : "#EEEEEE"
@@ -56,43 +101,62 @@ const TableComponent = (props) => {
                           : "#FFFFFF",
                     }}
                   >
-                    {row.map((column, index) => {
-                      return (
+                    {row.map((column, cindex) => {
+                      return cindex !== hiddenIdCol ? (
                         <td
                           className={style.eachColumn}
-                          key={index}
+                          key={cindex}
                           style={{
                             cursor:
-                              clickable[index] || doubleClickable[index]
+                              clickable[cindex] || doubleClickable[cindex]
                                 ? "pointer"
                                 : "default",
-                            color: clickable[index]
+                            color: clickable[cindex]
                               ? "#3867d6"
-                              : doubleClickable[index]
+                              : doubleClickable[cindex]
                               ? colors.greenButton
                               : "black",
                           }}
                           onClick={() => {
-                            if (clickable[index]) {
+                            if (clickable[cindex]) {
                               clickFunc(column);
                             }
                           }}
-                          onDoubleClick={() => {
-                            if (doubleClickable[index]) {
-                              doubleClickFunc(column);
+                          onDoubleClick={(e) => {
+                            if (doubleClickable[cindex]) {
+                              e.target.childNodes[0].style.display = "block";
+                              e.target.childNodes[0].value = column;
                             }
                           }}
                         >
-                          {img[index] ? (
+                          {input[cindex] ? (
+                            <input
+                              data-row={rindex}
+                              data-col={cindex}
+                              type={inputType}
+                              className={style.inputInTd}
+                              onChange={handleChangeInput}
+                              style={{
+                                color: titleBgColor,
+                              }}
+                            />
+                          ) : (
+                            ""
+                          )}
+                          {img[cindex] ? (
                             <img
                               className={style.imageInTable}
                               src={`http://localhost:3002${column}`}
                               alt="img"
                             />
+                          ) : priceType[cindex] ? (
+                            column.toLocaleString("fa")
                           ) : (
                             column
                           )}
                         </td>
+                      ) : (
+                        ""
                       );
                     })}
                   </tr>
@@ -147,6 +211,8 @@ const TableComponent = (props) => {
                               src={`http://localhost:3002${column}`}
                               alt="img"
                             />
+                          ) : priceType[index] ? (
+                            column.toLocaleString("fa")
                           ) : (
                             column
                           )}

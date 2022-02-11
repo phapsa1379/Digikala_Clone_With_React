@@ -8,7 +8,9 @@
       "discription": "16GB رم",
       "categoryId": 14,
       "thumbnail": "/files/9b83d8c1386408453e780d3b6a726041",
-      "image": ["/files/9b83d8c1386408453e780d3b6a726041"],
+      "image": [
+        "/files/9b83d8c1386408453e780d3b6a726041"
+      ],
       "createdAt": 1644513794766,
       "id": 1
     },
@@ -16,35 +18,41 @@
       "firstName": "Asus FX505",
       "brand": "Asus",
       "price": 38000000,
-      "count": 12,
+      "count": 11,
       "discription": "8GB رم",
       "categoryId": 14,
       "thumbnail": "/files/99ea8b4cf06511eb442d2e7b0a44a24b",
-      "image": ["/files/99ea8b4cf06511eb442d2e7b0a44a24b1"],
+      "image": [
+        "/files/99ea8b4cf06511eb442d2e7b0a44a24b1"
+      ],
       "createdAt": 1644513900415,
       "id": 2
     },
     {
       "firstName": "Lenovo 45lsb",
       "brand": "Lenovo",
-      "price": 34000000,
-      "count": 8,
+      "price": 27000000,
+      "count": 14,
       "discription": "16GB رم",
       "categoryId": 14,
       "thumbnail": "/files/5286452502ee890b41f7474d6b5ef174",
-      "image": ["/files/5286452502ee890b41f7474d6b5ef174"],
+      "image": [
+        "/files/5286452502ee890b41f7474d6b5ef174"
+      ],
       "createdAt": 1644513978938,
       "id": 3
     },
     {
       "firstName": "Lenovo 25scd",
       "brand": "Lenovo",
-      "price": 41000000,
+      "price": 43000000,
       "count": 8,
       "discription": "16GB رم",
       "categoryId": 14,
       "thumbnail": "/files/4582e6a1b26fd17b24e52c6443444beb",
-      "image": ["/files/4582e6a1b26fd17b24e52c6443444beb"],
+      "image": [
+        "/files/4582e6a1b26fd17b24e52c6443444beb"
+      ],
       "createdAt": 1644514073353,
       "id": 4
     },
@@ -56,7 +64,9 @@
       "discription": "4GB رم",
       "categoryId": 14,
       "thumbnail": "/files/8160166c81f494f81190bc58e20854c3",
-      "image": ["/files/8160166c81f494f81190bc58e20854c3"],
+      "image": [
+        "/files/8160166c81f494f81190bc58e20854c3"
+      ],
       "createdAt": 1644514179836,
       "id": 5
     },
@@ -68,7 +78,9 @@
       "discription": "4GB رم",
       "categoryId": 14,
       "thumbnail": "/files/cfa620df6c4cd63aa47fabe037e1d015",
-      "image": ["/files/cfa620df6c4cd63aa47fabe037e1d015"],
+      "image": [
+        "/files/cfa620df6c4cd63aa47fabe037e1d015"
+      ],
       "createdAt": 1644514272001,
       "id": 6
     },
@@ -80,7 +92,9 @@
       "discription": "32GB رم",
       "categoryId": 14,
       "thumbnail": "/files/2ecf79e992ab3ffac4ef4704a5ea71db",
-      "image": ["/files/2ecf79e992ab3ffac4ef4704a5ea71db"],
+      "image": [
+        "/files/2ecf79e992ab3ffac4ef4704a5ea71db"
+      ],
       "createdAt": 1644514359435,
       "id": 7
     },
@@ -92,7 +106,9 @@
       "discription": "8GB رم",
       "categoryId": 14,
       "thumbnail": "/files/d037d3597c7e7a19bb53dc2bb25d9766",
-      "image": ["/files/d037d3597c7e7a19bb53dc2bb25d9766"],
+      "image": [
+        "/files/d037d3597c7e7a19bb53dc2bb25d9766"
+      ],
       "createdAt": 1644514433874,
       "id": 8
     },
@@ -104,7 +120,9 @@
       "discription": "8GB رم",
       "categoryId": 14,
       "thumbnail": "/files/d10d60eeb06c09d081479885c90546a0",
-      "image": ["/files/d10d60eeb06c09d081479885c90546a0"],
+      "image": [
+        "/files/d10d60eeb06c09d081479885c90546a0"
+      ],
       "createdAt": 1644514518800,
       "id": 9
     },
@@ -116,7 +134,9 @@
       "discription": "4GB رم",
       "categoryId": 16,
       "thumbnail": "/files/b2ac72e85abdd15b030905212410469e",
-      "image": ["/files/b2ac72e85abdd15b030905212410469e"],
+      "image": [
+        "/files/b2ac72e85abdd15b030905212410469e"
+      ],
       "createdAt": 1644519053958,
       "id": 10
     },
@@ -128,7 +148,9 @@
       "discription": "4GB رم",
       "categoryId": 16,
       "thumbnail": "/files/1e6179b9fb82d44224eef8f6ca93b012",
-      "image": ["/files/1e6179b9fb82d44224eef8f6ca93b012"],
+      "image": [
+        "/files/1e6179b9fb82d44224eef8f6ca93b012"
+      ],
       "createdAt": 1644519126531,
       "id": 11
     },
@@ -140,7 +162,9 @@
       "discription": "8GB رم",
       "categoryId": 16,
       "thumbnail": "/files/aa313172352d118523434f412b1014b0",
-      "image": ["/files/aa313172352d118523434f412b1014b0"],
+      "image": [
+        "/files/aa313172352d118523434f412b1014b0"
+      ],
       "createdAt": 1644519219628,
       "id": 12
     },
@@ -152,7 +176,9 @@
       "discription": "حافظه 1 TB",
       "categoryId": 17,
       "thumbnail": "/files/45de0cc73cd205576e538dd612fbfe11",
-      "image": ["/files/45de0cc73cd205576e538dd612fbfe11"],
+      "image": [
+        "/files/45de0cc73cd205576e538dd612fbfe11"
+      ],
       "createdAt": 1644519369242,
       "id": 13
     },
@@ -164,7 +190,9 @@
       "discription": "رم 16GB",
       "categoryId": 14,
       "thumbnail": "/files/696c4536901218ef0a8b976d5191ba1d",
-      "image": ["/files/696c4536901218ef0a8b976d5191ba1d"],
+      "image": [
+        "/files/696c4536901218ef0a8b976d5191ba1d"
+      ],
       "createdAt": 1644519717930,
       "id": 14
     },
@@ -176,7 +204,9 @@
       "discription": "رم 32GB",
       "categoryId": 14,
       "thumbnail": "/files/7aa02c9bda66178fa2c8c2ede4a76ef9",
-      "image": ["/files/7aa02c9bda66178fa2c8c2ede4a76ef9"],
+      "image": [
+        "/files/7aa02c9bda66178fa2c8c2ede4a76ef9"
+      ],
       "createdAt": 1644519795886,
       "id": 15
     },
@@ -188,19 +218,23 @@
       "discription": "ظرفیت 1TB",
       "categoryId": 17,
       "thumbnail": "/files/b4122e9a1851dd5ec260152ef5513c06",
-      "image": ["/files/b4122e9a1851dd5ec260152ef5513c06"],
+      "image": [
+        "/files/b4122e9a1851dd5ec260152ef5513c06"
+      ],
       "createdAt": 1644519890487,
       "id": 16
     },
     {
       "firstName": "Playstation 4",
       "brand": "Sony",
-      "price": 10400000,
+      "price": 10450000,
       "count": 13,
       "discription": "ظرفیت 1TB",
       "categoryId": 17,
       "thumbnail": "/files/27b2ec25984f3c036276563a1b1aa873",
-      "image": ["/files/27b2ec25984f3c036276563a1b1aa873"],
+      "image": [
+        "/files/27b2ec25984f3c036276563a1b1aa873"
+      ],
       "createdAt": 1644519933753,
       "id": 17
     },
@@ -212,7 +246,9 @@
       "discription": "12GB رم",
       "categoryId": 16,
       "thumbnail": "/files/ec071064841caf1794973c1f320e6c47",
-      "image": ["/files/ec071064841caf1794973c1f320e6c47"],
+      "image": [
+        "/files/ec071064841caf1794973c1f320e6c47"
+      ],
       "createdAt": 1644520106097,
       "id": 18
     }
@@ -340,13 +376,5 @@
       ]
     }
   ],
-  "protection": {
-    "products.get": false,
-    "orders.post": true,
-    "upload": true,
-    "products": "admin",
-
-    "users": "admin",
-    "protection": "admin"
-  }
+  "protection": {}
 }

@@ -15,13 +15,15 @@ import swal from "sweetalert";
 import { useEffect } from "react";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3002";
 let navigate;
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
 });
 const theme = createTheme({
+  fieldset: {
+    borderColor: colors.primary,
+  },
   multilineColor: {
     color: "red",
   },
@@ -32,7 +34,7 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: colors.secondary,
+      main: colors.primary,
     },
   },
 });
@@ -74,17 +76,7 @@ const submitHandler = (e) => {
 
 const LoginPage = (props) => {
   navigate = useNavigate();
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL}/users`)
-  //     .then((res) => {
-  //       const users = res.data;
-  //       console.log(users);
-  //     })
-  //     .catch((err) => {
-  //       console.log("Something went wrong");
-  //     });
-  // }, []);
+
   return (
     <div className={style.loginPageContainer}>
       <div className={style.loginFormContainer}>
@@ -94,11 +86,14 @@ const LoginPage = (props) => {
             <ThemeProvider theme={theme}>
               <TextField
                 sx={{
-                  input: { color: colors.secondary, fontSize: "20px" },
-                  label: { color: colors.secondary },
-                  borderBottom: `1px solid ${colors.secondary}`,
+                  input: { color: colors.primary, fontSize: "20px" },
+                  label: { color: colors.primary },
+                  borderBottom: `1px solid ${colors.primary}`,
                   width: "40rem",
                   margin: "2rem 0",
+                  "&:hover": {
+                    // borderBottom: `3px solid ${colors.primary}`,
+                  },
                 }}
                 className={style.TextField}
                 id="standard-basic"
@@ -107,11 +102,20 @@ const LoginPage = (props) => {
               />
               <TextField
                 sx={{
-                  input: { color: colors.secondary, fontSize: "20px" },
-                  label: { color: colors.secondary },
-                  borderBottom: `1px solid ${colors.secondary}`,
+                  input: { color: colors.primary, fontSize: "20px" },
+                  label: { color: colors.primary },
+                  // borderBottom: `1px solid ${colors.primary}`,
                   width: "40rem",
                   margin: "2rem 0",
+                  "&.Mui-focused fieldset": {
+                    borderColor: `${colors.primary}!important`,
+                  },
+                  "&:hover fieldset": {
+                    borderColor: colors.primary,
+                  },
+                  "&.MuiInput-underline:hover": {
+                    borderBottomColor: colors.primary,
+                  },
                 }}
                 id="standard-password-input"
                 label="رمزعبور"
@@ -125,8 +129,8 @@ const LoginPage = (props) => {
                 variant="outlined"
                 type="submit"
                 sx={{
-                  color: colors.secondary,
-                  borderColor: colors.secondary,
+                  color: colors.primary,
+                  borderColor: colors.primary,
                   fontSize: "30px",
                   fontWeight: "bold",
                   borderRadius: "10px",
@@ -136,10 +140,11 @@ const LoginPage = (props) => {
                   marginBottom: "2rem!important",
                   backgroundColor: "transparent",
                   border: "3px solid",
+                  boxShadow: "-5px 5px 5px #e2364ad2",
                   "&:hover": {
                     color: colors.white,
-                    backgroundColor: colors.secondary,
-                    border: `3px solid ${colors.secondary}`,
+                    backgroundColor: colors.primary,
+                    border: `3px solid ${colors.primary}`,
                   },
                 }}
               >
@@ -159,7 +164,10 @@ const LoginPage = (props) => {
               link="/"
               sx={{
                 color: colors.white,
-                backgroundColor: colors.primary,
+                backgroundColor: colors.ligthPrimary,
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: colors.white,
+                },
                 borderRadius: "2rem",
                 width: "20rem",
                 height: "4rem",
@@ -178,14 +186,14 @@ const LoginPage = (props) => {
           </ThemeProvider>
         </div>
       </div>
-      <div className={style.background}>
+      {/* <div className={style.background}>
         <img
           src={loginBackground}
           alt="background"
           className={style.backgroundImage}
         />
         <div className={style.cover}></div>
-      </div>
+      </div> */}
     </div>
   );
 };

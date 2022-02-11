@@ -14,11 +14,13 @@
   border-collapse: collapse;
   border: 3px solid black;
   text-align: center;
+  font-weight: bold;
 }
 /* .eachColumn,
 .tableTitle {
   flex-grow: 1;
 } */
+
 .tableTitle {
   padding: 3rem 3rem;
   font-size: 2rem;
@@ -29,10 +31,27 @@
 .eachColumn {
   font-size: 2rem;
   padding: 3rem 3rem;
+  position: relative;
 }
 .imageInTable {
   height: 200px;
   width: 200px;
   border-radius: 2rem;
   box-shadow: 5px 5px 5px 0 #888888;
+}
+.inputInTd {
+  display: none;
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+}
+
+.inputInTd:focus {
+  outline: none;
 }

@@ -28,6 +28,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { putProducts } from "api/products.api";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -77,7 +78,7 @@ const theme3 = createTheme({
   },
 });
 
-const titleArray = ["نام کالا", "قیمت", "موجودی"];
+const titleArray = ["نام کالا", "قیمت", "موجودی", "id"];
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -94,6 +95,40 @@ class ManageEntitiesLayout extends React.Component {
     filter: "default",
     allCategories: [],
     filterSelection: "",
+    storeButton: "false",
+    clickOnStoreButtonEvent: false,
+  };
+  checkChangeInput = (changeFlag) => {
+    if (changeFlag) {
+      this.setState({ ...this.state, storeButton: "true" });
+    } else {
+      this.setState({ ...this.state, storeButton: "false" });
+    }
+  };
+  getDataFromTable = (changesArray) => {
+    console.log("array", changesArray);
+    changesArray.map((data, index) => {
+      let obj = {};
+      obj.firstName = data[0];
+      obj.price = data[1];
+      obj.count = data[2];
+      obj = { ...this.state.allProducts[data[3] - 1], ...obj };
+      console.log("id is : ", obj);
+      putProducts(data[3], obj)
+        .then((res) => {
+          console.log(res);
+          this.setState({
+            ...this.state,
+            storeButton: false,
+            clickOnStoreButtonEvent: false,
+          });
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+          return err;
+        });
+    });
   };
   dataArray = [];
 
@@ -158,6 +193,9 @@ class ManageEntitiesLayout extends React.Component {
                             this.state.products[index][property];
                         } else if (property === "count") {
                           this.dataArray[index][2] =
+                            this.state.products[index][property];
+                        } else if (property === "id") {
+                          this.dataArray[index][3] =
                             this.state.products[index][property];
                         }
                       }
@@ -240,8 +278,13 @@ class ManageEntitiesLayout extends React.Component {
           <div className={style.headerPartButton}>
             <ThemeProvider theme={theme}>
               <Button
-                disabled
-                onClick={() => {}}
+                disabled={!this.state.storeButton}
+                onClick={(e) => {
+                  this.setState({
+                    ...this.state,
+                    clickOnStoreButtonEvent: true,
+                  });
+                }}
                 variant="contained"
                 link="/"
                 sx={{
@@ -276,10 +319,17 @@ class ManageEntitiesLayout extends React.Component {
               clickable={[false, false, false]}
               doubleClickable={[false, true, true]}
               img={[false, false, false]}
+              priceType={[false, true, false]}
+              inputType="number"
+              input={[false, true, true]}
+              hiddenColumn={"id"}
               doubleClickFunc={(x) => {
                 alert(x);
               }}
               clickFunc={null}
+              checkChangeFlag={this.checkChangeInput}
+              eventIsDone={this.state.clickOnStoreButtonEvent}
+              getDataFromTable={this.getDataFromTable}
             />
           </div>
         ) : (

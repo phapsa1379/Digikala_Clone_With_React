@@ -311,6 +311,7 @@ class ManageOrdersLayout extends React.Component {
               clickable={[false, false, false, true]}
               doubleClickable={[false, false, false, false]}
               img={[false, false, false, false]}
+              priceType={[false, true, false, false]}
               clickFunc={(x) => {
                 alert(x);
               }}

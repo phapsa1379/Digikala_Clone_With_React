@@ -7,13 +7,15 @@
 .loginPageContainer {
   height: 100vh;
   position: relative;
+  /* background-color: var(--primary-color); */
 }
 
 .loginFormContainer {
   width: 65rem;
   height: 65rem;
   border-radius: 10px;
-  box-shadow: 0.5rem 0.5rem 2rem 0 rgba(0, 0, 0, 0.5);
+  border: 5px solid var(--primary-color);
+  box-shadow: 0.5rem 0.5rem 1rem 0 rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -21,6 +23,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
+  background-color: white;
 }
 .background {
   height: 100vh;
@@ -51,7 +54,7 @@
 
 .title {
   /* color: var(--secondary-color); */
-  background-color: #f3ec78;
+  /* background-color: #f3ec78;
   background: linear-gradient(
     90deg,
     #ff9100,
@@ -71,19 +74,20 @@
   -webkit-background-clip: text;
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-
+  -moz-text-fill-color: transparent; */
+  color: var(--primary-color);
   text-align: center;
-  line-height: 1.2cm;
+  line-height: 1.5cm;
   display: inline-block;
-  width: 30rem;
+  width: 40rem;
   margin: 2rem auto;
-  font-size: 30px;
-  font-weight: 900;
-  box-shadow: -0.2rem -0.2rem 2rem 0.2rem var(--secondary-color);
+  margin-bottom: 0;
+  font-size: 35px;
+  font-weight: 1000;
+  /* box-shadow: -0.2rem -0.2rem 2rem 0.2rem var(--secondary-color); */
   border-radius: 2rem;
   padding: 0.5rem 1rem;
-  animation: shadow 3s 1s ease-in-out infinite;
+  /* animation: shadow 3s 1s ease-in-out infinite; */
 }
 
 @keyframes shadow {

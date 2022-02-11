@@ -317,6 +317,7 @@ class ManageProductsLayout extends React.Component {
               clickable={[false, false, false, true, true]}
               doubleClickable={[false, false, false, false, false]}
               img={[true, false, false, false, false]}
+              priceType={[false, false, false, false, false]}
               clickFunc={(x) => {
                 alert(x);
               }}
