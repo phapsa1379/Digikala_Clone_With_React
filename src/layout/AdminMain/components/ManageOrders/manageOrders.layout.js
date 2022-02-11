@@ -121,94 +121,89 @@ class ManageOrdersLayout extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`${BASE_URL}/category`).then((res) => {
-      const allCategoriesArray = res.data;
-      this.setState({ allCategories: allCategoriesArray }, () => {
-        axios.get(`${BASE_URL}/orders`).then((res) => {
-          const allOrdersArray = res.data;
-          this.setState({ allOrders: allOrdersArray }, () => {
-            let howGet = {
-              default: `?_page=${this.state.pageNumber}&_limit=${
-                this.state.inPerPage
-              }&${
-                this.state.radio === "delivered"
-                  ? "deliveryDate_ne=null"
-                  : "deliveryDate=null"
-              }`,
-              all: "",
-              priceAsce: `?_page=${this.state.pageNumber}&_limit=${
-                this.state.inPerPage
-              }&_sort=totalPrice&_order=asc&${
-                this.state.radio === "delivered"
-                  ? "deliveryDate_ne=null"
-                  : "deliveryDate=null"
-              }`,
-              priceDesc: `?_page=${this.state.pageNumber}&_limit=${
-                this.state.inPerPage
-              }&_sort=totalPrice&_order=desc&${
-                this.state.radio === "delivered"
-                  ? "deliveryDate_ne=null"
-                  : "deliveryDate=null"
-              }`,
-              createAtAsce: `?_page=${this.state.pageNumber}&_limit=${
-                this.state.inPerPage
-              }&_sort=registerationDate&_order=asc&${
-                this.state.radio === "delivered"
-                  ? "deliveryDate_ne=null"
-                  : "deliveryDate=null"
-              }`,
-              createAtDesc: `?_page=${this.state.pageNumber}&_limit=${
-                this.state.inPerPage
-              }&_sort=registerationDate&_order=desc&${
-                this.state.radio === "delivered"
-                  ? "deliveryDate_ne=null"
-                  : "deliveryDate=null"
-              }`,
-            };
-            axios
-              .get(`${BASE_URL}/orders${howGet[this.state.filter]}`)
-              .then((res) => {
-                const ordersArray = res.data;
+    axios.get(`${BASE_URL}/orders`).then((res) => {
+      const allOrdersArray = res.data;
+      this.setState({ allOrders: allOrdersArray }, () => {
+        let howGet = {
+          default: `?_page=${this.state.pageNumber}&_limit=${
+            this.state.inPerPage
+          }&${
+            this.state.radio === "delivered"
+              ? "deliveryDate_ne=null"
+              : "deliveryDate=null"
+          }`,
+          all: "",
+          priceAsce: `?_page=${this.state.pageNumber}&_limit=${
+            this.state.inPerPage
+          }&_sort=totalPrice&_order=asc&${
+            this.state.radio === "delivered"
+              ? "deliveryDate_ne=null"
+              : "deliveryDate=null"
+          }`,
+          priceDesc: `?_page=${this.state.pageNumber}&_limit=${
+            this.state.inPerPage
+          }&_sort=totalPrice&_order=desc&${
+            this.state.radio === "delivered"
+              ? "deliveryDate_ne=null"
+              : "deliveryDate=null"
+          }`,
+          createAtAsce: `?_page=${this.state.pageNumber}&_limit=${
+            this.state.inPerPage
+          }&_sort=registerationDate&_order=asc&${
+            this.state.radio === "delivered"
+              ? "deliveryDate_ne=null"
+              : "deliveryDate=null"
+          }`,
+          createAtDesc: `?_page=${this.state.pageNumber}&_limit=${
+            this.state.inPerPage
+          }&_sort=registerationDate&_order=desc&${
+            this.state.radio === "delivered"
+              ? "deliveryDate_ne=null"
+              : "deliveryDate=null"
+          }`,
+        };
+        axios
+          .get(`${BASE_URL}/orders${howGet[this.state.filter]}`)
+          .then((res) => {
+            const ordersArray = res.data;
 
-                this.setState({ ...this.state, orders: ordersArray }, () => {
-                  let length = this.state.orders.length;
-                  let totalLength = this.state.allOrders.length;
+            this.setState({ ...this.state, orders: ordersArray }, () => {
+              let length = this.state.orders.length;
+              let totalLength = this.state.allOrders.length;
 
-                  this.numberOfPage = Math.ceil(length / this.state.inPerPage);
-                  this.dataArray = [];
+              this.numberOfPage = Math.ceil(length / this.state.inPerPage);
+              this.dataArray = [];
 
-                  for (let i = 0; i < length; i++) {
-                    this.dataArray[i] = [];
+              for (let i = 0; i < length; i++) {
+                this.dataArray[i] = [];
+              }
+
+              for (let index = 0; index < length; index++) {
+                for (let property in this.state.orders[index]) {
+                  if (property === "name") {
+                    this.dataArray[index][0] =
+                      this.state.orders[index][property];
+                    console.log("in for:", this.dataArray);
+                  } else if (property === "totalPrice") {
+                    this.dataArray[index][1] =
+                      this.state.orders[index][property];
+                  } else if (property === "registerationDate") {
+                    this.dataArray[index][2] =
+                      this.state.orders[index][property];
                   }
-
-                  for (let index = 0; index < length; index++) {
-                    for (let property in this.state.orders[index]) {
-                      if (property === "name") {
-                        this.dataArray[index][0] =
-                          this.state.orders[index][property];
-                        console.log("in for:", this.dataArray);
-                      } else if (property === "totalPrice") {
-                        this.dataArray[index][1] =
-                          this.state.orders[index][property];
-                      } else if (property === "registerationDate") {
-                        this.dataArray[index][2] =
-                          this.state.orders[index][property];
-                      }
-                      this.dataArray[index][3] = "بررسی سفارش";
-                    }
-                  }
-                  console.log(this.dataArray);
-                  this.setState({
-                    ...this.state,
-                    data: this.dataArray,
-                  });
-                });
-              })
-              .catch((err) => {
-                console.log("Something went wrong");
+                  this.dataArray[index][3] = "بررسی سفارش";
+                }
+              }
+              console.log(this.dataArray);
+              this.setState({
+                ...this.state,
+                data: this.dataArray,
               });
+            });
+          })
+          .catch((err) => {
+            console.log("Something went wrong");
           });
-        });
       });
     });
   }
