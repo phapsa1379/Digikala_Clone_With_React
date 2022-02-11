@@ -1,1 +1,1 @@
-export { ProductsReducer } from "./products.reducer";
+export { ProductsReducer } from "redux/reducers/products.reducer";

@@ -2,10 +2,9 @@ import React from "react";
 import style from "./UserHeader.module.css";
 import { digikalaLogo } from "assets/icons";
 import { BiSearch, FaShoppingCart, FaUser, FiMenu } from "assets/icons/index";
-import { adv1, adv2 } from "assets/images/index";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
