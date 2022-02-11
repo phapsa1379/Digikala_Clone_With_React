@@ -28,6 +28,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { connect } from "react-redux";
+import { fetchProducts } from "redux/actions/products.action";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -149,74 +151,75 @@ class ManageProductsLayout extends React.Component {
 
     return categoryName;
   };
-
+  componentWillMount() {
+    this.props.getProductss();
+  }
   componentDidMount() {
     axios.get(`${BASE_URL}/category`).then((res) => {
       const allCategoriesArray = res.data;
-      this.setState({ allCategories: allCategoriesArray }, () => {
-        axios.get(`${BASE_URL}/products`).then((res) => {
-          const allProductsArray = res.data;
-          this.setState({ allProducts: allProductsArray }, () => {
-            let howGet = {
-              default: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}`,
-              all: "",
-              priceAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=asc`,
-              priceDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=desc`,
-              createAtAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=asc`,
-              createAtDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=desc`,
-              category: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=categoryId&_order=asc`,
-            };
-            axios
-              .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
-              .then((res) => {
-                const productsArray = res.data;
+      this.setState({ allCategories: allCategoriesArray }, async () => {
+        // axios.get(`${BASE_URL}/products`).then((res) => {
 
-                this.setState(
-                  { ...this.state, products: productsArray },
-                  () => {
-                    let length = this.state.products.length;
-                    let totalLength = this.state.allProducts.length;
+        const allProductsArray = await this.props.products;
+        console.log("redux", allProductsArray);
+        this.setState({ allProducts: allProductsArray }, () => {
+          let howGet = {
+            default: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}`,
+            all: "",
+            priceAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=asc`,
+            priceDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=price&_order=desc`,
+            createAtAsce: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=asc`,
+            createAtDesc: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=createdAt&_order=desc`,
+            category: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}&_sort=categoryId&_order=asc`,
+          };
+          axios
+            .get(`${BASE_URL}/products${howGet[this.state.filter]}`)
+            .then((res) => {
+              const productsArray = res.data;
 
-                    this.numberOfPage = Math.ceil(
-                      totalLength / this.state.inPerPage
-                    );
-                    this.dataArray = [];
+              this.setState({ ...this.state, products: productsArray }, () => {
+                let length = this.state.products.length;
+                let totalLength = this.state.allProducts.length;
 
-                    for (let i = 0; i < length; i++) {
-                      this.dataArray[i] = [];
-                    }
-
-                    for (let index = 0; index < length; index++) {
-                      for (let property in this.state.products[index]) {
-                        if (property === "thumbnail") {
-                          this.dataArray[index][0] =
-                            this.state.products[index][property];
-                          console.log("in for:", this.dataArray);
-                        } else if (property === "firstName") {
-                          this.dataArray[index][1] =
-                            this.state.products[index][property];
-                        } else if (property === "categoryId") {
-                          this.dataArray[index][2] = this.findCategoryNameById(
-                            this.state.products[index][property]
-                          );
-                        }
-                        this.dataArray[index][3] = "ویرایش";
-                        this.dataArray[index][4] = "حذف";
-                      }
-                    }
-                    console.log(this.dataArray);
-                    this.setState({
-                      ...this.state,
-                      data: this.dataArray,
-                    });
-                  }
+                this.numberOfPage = Math.ceil(
+                  totalLength / this.state.inPerPage
                 );
-              })
-              .catch((err) => {
-                console.log("Something went wrong");
+                this.dataArray = [];
+
+                for (let i = 0; i < length; i++) {
+                  this.dataArray[i] = [];
+                }
+
+                for (let index = 0; index < length; index++) {
+                  for (let property in this.state.products[index]) {
+                    if (property === "thumbnail") {
+                      this.dataArray[index][0] =
+                        this.state.products[index][property];
+                      console.log("in for:", this.dataArray);
+                    } else if (property === "firstName") {
+                      this.dataArray[index][1] =
+                        this.state.products[index][property];
+                    } else if (property === "categoryId") {
+                      this.dataArray[index][2] = this.findCategoryNameById(
+                        this.state.products[index][property]
+                      );
+                    }
+                    this.dataArray[index][3] = "ویرایش";
+                    this.dataArray[index][4] = "حذف";
+                  }
+                }
+                console.log(this.dataArray);
+                this.setState({
+                  ...this.state,
+                  data: this.dataArray,
+                });
               });
-          });
+            })
+            .catch((err) => {
+              console.log("Something went wrong");
+            });
         });
+        // });
       });
     });
   }
@@ -388,5 +391,21 @@ class ManageProductsLayout extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  console.log("map", state.allProducts.products);
+  return {
+    products: state.allProducts.products,
+  };
+};
 
-export { ManageProductsLayout };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProductss: () => dispatch(fetchProducts()),
+  };
+};
+// export { ManageProductsLayout };
+const ManageProducts = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageProductsLayout);
+export { ManageProducts };
