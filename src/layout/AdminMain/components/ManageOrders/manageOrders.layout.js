@@ -120,6 +120,8 @@ class ManageOrdersLayout extends React.Component {
     return categoryName;
   };
 
+  getDataFromTable = (data) => {};
+
   componentDidMount() {
     axios.get(`${BASE_URL}/orders`).then((res) => {
       const allOrdersArray = res.data;
@@ -312,10 +314,16 @@ class ManageOrdersLayout extends React.Component {
               doubleClickable={[false, false, false, false]}
               img={[false, false, false, false]}
               priceType={[false, true, false, false]}
+              inputType="number"
+              input={[false, false, false]}
+              hiddenColumn={"id"}
               clickFunc={(x) => {
                 alert(x);
               }}
               doubleClickFunc={null}
+              checkChangeFlag={false}
+              eventIsDone={false}
+              getDataFromTable={this.getDataFromTable}
             />
           </div>
         ) : (
