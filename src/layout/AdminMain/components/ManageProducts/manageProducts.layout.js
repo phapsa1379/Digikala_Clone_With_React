@@ -30,6 +30,12 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { connect } from "react-redux";
 import { fetchProducts } from "redux/actions/products.action";
+import { deleteProducts } from "api/products.api";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -48,7 +54,21 @@ const theme = createTheme({
     },
   },
 });
-
+const dialogTheme = createTheme({
+  multilineColor: {
+    color: "red",
+  },
+  direction: "rtl",
+  typography: {
+    fontFamily: "vazir",
+    fontSize: 35,
+  },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
+});
 const theme2 = createTheme({
   direction: "ltr",
   typography: {
@@ -79,7 +99,7 @@ const theme3 = createTheme({
   },
 });
 
-const titleArray = ["تصویر", "نام کالا", "دسته بندی", "ویرایش", ["حذف"]];
+const titleArray = ["id", "تصویر", "نام کالا", "دسته بندی", "ویرایش", ["حذف"]];
 
 /****Table */
 
@@ -135,8 +155,27 @@ class ManageProductsLayout extends React.Component {
     filter: "default",
     allCategories: [],
     filterSelection: "",
-  };
+    showDialog: false,
 
+    itemId: null,
+  };
+  //close confirm Dialog handler
+  handleClose = () => {
+    this.setState({ ...this.state, showDialog: false });
+  };
+  deleteConfirmHandler = () => {
+    this.setState({ ...this.state, showDialog: false }, () => {
+      deleteProducts(this.state.itemId);
+      this.state.allProducts.map((item, index) => {
+        if (item.id === this.state.itemId) {
+          this.state.allProducts.splice(index, 1);
+        }
+      });
+      this.componentDidMount();
+
+      this.setState({ ...this.state, itemId: null });
+    });
+  };
   getDataFromTable = (data) => {};
   dataArray = [];
 
@@ -194,20 +233,23 @@ class ManageProductsLayout extends React.Component {
 
                 for (let index = 0; index < length; index++) {
                   for (let property in this.state.products[index]) {
-                    if (property === "thumbnail") {
+                    if (property === "id") {
                       this.dataArray[index][0] =
+                        this.state.products[index][property];
+                    } else if (property === "thumbnail") {
+                      this.dataArray[index][1] =
                         this.state.products[index][property];
                       console.log("in for:", this.dataArray);
                     } else if (property === "firstName") {
-                      this.dataArray[index][1] =
+                      this.dataArray[index][2] =
                         this.state.products[index][property];
                     } else if (property === "categoryId") {
-                      this.dataArray[index][2] = this.findCategoryNameById(
+                      this.dataArray[index][3] = this.findCategoryNameById(
                         this.state.products[index][property]
                       );
                     }
-                    this.dataArray[index][3] = "ویرایش";
-                    this.dataArray[index][4] = "حذف";
+                    this.dataArray[index][4] = "ویرایش";
+                    this.dataArray[index][5] = "حذف";
                   }
                 }
                 console.log(this.dataArray);
@@ -316,15 +358,21 @@ class ManageProductsLayout extends React.Component {
               data={this.state.data}
               titlesArray={titleArray}
               perPage={false}
-              clickable={[false, false, false, true, true]}
-              doubleClickable={[false, false, false, false, false]}
-              img={[true, false, false, false, false]}
-              priceType={[false, false, false, false, false]}
+              clickable={[false, false, false, false, true, true]}
+              doubleClickable={[false, false, false, false, false, false]}
+              img={[false, true, false, false, false, false]}
+              priceType={[false, false, false, false, false, false]}
               inputType="number"
-              input={[false, false, false]}
+              input={[false, false, false, false, false, false]}
               hiddenColumn={"id"}
-              clickFunc={(x) => {
-                alert(x);
+              clickFunc={(x, itemId) => {
+                console.log(x, itemId);
+                this.setState({ ...this.state, itemId: itemId }, () => {
+                  if (x === "ویرایش") {
+                  } else if (x === "حذف") {
+                    this.setState({ ...this.state, showDialog: true });
+                  }
+                });
               }}
               doubleClickFunc={null}
               checkChangeFlag={false}
@@ -396,6 +444,36 @@ class ManageProductsLayout extends React.Component {
             </CacheProvider>
           </div>
         ) : null}
+        <div className={style.confirmDialog}>
+          <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={dialogTheme}>
+              <Dialog
+                open={this.state.showDialog}
+                onClose={this.handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle
+                  sx={{ color: colors.primary, fontSize: "3rem" }}
+                  id="alert-dialog-title"
+                >
+                  {"حذف کالا"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    آیا از حذف این محصول اطمینان دارید؟
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose}>لغو</Button>
+                  <Button onClick={this.deleteConfirmHandler} autoFocus>
+                    تایید
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </ThemeProvider>
+          </CacheProvider>
+        </div>
       </div>
     );
   }

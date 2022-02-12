@@ -25,3 +25,11 @@ export async function putProducts(subUrl, data) {
     return Promise.reject(e);
   }
 }
+export async function deleteProducts(subUrl) {
+  try {
+    const response = await http.delete(`/products/${subUrl}`);
+    return response.data;
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}

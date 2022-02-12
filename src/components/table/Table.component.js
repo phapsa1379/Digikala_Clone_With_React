@@ -35,6 +35,9 @@ const TableComponent = (props) => {
     setTransferData(eventIsDone);
   }, [eventIsDone]);
 
+  const getIdWithRowAndColumn = (row, col) => {
+    return data[row][0];
+  };
   const handleChangeInput = (e) => {
     let row, col;
     row = e.target.getAttribute("data-row");
@@ -119,7 +122,11 @@ const TableComponent = (props) => {
                           }}
                           onClick={() => {
                             if (clickable[cindex]) {
-                              clickFunc(column);
+                              let itemId = getIdWithRowAndColumn(
+                                rindex,
+                                cindex
+                              );
+                              clickFunc(column, itemId);
                             }
                           }}
                           onDoubleClick={(e) => {
