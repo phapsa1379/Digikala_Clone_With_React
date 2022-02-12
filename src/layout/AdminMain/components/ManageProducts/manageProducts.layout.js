@@ -136,6 +136,8 @@ class ManageProductsLayout extends React.Component {
     allCategories: [],
     filterSelection: "",
   };
+
+  getDataFromTable = (data) => {};
   dataArray = [];
 
   productsArray = [];
@@ -318,10 +320,16 @@ class ManageProductsLayout extends React.Component {
               doubleClickable={[false, false, false, false, false]}
               img={[true, false, false, false, false]}
               priceType={[false, false, false, false, false]}
+              inputType="number"
+              input={[false, false, false]}
+              hiddenColumn={"id"}
               clickFunc={(x) => {
                 alert(x);
               }}
               doubleClickFunc={null}
+              checkChangeFlag={false}
+              eventIsDone={false}
+              getDataFromTable={this.getDataFromTable}
             />
 
             {/* <CacheProvider value={cacheRtl}>
