@@ -21,7 +21,7 @@
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
     "stylis": "^4.0.13",
@@ -59,6 +59,7 @@
     "json-server": "^0.17.0",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
+    "react-select": "^5.2.2",
     "react-toastify": "^8.1.1",
     "sweetalert": "^2.1.2"
   }

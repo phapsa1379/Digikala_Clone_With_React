@@ -1,31 +1,17 @@
 {
   "products": [
     {
-      "firstName": "Asus 5",
-      "brand": "Asus",
-      "price": 47580000,
-      "count": 17,
+      "firstName": "Asus FX505",
+      "brand": "Lenovo",
+      "price": 37200000,
+      "count": 22,
       "discription": "16GB رم",
       "categoryId": 14,
-      "thumbnail": "/files/9b83d8c1386408453e780d3b6a726041",
+      "thumbnail": "/files/5286452502ee890b41f7474d6b5ef174",
       "image": [
-        "/files/9b83d8c1386408453e780d3b6a726041"
+        "/files/5286452502ee890b41f7474d6b5ef174"
       ],
-      "createdAt": 1644513794766,
-      "id": 1
-    },
-    {
-      "firstName": "Asus FX505",
-      "brand": "Asus",
-      "price": 38000000,
-      "count": 12,
-      "discription": "8GB رم",
-      "categoryId": 14,
-      "thumbnail": "/files/99ea8b4cf06511eb442d2e7b0a44a24b",
-      "image": [
-        "/files/99ea8b4cf06511eb442d2e7b0a44a24b1"
-      ],
-      "createdAt": 1644513900415,
+      "createdAt": 1644513978938,
       "id": 2
     },
     {
@@ -227,7 +213,7 @@
     {
       "firstName": "Playstation 4",
       "brand": "Sony",
-      "price": 10400000,
+      "price": 12400000,
       "count": 13,
       "discription": "ظرفیت 1TB",
       "categoryId": 17,

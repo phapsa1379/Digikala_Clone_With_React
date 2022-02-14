@@ -59,3 +59,48 @@
     margin: 5rem auto;
   }
 }
+.modalForm {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.labelFormModal {
+  text-align: right;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-right: 5%;
+  margin-top: 2rem;
+  color: var(--primary-color);
+}
+.inputFormModal {
+  margin: 1rem auto;
+  height: 5rem;
+  border-radius: 1rem;
+  border: 2px solid var(--primary-color);
+  padding: 1rem;
+  font-size: 1.8rem;
+  color: var(--text-color);
+}
+.inputFormModal,
+.lableFormModal {
+  width: 90%;
+}
+
+.inputFormModal:focus {
+  outline: none;
+}
+
+.inputFormModal::placeholder {
+  font-size: 1.8rem;
+}
+.closeModalBtn {
+  font-size: 4rem;
+  color: var(--primary-color);
+  display: inline-block;
+  margin-right: auto;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  cursor: pointer;
+}

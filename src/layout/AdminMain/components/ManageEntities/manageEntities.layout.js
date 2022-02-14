@@ -29,6 +29,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { putProducts } from "api/products.api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -276,14 +278,40 @@ class ManageEntitiesLayout extends React.Component {
             </CacheProvider>
           </div>
           <div className={style.headerPartButton}>
+            <ToastContainer
+              bodyClassName={() => style.toastify}
+              position="bottom-left"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={true}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
             <ThemeProvider theme={theme}>
               <Button
                 disabled={!this.state.storeButton}
                 onClick={(e) => {
-                  this.setState({
-                    ...this.state,
-                    clickOnStoreButtonEvent: true,
-                  });
+                  this.setState(
+                    {
+                      ...this.state,
+                      clickOnStoreButtonEvent: true,
+                    },
+                    () => {
+                      toast.success("با موفقیت ذخیره شد", {
+                        position: "bottom-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                      });
+                    }
+                  );
                 }}
                 variant="contained"
                 link="/"

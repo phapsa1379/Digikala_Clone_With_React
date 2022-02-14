@@ -59,3 +59,10 @@
     margin: 5rem auto;
   }
 }
+
+.toastify {
+  font-size: 1.8rem;
+}
+.toastifyContainer {
+  /* height: 4rem; */
+}

@@ -8,6 +8,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import { colors } from "assets/colors";
+import { AiFillCloseCircle } from "assets/icons";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
@@ -36,7 +37,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import CreatableSelect from "react-select/creatable";
+import { ActionMeta, OnChangeValue } from "react-select";
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -47,6 +51,21 @@ const theme = createTheme({
   typography: {
     fontFamily: "vazir",
     fontSize: 40,
+  },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
+});
+const modalTheme = createTheme({
+  multilineColor: {
+    color: "red",
+  },
+  direction: "rtl",
+  typography: {
+    fontFamily: "vazir",
+    fontSize: 30,
   },
   palette: {
     primary: {
@@ -110,6 +129,78 @@ const cacheRtl = createCache({
   stylisPlugins: [prefixer, rtlPlugin],
 });
 
+//React Select Styles
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    fontSize: "1.8rem",
+    color: state.isSelected ? colors.white : colors.primary,
+    backgroundColor: state.isSelected ? colors.primary : colors.white,
+    padding: 20,
+    borderRadius: "0.5rem",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: colors.primary,
+      color: colors.white,
+    },
+  }),
+
+  singleValue: (provided, state) => ({
+    ...provided,
+    fontSize: "1.8rem",
+    color: colors.text,
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    width: "90%",
+    border: `2px solid ${colors.primary}`,
+    boxShadow: "none",
+    borderRadius: "1rem",
+    "&:focus": {
+      // outline: "none",
+      boxShadow: "0 0 1rem 0.5rem",
+    },
+    "&:hover": {
+      // outline: "none",
+    },
+  }),
+  container: (provided, state) => ({
+    ...provided,
+    display: "flex",
+    justifyContent: "center",
+    height: "5rem",
+    margin: "1rem 0",
+  }),
+  menu: (provided, state) => ({
+    ...provided,
+    width: "90%",
+    border: `2px solid ${colors.primary}`,
+    borderRadius: "1rem",
+  }),
+  menuList: (provided, state) => ({
+    ...provided,
+  }),
+  input: (provided, state) => ({
+    ...provided,
+    color: colors.primary,
+    fontSize: "1.8rem",
+
+    fontFamily: "vazir",
+
+    "&:focus": {
+      outline: "none",
+    },
+    "&:hover": {
+      outline: "none",
+    },
+  }),
+
+  placeholder: (provided, state) => ({
+    ...provided,
+    fontFamily: "vazir",
+    fontSize: "1.8rem",
+  }),
+};
 /***RTL */
 
 // const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -145,6 +236,27 @@ const cacheRtl = createCache({
 // ];
 /****Table */
 
+const boxStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "30%",
+  bgcolor: "background.paper",
+  border: `5px solid ${colors.primary}`,
+  boxShadow: 24,
+  borderRadius: "2rem",
+  // display: "flex",
+  // justifyContent: "space-between",
+  p: 4,
+};
+
+const options = [
+  { value: "14", label: "لپتاپ" },
+  { value: "16", label: "تلفن همراه" },
+  { value: "17", label: "پلستیشن" },
+];
+
 class ManageProductsLayout extends React.Component {
   state = {
     allProducts: [],
@@ -156,13 +268,27 @@ class ManageProductsLayout extends React.Component {
     allCategories: [],
     filterSelection: "",
     showDialog: false,
+    openModal: false,
+    selectInputModal: null,
 
     itemId: null,
+  };
+  handleCreateOption = () => {};
+  handleChangeSelectInputModal = (selectInputModal) => {
+    this.setState({ selectInputModal });
   };
   //close confirm Dialog handler
   handleClose = () => {
     this.setState({ ...this.state, showDialog: false });
   };
+
+  addProductHandler = () => {
+    this.setState({ ...this.state, openModal: true });
+  };
+  closeModalHandler = () => {
+    this.setState({ ...this.state, openModal: false });
+  };
+
   deleteConfirmHandler = () => {
     this.setState({ ...this.state, showDialog: false }, () => {
       deleteProducts(this.state.itemId);
@@ -324,9 +450,85 @@ class ManageProductsLayout extends React.Component {
             </CacheProvider>
           </div>
           <div className={style.headerPartButton}>
+            <CacheProvider value={cacheRtl}>
+              <ThemeProvider theme={modalTheme}>
+                <Modal
+                  open={this.state.openModal}
+                  onClose={this.closeModalHandler}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={boxStyle} className="modalBox">
+                    <span
+                      className={style.closeModalBtn}
+                      onClick={this.closeModalHandler}
+                    >
+                      <AiFillCloseCircle />
+                    </span>
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                      sx={{ color: colors.primary }}
+                    >
+                      افزودن / ویرایش کالا
+                    </Typography>
+
+                    {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      Duis mollis, est non commodo luctus, nisi erat porttitor
+                      ligula.
+                    </Typography> */}
+
+                    <form className={style.modalForm}>
+                      <label
+                        className={style.labelFormModal}
+                        htmlFor="imageName"
+                      >
+                        تصویر کالا :
+                      </label>
+                      <input
+                        id="imageName"
+                        type="text"
+                        placeholder="تصویر موردنظر خود را انتخاب کنید"
+                        className={`${style.inputFormModal} ${style.imageNameInput}`}
+                      />
+                      <label
+                        className={style.labelFormModal}
+                        htmlFor="productName"
+                      >
+                        نام کالا :
+                      </label>
+                      <input
+                        name="name"
+                        id="productName"
+                        type="text"
+                        placeholder="نام موردنظر خود را وارد کنید"
+                        className={`${style.inputFormModal} ${style.imageNameInput}`}
+                      />
+                      <label
+                        className={style.labelFormModal}
+                        htmlFor="category"
+                      >
+                        دسته بندی :
+                      </label>
+                      <CreatableSelect
+                        id="category"
+                        styles={customStyles}
+                        value={this.state.selectInputModal}
+                        onChange={this.handleChangeSelectInputModal}
+                        onCreateOption={this.handleCreateOption}
+                        isClearable
+                        placeholder="دسته بندی موردنظر خود را انتخاب کنید"
+                        options={options}
+                      />
+                    </form>
+                  </Box>
+                </Modal>
+              </ThemeProvider>
+            </CacheProvider>
             <ThemeProvider theme={theme}>
               <Button
-                onClick={() => {}}
+                onClick={this.addProductHandler}
                 variant="contained"
                 link="/"
                 sx={{

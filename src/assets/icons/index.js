@@ -1,7 +1,7 @@
 import { FiSearch, FiMenu } from "react-icons/fi";
 import { BiSearch } from "react-icons/bi";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUser, AiFillCloseCircle } from "react-icons/ai";
 import digikalaLogo from "./digikala.svg";
 export {
   FiSearch,
@@ -11,4 +11,5 @@ export {
   FaUser,
   FiMenu,
   digikalaLogo,
+  AiFillCloseCircle,
 };
