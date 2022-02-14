@@ -104,3 +104,6 @@
   left: 2rem;
   cursor: pointer;
 }
+.toastify {
+  font-size: 1.8rem;
+}

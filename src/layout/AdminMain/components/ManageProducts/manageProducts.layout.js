@@ -32,6 +32,7 @@ import Select from "@mui/material/Select";
 import { connect } from "react-redux";
 import { fetchProducts } from "redux/actions/products.action";
 import { deleteProducts } from "api/products.api";
+import { postCategory } from "api/category.api";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -41,6 +42,10 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CreatableSelect from "react-select/creatable";
 import { ActionMeta, OnChangeValue } from "react-select";
+/*****Toastify *****/
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+/************ */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -179,6 +184,7 @@ const customStyles = {
   }),
   menuList: (provided, state) => ({
     ...provided,
+    maxHeight: "20rem",
   }),
   input: (provided, state) => ({
     ...provided,
@@ -251,11 +257,7 @@ const boxStyle = {
   p: 4,
 };
 
-const options = [
-  { value: "14", label: "لپتاپ" },
-  { value: "16", label: "تلفن همراه" },
-  { value: "17", label: "پلستیشن" },
-];
+let options;
 
 class ManageProductsLayout extends React.Component {
   state = {
@@ -273,7 +275,26 @@ class ManageProductsLayout extends React.Component {
 
     itemId: null,
   };
-  handleCreateOption = () => {};
+  handleCreateOption = (newCategory) => {
+    postCategory({ name: newCategory })
+      .then((res) => {
+        toast.success("دسته بندی جدید با موفقیت ایجاد شد", {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        this.componentDidMount();
+      })
+      .catch((err) => {
+        alert("error");
+      });
+    // alert(newCategory);
+  };
   handleChangeSelectInputModal = (selectInputModal) => {
     this.setState({ selectInputModal });
   };
@@ -324,6 +345,14 @@ class ManageProductsLayout extends React.Component {
   componentDidMount() {
     axios.get(`${BASE_URL}/category`).then((res) => {
       const allCategoriesArray = res.data;
+      let intializeOptions = [];
+      allCategoriesArray.forEach((category, index) => {
+        intializeOptions.push({
+          value: category.id,
+          label: category.name,
+        });
+      });
+      options = intializeOptions;
       this.setState({ allCategories: allCategoriesArray }, async () => {
         // axios.get(`${BASE_URL}/products`).then((res) => {
 
@@ -526,6 +555,18 @@ class ManageProductsLayout extends React.Component {
                 </Modal>
               </ThemeProvider>
             </CacheProvider>
+            <ToastContainer
+              bodyClassName={() => style.toastify}
+              position="bottom-left"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={true}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
             <ThemeProvider theme={theme}>
               <Button
                 onClick={this.addProductHandler}
