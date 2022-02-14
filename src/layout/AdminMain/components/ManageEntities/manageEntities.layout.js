@@ -78,7 +78,7 @@ const theme3 = createTheme({
   },
 });
 
-const titleArray = ["نام کالا", "قیمت", "موجودی", "id"];
+const titleArray = ["id", "نام کالا", "قیمت", "موجودی"];
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -95,7 +95,7 @@ class ManageEntitiesLayout extends React.Component {
     filter: "default",
     allCategories: [],
     filterSelection: "",
-    storeButton: "false",
+    storeButton: false,
     clickOnStoreButtonEvent: false,
   };
   checkChangeInput = (changeFlag) => {
@@ -109,12 +109,12 @@ class ManageEntitiesLayout extends React.Component {
     console.log("array", changesArray);
     changesArray.map((data, index) => {
       let obj = {};
-      obj.firstName = data[0];
-      obj.price = data[1];
-      obj.count = data[2];
-      obj = { ...this.state.allProducts[data[3] - 1], ...obj };
+      obj.firstName = data[1];
+      obj.price = data[2];
+      obj.count = data[3];
+      obj = { ...this.state.allProducts[data[0] - 1], ...obj };
       console.log("id is : ", obj);
-      putProducts(data[3], obj)
+      putProducts(data[0], obj)
         .then((res) => {
           console.log(res);
           this.setState({
@@ -185,16 +185,16 @@ class ManageEntitiesLayout extends React.Component {
 
                     for (let index = 0; index < length; index++) {
                       for (let property in this.state.products[index]) {
-                        if (property === "firstName") {
+                        if (property === "id") {
                           this.dataArray[index][0] =
                             this.state.products[index][property];
-                        } else if (property === "price") {
+                        } else if (property === "firstName") {
                           this.dataArray[index][1] =
                             this.state.products[index][property];
-                        } else if (property === "count") {
+                        } else if (property === "price") {
                           this.dataArray[index][2] =
                             this.state.products[index][property];
-                        } else if (property === "id") {
+                        } else if (property === "count") {
                           this.dataArray[index][3] =
                             this.state.products[index][property];
                         }
@@ -316,12 +316,12 @@ class ManageEntitiesLayout extends React.Component {
               data={this.state.data}
               titlesArray={titleArray}
               perPage={false}
-              clickable={[false, false, false]}
-              doubleClickable={[false, true, true]}
-              img={[false, false, false]}
-              priceType={[false, true, false]}
+              clickable={[false, false, false, false]}
+              doubleClickable={[false, false, true, true]}
+              img={[false, false, false, false]}
+              priceType={[false, false, true, false]}
               inputType="number"
-              input={[false, true, true]}
+              input={[false, false, true, true]}
               hiddenColumn={"id"}
               doubleClickFunc={(x) => {
                 alert(x);

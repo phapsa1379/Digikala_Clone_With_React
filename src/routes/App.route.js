@@ -114,6 +114,10 @@ function AppRoute(props) {
           element={<Page.ProductsListPage {...props} />}
         />
         <Route
+          path={PATHS.NOT_FOUND}
+          element={<Page.NotFoundPage {...props} />}
+        />
+        <Route
           path={PATHS.PRODUCT_DETAILS}
           element={<Page.ProductDetailsPage {...props} />}
         />

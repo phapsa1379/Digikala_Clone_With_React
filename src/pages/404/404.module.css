@@ -1,0 +1,16 @@
+.notFoundPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  gap: 5rem;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+.homeButton {
+}

@@ -8,3 +8,4 @@ export { OrderDetailsPage } from "./OrderDetails/OrderDetails.page";
 export { PaymentResultPage } from "./PaymentResult/PaymentResult.page";
 export { ProductDetailsPage } from "./ProductDetails/ProductDetails.page";
 export { ProductsListPage } from "./ProductsList/ProductsList.page";
+export { NotFoundPage } from "./404/404.page";

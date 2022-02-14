@@ -3,8 +3,8 @@
     {
       "firstName": "Asus 5",
       "brand": "Asus",
-      "price": 40000000,
-      "count": 20,
+      "price": 47580000,
+      "count": 17,
       "discription": "16GB رم",
       "categoryId": 14,
       "thumbnail": "/files/9b83d8c1386408453e780d3b6a726041",
@@ -43,6 +43,20 @@
       "id": 3
     },
     {
+      "firstName": "Lenovo 25scd",
+      "brand": "Lenovo",
+      "price": 43000000,
+      "count": 8,
+      "discription": "16GB رم",
+      "categoryId": 14,
+      "thumbnail": "/files/4582e6a1b26fd17b24e52c6443444beb",
+      "image": [
+        "/files/4582e6a1b26fd17b24e52c6443444beb"
+      ],
+      "createdAt": 1644514073353,
+      "id": 4
+    },
+    {
       "firstName": "Dell 14sb",
       "brand": "Dell",
       "price": 18000000,
@@ -74,7 +88,7 @@
       "firstName": "Asus f+",
       "brand": "Asus",
       "price": 41000000,
-      "count": 17,
+      "count": 13,
       "discription": "32GB رم",
       "categoryId": 14,
       "thumbnail": "/files/2ecf79e992ab3ffac4ef4704a5ea71db",
@@ -213,8 +227,8 @@
     {
       "firstName": "Playstation 4",
       "brand": "Sony",
-      "price": 10800000,
-      "count": 15,
+      "price": 10400000,
+      "count": 13,
       "discription": "ظرفیت 1TB",
       "categoryId": 17,
       "thumbnail": "/files/27b2ec25984f3c036276563a1b1aa873",
@@ -223,6 +237,20 @@
       ],
       "createdAt": 1644519933753,
       "id": 17
+    },
+    {
+      "firstName": "Apple iPhone",
+      "brand": "Apple",
+      "price": 14400000,
+      "count": 3,
+      "discription": "12GB رم",
+      "categoryId": 16,
+      "thumbnail": "/files/ec071064841caf1794973c1f320e6c47",
+      "image": [
+        "/files/ec071064841caf1794973c1f320e6c47"
+      ],
+      "createdAt": 1644520106097,
+      "id": 18
     }
   ],
   "category": [

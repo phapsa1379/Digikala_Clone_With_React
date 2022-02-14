@@ -9,4 +9,5 @@ export const PATHS = {
   CART: "/cart", //cart page
   FINALIZE_PURCHASE: "/finalize-purchase", //finalize purchase page
   PAYMENT_RESULT: "/payment-result", //payment result page
+  NOT_FOUND: "/*",
 };
