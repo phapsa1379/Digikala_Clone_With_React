@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^32.0.0",
+    "@ckeditor/ckeditor5-react": "^4.0.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/material": "^5.4.0",
@@ -10,6 +12,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
+    "ckeditor5": "^31.1.0",
     "default-props": "^0.1.1",
     "env-cmd": "^10.1.0",
     "jalali-moment": "^3.3.11",
@@ -26,6 +29,7 @@
     "redux-thunk": "^2.4.1",
     "stylis": "^4.0.13",
     "stylis-plugin-rtl": "^2.1.1",
+    "suneditor-react": "^3.3.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

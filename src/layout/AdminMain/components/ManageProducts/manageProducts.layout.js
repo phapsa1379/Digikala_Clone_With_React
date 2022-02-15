@@ -45,7 +45,14 @@ import { ActionMeta, OnChangeValue } from "react-select";
 /*****Toastify *****/
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-/************ */
+/*******ckEditor ****/
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import "ckeditor5/build/translations/fa";
+/************SunEditor************* */
+import SunEditor from "suneditor-react";
+import "suneditor/dist/css/suneditor.min.css";
+/********************************** */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -144,6 +151,7 @@ const customStyles = {
     padding: 20,
     borderRadius: "0.5rem",
     cursor: "pointer",
+    zIndex: 101,
     "&:hover": {
       backgroundColor: colors.primary,
       color: colors.white,
@@ -154,6 +162,7 @@ const customStyles = {
     ...provided,
     fontSize: "1.8rem",
     color: colors.text,
+    zIndex: 101,
   }),
   control: (provided, state) => ({
     ...provided,
@@ -161,6 +170,7 @@ const customStyles = {
     border: `2px solid ${colors.primary}`,
     boxShadow: "none",
     borderRadius: "1rem",
+    zIndex: 101,
     "&:focus": {
       // outline: "none",
       boxShadow: "0 0 1rem 0.5rem",
@@ -175,16 +185,19 @@ const customStyles = {
     justifyContent: "center",
     height: "5rem",
     margin: "1rem 0",
+    zIndex: 101,
   }),
   menu: (provided, state) => ({
     ...provided,
     width: "90%",
     border: `2px solid ${colors.primary}`,
     borderRadius: "1rem",
+    zIndex: 101,
   }),
   menuList: (provided, state) => ({
     ...provided,
     maxHeight: "20rem",
+    zIndex: 101,
   }),
   input: (provided, state) => ({
     ...provided,
@@ -192,6 +205,7 @@ const customStyles = {
     fontSize: "1.8rem",
 
     fontFamily: "vazir",
+    zIndex: 101,
 
     "&:focus": {
       outline: "none",
@@ -247,7 +261,8 @@ const boxStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "30%",
+  maxWidth: "35%",
+  minWidth: "50rem",
   bgcolor: "background.paper",
   border: `5px solid ${colors.primary}`,
   boxShadow: 24,
@@ -256,6 +271,53 @@ const boxStyle = {
   // justifyContent: "space-between",
   p: 4,
 };
+const getTextFromEditor = (content) => {
+  return content.replace(/<[^>]*>/g, "");
+};
+
+// CKEDITOR.config.language = "fa";
+// CKEDITOR.replace("body", {
+//   filebrowserUploadUrl: "/admin/upload_image",
+//   filebrowserImageUploadUrl: "/admin/upload_image",
+//   imageUploadUrl: "/admin/upload_image?type=drag",
+//   filebrowserUploadMethod: "form",
+//   extraPlugins: "uploadimage",
+//   width: "100%",
+//   height: "400px",
+//   toolbar: [
+//     [
+//       "Bold",
+//       "Italic",
+//       "Underline",
+//       "StrikeThrough",
+//       "-",
+//       "Undo",
+//       "Redo",
+//       "-",
+//       "Cut",
+//       "Copy",
+//       "Paste",
+//       "Replace",
+//       "-",
+//       "Outdent",
+//       "Indent",
+//       "-",
+//     ],
+//     [
+//       "NumberedList",
+//       "BulletedList",
+//       "-",
+//       "JustifyLeft",
+//       "JustifyCenter",
+//       "JustifyRight",
+//       "JustifyBlock",
+//     ],
+//     ["Table", "-", "Smiley", "TextColor", "BGColor"],
+//   ],
+//   contentsLangDirection: "rtl",
+//   font_defaultLabel: "Vazir",
+//   font_names: "Vazir",
+// });
 
 let options;
 
@@ -273,7 +335,22 @@ class ManageProductsLayout extends React.Component {
     openModal: false,
     selectInputModal: null,
 
+    editorValue: "",
+
     itemId: null,
+  };
+  selectReference = React.createRef();
+
+  submitButtonHandler = (e) => {
+    e.preventDefault();
+    const nameOfProduct = e.target.parentNode[1].value;
+    const categoryName = this.state.selectInputModal.label;
+    const description = this.state.editorValue;
+    // console.log(nameOfProduct, categoryName, description);
+  };
+  handleChangeDescription = (content) => {
+    //content includes tag so to seprate text from tag we use getTextFromEditor function
+    this.setState({ ...this.state, editorValue: getTextFromEditor(content) });
   };
   handleCreateOption = (newCategory) => {
     postCategory({ name: newCategory })
@@ -343,6 +420,12 @@ class ManageProductsLayout extends React.Component {
     this.props.getProductss();
   }
   componentDidMount() {
+    // /****Create ckEditor in form Modal */
+    // console.log("form", this.formReference);
+    // ClassicEditor.create(this.formReference.current).catch((error) => {
+    //   console.error(error);
+    // });
+    // /******* */
     axios.get(`${BASE_URL}/category`).then((res) => {
       const allCategoriesArray = res.data;
       let intializeOptions = [];
@@ -518,7 +601,7 @@ class ManageProductsLayout extends React.Component {
                       <input
                         id="imageName"
                         type="text"
-                        placeholder="تصویر موردنظر خود را انتخاب کنید"
+                        placeholder="تصویر کالا موردنظر خود را انتخاب کنید"
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
                       />
                       <label
@@ -531,7 +614,7 @@ class ManageProductsLayout extends React.Component {
                         name="name"
                         id="productName"
                         type="text"
-                        placeholder="نام موردنظر خود را وارد کنید"
+                        placeholder="نام کالا موردنظر خود را وارد کنید"
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
                       />
                       <label
@@ -541,15 +624,71 @@ class ManageProductsLayout extends React.Component {
                         دسته بندی :
                       </label>
                       <CreatableSelect
+                        formatCreateLabel={(userInput) =>
+                          `افزودن دسته‌بندی : ${userInput}`
+                        }
                         id="category"
                         styles={customStyles}
                         value={this.state.selectInputModal}
                         onChange={this.handleChangeSelectInputModal}
                         onCreateOption={this.handleCreateOption}
+                        // onFocus={() => {
+                        //   this.selectReference.current.style.marginBottom =
+                        //     "5rem";
+                        // }}
+                        // onBlur={() => {
+                        //   this.selectReference.current.style.marginBottom = "0";
+                        // }}
                         isClearable
                         placeholder="دسته بندی موردنظر خود را انتخاب کنید"
                         options={options}
                       />
+                      <label
+                        ref={this.selectReference}
+                        className={style.labelFormModal}
+                        htmlFor="description"
+                      >
+                        توضیحات :
+                      </label>
+                      <div className={style.ckeContainer}>
+                        <SunEditor
+                          id="description"
+                          value={this.state.description}
+                          color={`${colors.primary}`}
+                          placeholder="توضیحات موردنظر خود را وارد کنید"
+                          onChange={this.handleChangeDescription}
+                          setDefaultStyle={`font-family: vazir; font-size: 1.8rem;color: ${colors.text};z-index=1;max-height:15rem;min-height:15rem;`}
+                        />
+                        {/* <CKEditor
+                          id="description"
+                          config={{
+                            language: "fa",
+                          }}
+                          editor={ClassicEditor}
+                          data="<p>توضیحات مربوط به کالا ...</p>"
+                          onReady={(editor) => {
+                            // You can store the "editor" and use when it is needed.
+                            console.log("Editor is ready to use!", editor);
+                          }}
+                          onChange={(event, editor) => {
+                            const data = editor.getData();
+                            console.log({ event, editor, data });
+                          }}
+                          onBlur={(event, editor) => {
+                            console.log("Blur.", editor);
+                          }}
+                          onFocus={(event, editor) => {
+                            console.log("Focus.", editor);
+                          }}
+                        /> */}
+                      </div>
+                      <button
+                        className={style.subButton}
+                        type="submit"
+                        onClick={this.submitButtonHandler}
+                      >
+                        ذخیره
+                      </button>
                     </form>
                   </Box>
                 </Modal>

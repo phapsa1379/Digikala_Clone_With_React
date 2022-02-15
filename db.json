@@ -3,7 +3,7 @@
     {
       "firstName": "Asus FX505",
       "brand": "Lenovo",
-      "price": 37200000,
+      "price": 37600000,
       "count": 22,
       "discription": "16GB رم",
       "categoryId": 14,
@@ -223,20 +223,6 @@
       ],
       "createdAt": 1644519933753,
       "id": 17
-    },
-    {
-      "firstName": "Apple iPhone",
-      "brand": "Apple",
-      "price": 14400000,
-      "count": 3,
-      "discription": "12GB رم",
-      "categoryId": 16,
-      "thumbnail": "/files/ec071064841caf1794973c1f320e6c47",
-      "image": [
-        "/files/ec071064841caf1794973c1f320e6c47"
-      ],
-      "createdAt": 1644520106097,
-      "id": 18
     }
   ],
   "category": [
