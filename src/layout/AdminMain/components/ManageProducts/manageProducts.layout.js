@@ -11,7 +11,6 @@ import { colors } from "assets/colors";
 import { AiFillCloseCircle } from "assets/icons";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import swal from "sweetalert";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "@mui/material/Table";
@@ -31,7 +30,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { connect } from "react-redux";
 import { fetchProducts } from "redux/actions/products.action";
-import { deleteProducts } from "api/products.api";
+import { deleteProducts, postProducts } from "api/products.api";
 import { postCategory } from "api/category.api";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -52,7 +51,9 @@ import "ckeditor5/build/translations/fa";
 /************SunEditor************* */
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-/********************************** */
+/**************SweetAlert******************** */
+import swal from "sweetalert";
+/******************************** */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -334,19 +335,117 @@ class ManageProductsLayout extends React.Component {
     showDialog: false,
     openModal: false,
     selectInputModal: null,
-
+    selectedFile: null,
     editorValue: "",
 
     itemId: null,
   };
   selectReference = React.createRef();
+  onFileUpload = (e) => {
+    //Create an object of formData
+    const formData = new FormData();
+    console.log("selectedFile", this.state.selectedFile);
+    // Update the formData object
+    if (this.state.selectedFile !== null) {
+      formData.append(
+        "image",
+        this.state.selectedFile,
+        this.state.selectedFile.name
+      );
+      // Details of the uploaded file
+      console.log(this.state.selectedFile);
 
+      // Request made to the backend api
+      // Send formData object
+      return formData;
+    } else {
+      swal({
+        title: "خطا",
+        text: `فیلد عکس نمیتواند خالی باشد.`,
+        icon: "error",
+      });
+      return false;
+    }
+  };
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
   submitButtonHandler = (e) => {
     e.preventDefault();
-    const nameOfProduct = e.target.parentNode[1].value;
-    const categoryName = this.state.selectInputModal.label;
-    const description = this.state.editorValue;
-    // console.log(nameOfProduct, categoryName, description);
+    //  const nameOfProduct = e.target.parentNode[1].value;
+    // console.log(e.target[1].value);
+    // const categoryName = this.state.selectInputModal.label;
+    // const description = this.state.editorValue;
+    // console.log(categoryName, description);
+    let formData = this.onFileUpload();
+    if (formData !== false) {
+      axios
+        .post(`${BASE_URL}/upload`, formData)
+        .then((res) => {
+          if (this.state.selectedFile.size < 2000000) {
+            let urlImage = res.data.filename;
+            urlImage = "/files/" + urlImage;
+            const nameOfProduct = e.target[1].value;
+
+            const categoryName = this.state.selectInputModal.label;
+
+            const description = this.state.editorValue;
+            // console.log(res);
+            if (urlImage && nameOfProduct && categoryName && description) {
+              // alert("با موفقیت ثبت شد");
+              let productObj = {};
+              productObj.name = nameOfProduct;
+              productObj.categoryId = Number(
+                this.findCategoryIdByName(categoryName)
+              );
+              productObj.brand = "";
+              productObj.price = 0;
+              productObj.count = 0;
+              productObj.discription = description;
+              productObj.thumbnail = urlImage;
+              productObj.image = [];
+              productObj.image[0] = urlImage;
+              postProducts(productObj).then((res) => {
+                toast.success("محصول جدید با موفقیت ثبت شد", {
+                  position: "bottom-left",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
+                this.setState({ ...this.state, openModal: false }, () => {
+                  this.componentDidMount();
+                });
+              });
+            } else {
+              swal({
+                title: "خطا",
+                text: `لطفا تمامی  فیلد هار پر کنید`,
+                icon: "error",
+              });
+            }
+          } else {
+            swal({
+              title: "خطا",
+              text: `حجم فایل بیشتر از 2 مگابایت است`,
+              icon: "error",
+            });
+          }
+          // console.log(nameOfProduct, categoryName, description);
+        })
+        .catch((err) => {
+          swal({
+            title: "خطا",
+            text: `خطایی در آپلود عکس رخ داده است`,
+            icon: "error",
+          });
+        });
+    }
+    // console.log("imageInput", e.target.parentNode[0]);
   };
   handleChangeDescription = (content) => {
     //content includes tag so to seprate text from tag we use getTextFromEditor function
@@ -416,16 +515,20 @@ class ManageProductsLayout extends React.Component {
 
     return categoryName;
   };
+  findCategoryIdByName = (name) => {
+    let categoryId;
+    this.state.allCategories.forEach((category) => {
+      if (category.name === name) {
+        categoryId = category.id;
+      }
+    });
+
+    return categoryId;
+  };
   componentWillMount() {
     this.props.getProductss();
   }
   componentDidMount() {
-    // /****Create ckEditor in form Modal */
-    // console.log("form", this.formReference);
-    // ClassicEditor.create(this.formReference.current).catch((error) => {
-    //   console.error(error);
-    // });
-    // /******* */
     axios.get(`${BASE_URL}/category`).then((res) => {
       const allCategoriesArray = res.data;
       let intializeOptions = [];
@@ -478,7 +581,7 @@ class ManageProductsLayout extends React.Component {
                       this.dataArray[index][1] =
                         this.state.products[index][property];
                       console.log("in for:", this.dataArray);
-                    } else if (property === "firstName") {
+                    } else if (property === "name") {
                       this.dataArray[index][2] =
                         this.state.products[index][property];
                     } else if (property === "categoryId") {
@@ -591,17 +694,29 @@ class ManageProductsLayout extends React.Component {
                       ligula.
                     </Typography> */}
 
-                    <form className={style.modalForm}>
+                    <form
+                      className={style.modalForm}
+                      action="http://localhost:3002/upload"
+                      method="post"
+                      enctype="multipart/form-data"
+                      onSubmit={this.submitButtonHandler}
+                    >
                       <label
                         className={style.labelFormModal}
                         htmlFor="imageName"
                       >
                         تصویر کالا :
                       </label>
-                      <input
+                      {/* <input
                         id="imageName"
                         type="text"
                         placeholder="تصویر کالا موردنظر خود را انتخاب کنید"
+                        className={`${style.inputFormModal} ${style.imageNameInput}`}
+                      /> */}
+                      <input
+                        id="imageName"
+                        type="file"
+                        onChange={this.onFileChange}
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
                       />
                       <label
@@ -617,6 +732,7 @@ class ManageProductsLayout extends React.Component {
                         placeholder="نام کالا موردنظر خود را وارد کنید"
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
                       />
+
                       <label
                         className={style.labelFormModal}
                         htmlFor="category"
@@ -682,11 +798,7 @@ class ManageProductsLayout extends React.Component {
                           }}
                         /> */}
                       </div>
-                      <button
-                        className={style.subButton}
-                        type="submit"
-                        onClick={this.submitButtonHandler}
-                      >
+                      <button className={style.subButton} type="submit">
                         ذخیره
                       </button>
                     </form>

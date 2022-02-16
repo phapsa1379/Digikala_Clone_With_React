@@ -111,7 +111,7 @@ class ManageEntitiesLayout extends React.Component {
     console.log("array", changesArray);
     changesArray.map((data, index) => {
       let obj = {};
-      obj.firstName = data[1];
+      obj.name = data[1];
       obj.price = data[2];
       obj.count = data[3];
       obj = { ...this.state.allProducts[data[0] - 1], ...obj };
@@ -190,7 +190,7 @@ class ManageEntitiesLayout extends React.Component {
                         if (property === "id") {
                           this.dataArray[index][0] =
                             this.state.products[index][property];
-                        } else if (property === "firstName") {
+                        } else if (property === "name") {
                           this.dataArray[index][1] =
                             this.state.products[index][property];
                         } else if (property === "price") {

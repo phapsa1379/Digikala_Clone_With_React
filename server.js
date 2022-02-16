@@ -8,7 +8,7 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const jwt = require("jsonwebtoken");
 const AUTH_JWT_SECRET = "TOP-SECRET";
-const AUTH_JWT_OPTIONS = { expiresIn: 5 * 60 };
+const AUTH_JWT_OPTIONS = { expiresIn: 2 * 60 };
 
 // Load DB file for Authentication middleware and endpoints
 const DB = JSON.parse(
@@ -143,7 +143,7 @@ server.post(["/auth/login", "/auth/refresh-token"], function (req, res, next) {
     AUTH_JWT_SECRET,
     AUTH_JWT_OPTIONS,
     (err, token) => {
-      if (err) return next(error);
+      if (err) return next(err);
       res.json({ token });
     }
   );
