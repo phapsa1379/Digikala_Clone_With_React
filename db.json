@@ -1,35 +1,6 @@
 {
   "products": [
     {
-      "name": "Asus 5g+",
-      "brand": "Asus",
-      "price": 40250000,
-      "count": 20,
-      "description": "8GB رم",
-      "categoryId": 14,
-      "thumbnail": "/files/9b83d8c1386408453e780d3b6a726041",
-      "image": [
-        "/files/9b83d8c1386408453e780d3b6a726041",
-        "/files/995f22b6ede62a3b2342400b5ccf4476"
-      ],
-      "createdAt": 1644513794766,
-      "id": 1
-    },
-    {
-      "name": "Asus FX505",
-      "brand": "Asus",
-      "price": 38000000,
-      "count": 12,
-      "description": "8GB رم",
-      "categoryId": 14,
-      "thumbnail": "/files/99ea8b4cf06511eb442d2e7b0a44a24b",
-      "image": [
-        "/files/99ea8b4cf06511eb442d2e7b0a44a24b1"
-      ],
-      "createdAt": 1644513900415,
-      "id": 2
-    },
-    {
       "name": "لپ تاپ 13 اینچی اپل مدل MacBook Air MGN63 2020",
       "brand": "Lenovo",
       "price": 34000000,
@@ -94,20 +65,6 @@
       "id": 6
     },
     {
-      "name": "Asus f+",
-      "brand": "Asus",
-      "price": 41000000,
-      "count": 17,
-      "description": "32GB رم",
-      "categoryId": 14,
-      "thumbnail": "/files/2ecf79e992ab3ffac4ef4704a5ea71db",
-      "image": [
-        "/files/2ecf79e992ab3ffac4ef4704a5ea71db"
-      ],
-      "createdAt": 1644514359435,
-      "id": 7
-    },
-    {
       "name": "لپ تاپ 15.6 اینچی دل مدل VOSTRO 3510-A",
       "brand": "Microsoft",
       "price": 26000000,
@@ -122,20 +79,6 @@
       ],
       "createdAt": 1644514433874,
       "id": 8
-    },
-    {
-      "name": "Microsoft ci98",
-      "brand": "Microsoft",
-      "price": 37000000,
-      "count": 19,
-      "description": "8GB رم",
-      "categoryId": 14,
-      "thumbnail": "/files/d10d60eeb06c09d081479885c90546a0",
-      "image": [
-        "/files/d10d60eeb06c09d081479885c90546a0"
-      ],
-      "createdAt": 1644514518800,
-      "id": 9
     },
     {
       "name": "گوشی موبایل اپل مدل iPhone 13 A263",
@@ -200,34 +143,6 @@
       ],
       "createdAt": 1644519369242,
       "id": 13
-    },
-    {
-      "name": "Apple lx16",
-      "brand": "Apple",
-      "price": 38300000,
-      "count": 6,
-      "description": "رم 16GB",
-      "categoryId": 14,
-      "thumbnail": "/files/696c4536901218ef0a8b976d5191ba1d",
-      "image": [
-        "/files/696c4536901218ef0a8b976d5191ba1d"
-      ],
-      "createdAt": 1644519717930,
-      "id": 14
-    },
-    {
-      "name": "Asus Rog",
-      "brand": "Asus",
-      "price": 56300000,
-      "count": 7,
-      "description": "رم 32GB",
-      "categoryId": 14,
-      "thumbnail": "/files/7aa02c9bda66178fa2c8c2ede4a76ef9",
-      "image": [
-        "/files/7aa02c9bda66178fa2c8c2ede4a76ef9"
-      ],
-      "createdAt": 1644519795886,
-      "id": 15
     },
     {
       "name": "کنسول بازی سونی مدل Playstation 4 Slim کد Region 2 CUH-2216B",
