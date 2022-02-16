@@ -584,7 +584,13 @@ class ManageProductsLayout extends React.Component {
 
   productsArray = [];
   numberOfPage = 1;
-
+  getIndexByCategoryId = (categoryId) => {
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].value == categoryId) {
+        return i;
+      }
+    }
+  };
   findCategoryNameById = (id) => {
     let categoryName = "";
     this.state.allCategories.forEach((category) => {
@@ -833,7 +839,7 @@ class ManageProductsLayout extends React.Component {
                         }
                         id="category"
                         styles={customStyles}
-                        value={this.state.selectInputModal}
+                        defaultValue={this.state.selectInputModal}
                         onChange={this.handleChangeSelectInputModal}
                         onCreateOption={this.handleCreateOption}
                         // onFocus={() => {
@@ -965,6 +971,12 @@ class ManageProductsLayout extends React.Component {
                               editorValue:
                                 this.state.currentProduct.description,
                               nameProductValue: this.state.currentProduct.name,
+                              selectInputModal:
+                                options[
+                                  this.getIndexByCategoryId(
+                                    this.state.currentProduct.categoryId
+                                  )
+                                ],
                             },
                             () => {
                               this.editProductHandler();
