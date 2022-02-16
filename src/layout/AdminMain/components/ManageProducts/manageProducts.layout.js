@@ -351,6 +351,7 @@ class ManageProductsLayout extends React.Component {
     const formData = new FormData();
     // console.log("selectedFile", this.state.selectedFile);
     // Update the formData object
+
     if (this.state.selectedFile !== null) {
       formData.append(
         "image",
@@ -362,7 +363,7 @@ class ManageProductsLayout extends React.Component {
       // Request made to the backend api
       // Send formData object
       return formData;
-    } else {
+    } else if (this.state.addOrEdit === "add") {
       swal({
         title: "خطا",
         text: `فیلد عکس نمیتواند خالی باشد.`,
@@ -453,69 +454,117 @@ class ManageProductsLayout extends React.Component {
     } else if (this.state.addOrEdit === "edit") {
       let formData = this.onFileUpload();
       if (formData !== false) {
-        axios
-          .post(`${BASE_URL}/upload`, formData)
-          .then((res) => {
-            if (this.state.selectedFile.size < 2000000) {
-              let urlImage = res.data.filename;
-              urlImage = "/files/" + urlImage;
-              const nameOfProduct = e.target[1].value;
+        if (formData) {
+          axios
+            .post(`${BASE_URL}/upload`, formData)
+            .then((res) => {
+              if (this.state.selectedFile.size < 2000000) {
+                let urlImage = res.data.filename;
+                urlImage = "/files/" + urlImage;
+                const nameOfProduct = e.target[1].value;
 
-              const categoryName = this.state.selectInputModal.label;
+                const categoryName = this.state.selectInputModal.label;
 
-              const description = this.state.editorValue;
-              // console.log(res);
-              if (urlImage && nameOfProduct && categoryName && description) {
-                // alert("با موفقیت ثبت شد");
-                let productObj = {};
-                productObj.name = nameOfProduct;
-                productObj.categoryId = Number(
-                  this.findCategoryIdByName(categoryName)
-                );
+                const description = this.state.editorValue;
+                // console.log(res);
+                if (nameOfProduct && categoryName && description) {
+                  // alert("با موفقیت ثبت شد");
+                  let productObj = {};
+                  productObj.name = nameOfProduct;
+                  productObj.categoryId = Number(
+                    this.findCategoryIdByName(categoryName)
+                  );
 
-                productObj.description = description;
+                  productObj.description = description;
+                  let currentProduct = this.state.currentProduct;
 
-                productObj.image.push(urlImage);
-                let currentProduct = this.state.currentProduct;
-                productObj = { ...currentProduct, ...productObj };
-                putProducts(this.state.itemId, productObj).then((res) => {
-                  toast.success("محصول با موفقیت ویرایش شد", {
-                    position: "bottom-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
+                  productObj.image = [...currentProduct.image];
+                  productObj.image.push(urlImage);
+
+                  productObj = { ...currentProduct, ...productObj };
+                  putProducts(this.state.itemId, productObj).then((res) => {
+                    toast.success("محصول با موفقیت ویرایش شد", {
+                      position: "bottom-left",
+                      autoClose: 5000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "colored",
+                    });
+                    this.setState({ ...this.state, openModal: false }, () => {
+                      this.componentDidMount();
+                    });
                   });
-                  this.setState({ ...this.state, openModal: false }, () => {
-                    this.componentDidMount();
+                } else {
+                  swal({
+                    title: "خطا",
+                    text: `لطفا تمامی  فیلد هار پر کنید`,
+                    icon: "error",
                   });
-                });
+                }
               } else {
                 swal({
                   title: "خطا",
-                  text: `لطفا تمامی  فیلد هار پر کنید`,
+                  text: `حجم فایل بیشتر از 2 مگابایت است`,
                   icon: "error",
                 });
               }
-            } else {
+              // console.log(nameOfProduct, categoryName, description);
+            })
+            .catch((err) => {
               swal({
                 title: "خطا",
-                text: `حجم فایل بیشتر از 2 مگابایت است`,
+                text: `خطایی در آپلود عکس رخ داده است`,
                 icon: "error",
               });
-            }
-            // console.log(nameOfProduct, categoryName, description);
-          })
-          .catch((err) => {
+            });
+        } else {
+          //no any image is uploaded
+          const nameOfProduct = e.target[1].value;
+
+          const categoryName = this.state.selectInputModal.label;
+
+          const description = this.state.editorValue;
+          // console.log(res);
+          if (nameOfProduct && categoryName && description) {
+            // alert("با موفقیت ثبت شد");
+            let productObj = {};
+            productObj.name = nameOfProduct;
+            productObj.categoryId = Number(
+              this.findCategoryIdByName(categoryName)
+            );
+
+            productObj.description = description;
+            let currentProduct = this.state.currentProduct;
+
+            productObj = { ...currentProduct, ...productObj };
+            putProducts(this.state.itemId, productObj).then((res) => {
+              toast.success("محصول با موفقیت ویرایش شد", {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              this.setState({ ...this.state, openModal: false }, () => {
+                this.componentDidMount();
+              });
+            });
+          } else {
             swal({
               title: "خطا",
-              text: `خطایی در آپلود عکس رخ داده است`,
+              text: `لطفا تمامی  فیلد هار پر کنید`,
               icon: "error",
             });
-          });
+          }
+
+          // console.log(nameOfProduct, categoryName, description);
+        }
       }
     }
     // console.log("imageInput", e.target.parentNode[0]);
