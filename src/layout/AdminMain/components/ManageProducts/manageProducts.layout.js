@@ -553,9 +553,19 @@ class ManageProductsLayout extends React.Component {
   };
 
   addProductHandler = () => {
-    this.setState({ ...this.state, openModal: true }, () => {
-      this.setState({ ...this.state, addOrEdit: "add" });
-    });
+    this.setState(
+      {
+        ...this.state,
+        editorValue: "",
+        nameProductValue: "",
+        selectInputModal: { label: "", value: "" },
+      },
+      () => {
+        this.setState({ ...this.state, openModal: true }, () => {
+          this.setState({ ...this.state, addOrEdit: "add" });
+        });
+      }
+    );
   };
   editProductHandler = () => {
     this.setState({ ...this.state, openModal: true }, () => {
