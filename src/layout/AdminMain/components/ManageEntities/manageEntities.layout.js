@@ -31,6 +31,7 @@ import Select from "@mui/material/Select";
 import { putProducts } from "api/products.api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getProductById } from "globalFunctions";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -114,22 +115,26 @@ class ManageEntitiesLayout extends React.Component {
       obj.name = data[1];
       obj.price = data[2];
       obj.count = data[3];
-      obj = { ...this.state.allProducts[data[0] - 1], ...obj };
-      console.log("id is : ", obj);
-      putProducts(data[0], obj)
+      getProductById(data[0])
         .then((res) => {
-          console.log(res);
-          this.setState({
-            ...this.state,
-            storeButton: false,
-            clickOnStoreButtonEvent: false,
-          });
-          return res;
+          obj = { ...res, ...obj };
+          console.log("id is : ", obj);
+          putProducts(data[0], obj)
+            .then((res) => {
+              console.log(res);
+              this.setState({
+                ...this.state,
+                storeButton: false,
+                clickOnStoreButtonEvent: false,
+              });
+              return res;
+            })
+            .catch((err) => {
+              console.log(err);
+              return err;
+            });
         })
-        .catch((err) => {
-          console.log(err);
-          return err;
-        });
+        .catch((err) => {});
     });
   };
   dataArray = [];
