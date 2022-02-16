@@ -30,7 +30,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { connect } from "react-redux";
 import { fetchProducts } from "redux/actions/products.action";
-import { deleteProducts, postProducts } from "api/products.api";
+import { deleteProducts, postProducts, putProducts } from "api/products.api";
 import { postCategory } from "api/category.api";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -54,6 +54,7 @@ import "suneditor/dist/css/suneditor.min.css";
 /**************SweetAlert******************** */
 import swal from "sweetalert";
 /******************************** */
+import { getProductById } from "globalFunctions";
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -337,14 +338,18 @@ class ManageProductsLayout extends React.Component {
     selectInputModal: null,
     selectedFile: null,
     editorValue: "",
+    addOrEdit: null,
+    nameProductValue: "",
 
+    currentProduct: null,
     itemId: null,
   };
   selectReference = React.createRef();
+
   onFileUpload = (e) => {
     //Create an object of formData
     const formData = new FormData();
-    console.log("selectedFile", this.state.selectedFile);
+    // console.log("selectedFile", this.state.selectedFile);
     // Update the formData object
     if (this.state.selectedFile !== null) {
       formData.append(
@@ -353,7 +358,6 @@ class ManageProductsLayout extends React.Component {
         this.state.selectedFile.name
       );
       // Details of the uploaded file
-      console.log(this.state.selectedFile);
 
       // Request made to the backend api
       // Send formData object
@@ -378,72 +382,141 @@ class ManageProductsLayout extends React.Component {
     // const categoryName = this.state.selectInputModal.label;
     // const description = this.state.editorValue;
     // console.log(categoryName, description);
-    let formData = this.onFileUpload();
-    if (formData !== false) {
-      axios
-        .post(`${BASE_URL}/upload`, formData)
-        .then((res) => {
-          if (this.state.selectedFile.size < 2000000) {
-            let urlImage = res.data.filename;
-            urlImage = "/files/" + urlImage;
-            const nameOfProduct = e.target[1].value;
+    if (this.state.addOrEdit === "add") {
+      let formData = this.onFileUpload();
+      if (formData !== false) {
+        axios
+          .post(`${BASE_URL}/upload`, formData)
+          .then((res) => {
+            if (this.state.selectedFile.size < 2000000) {
+              let urlImage = res.data.filename;
+              urlImage = "/files/" + urlImage;
+              const nameOfProduct = e.target[1].value;
 
-            const categoryName = this.state.selectInputModal.label;
+              const categoryName = this.state.selectInputModal.label;
 
-            const description = this.state.editorValue;
-            // console.log(res);
-            if (urlImage && nameOfProduct && categoryName && description) {
-              // alert("با موفقیت ثبت شد");
-              let productObj = {};
-              productObj.name = nameOfProduct;
-              productObj.categoryId = Number(
-                this.findCategoryIdByName(categoryName)
-              );
-              productObj.brand = "";
-              productObj.price = 0;
-              productObj.count = 0;
-              productObj.discription = description;
-              productObj.thumbnail = urlImage;
-              productObj.image = [];
-              productObj.image[0] = urlImage;
-              postProducts(productObj).then((res) => {
-                toast.success("محصول جدید با موفقیت ثبت شد", {
-                  position: "bottom-left",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
+              const description = this.state.editorValue;
+              // console.log(res);
+              if (urlImage && nameOfProduct && categoryName && description) {
+                // alert("با موفقیت ثبت شد");
+                let productObj = {};
+                productObj.name = nameOfProduct;
+                productObj.categoryId = Number(
+                  this.findCategoryIdByName(categoryName)
+                );
+                productObj.brand = "";
+                productObj.price = 0;
+                productObj.count = 0;
+                productObj.description = description;
+                productObj.thumbnail = urlImage;
+                productObj.image = [];
+                productObj.image[0] = urlImage;
+                postProducts(productObj).then((res) => {
+                  toast.success("محصول جدید با موفقیت ثبت شد", {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                  });
+                  this.setState({ ...this.state, openModal: false }, () => {
+                    this.componentDidMount();
+                  });
                 });
-                this.setState({ ...this.state, openModal: false }, () => {
-                  this.componentDidMount();
+              } else {
+                swal({
+                  title: "خطا",
+                  text: `لطفا تمامی  فیلد هار پر کنید`,
+                  icon: "error",
                 });
-              });
+              }
             } else {
               swal({
                 title: "خطا",
-                text: `لطفا تمامی  فیلد هار پر کنید`,
+                text: `حجم فایل بیشتر از 2 مگابایت است`,
                 icon: "error",
               });
             }
-          } else {
+            // console.log(nameOfProduct, categoryName, description);
+          })
+          .catch((err) => {
             swal({
               title: "خطا",
-              text: `حجم فایل بیشتر از 2 مگابایت است`,
+              text: `خطایی در آپلود عکس رخ داده است`,
               icon: "error",
             });
-          }
-          // console.log(nameOfProduct, categoryName, description);
-        })
-        .catch((err) => {
-          swal({
-            title: "خطا",
-            text: `خطایی در آپلود عکس رخ داده است`,
-            icon: "error",
           });
-        });
+      }
+    } else if (this.state.addOrEdit === "edit") {
+      let formData = this.onFileUpload();
+      if (formData !== false) {
+        axios
+          .post(`${BASE_URL}/upload`, formData)
+          .then((res) => {
+            if (this.state.selectedFile.size < 2000000) {
+              let urlImage = res.data.filename;
+              urlImage = "/files/" + urlImage;
+              const nameOfProduct = e.target[1].value;
+
+              const categoryName = this.state.selectInputModal.label;
+
+              const description = this.state.editorValue;
+              // console.log(res);
+              if (urlImage && nameOfProduct && categoryName && description) {
+                // alert("با موفقیت ثبت شد");
+                let productObj = {};
+                productObj.name = nameOfProduct;
+                productObj.categoryId = Number(
+                  this.findCategoryIdByName(categoryName)
+                );
+
+                productObj.description = description;
+
+                productObj.image.push(urlImage);
+                let currentProduct = this.state.currentProduct;
+                productObj = { ...currentProduct, ...productObj };
+                putProducts(this.state.itemId, productObj).then((res) => {
+                  toast.success("محصول با موفقیت ویرایش شد", {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                  });
+                  this.setState({ ...this.state, openModal: false }, () => {
+                    this.componentDidMount();
+                  });
+                });
+              } else {
+                swal({
+                  title: "خطا",
+                  text: `لطفا تمامی  فیلد هار پر کنید`,
+                  icon: "error",
+                });
+              }
+            } else {
+              swal({
+                title: "خطا",
+                text: `حجم فایل بیشتر از 2 مگابایت است`,
+                icon: "error",
+              });
+            }
+            // console.log(nameOfProduct, categoryName, description);
+          })
+          .catch((err) => {
+            swal({
+              title: "خطا",
+              text: `خطایی در آپلود عکس رخ داده است`,
+              icon: "error",
+            });
+          });
+      }
     }
     // console.log("imageInput", e.target.parentNode[0]);
   };
@@ -480,7 +553,14 @@ class ManageProductsLayout extends React.Component {
   };
 
   addProductHandler = () => {
-    this.setState({ ...this.state, openModal: true });
+    this.setState({ ...this.state, openModal: true }, () => {
+      this.setState({ ...this.state, addOrEdit: "add" });
+    });
+  };
+  editProductHandler = () => {
+    this.setState({ ...this.state, openModal: true }, () => {
+      this.setState({ ...this.state, addOrEdit: "edit" });
+    });
   };
   closeModalHandler = () => {
     this.setState({ ...this.state, openModal: false });
@@ -543,7 +623,7 @@ class ManageProductsLayout extends React.Component {
         // axios.get(`${BASE_URL}/products`).then((res) => {
 
         const allProductsArray = await this.props.products;
-        console.log("redux", allProductsArray);
+        // console.log("redux", allProductsArray);
         this.setState({ allProducts: allProductsArray }, () => {
           let howGet = {
             default: `?_page=${this.state.pageNumber}&_limit=${this.state.inPerPage}`,
@@ -580,7 +660,7 @@ class ManageProductsLayout extends React.Component {
                     } else if (property === "thumbnail") {
                       this.dataArray[index][1] =
                         this.state.products[index][property];
-                      console.log("in for:", this.dataArray);
+                      // console.log("in for:", this.dataArray);
                     } else if (property === "name") {
                       this.dataArray[index][2] =
                         this.state.products[index][property];
@@ -593,7 +673,7 @@ class ManageProductsLayout extends React.Component {
                     this.dataArray[index][5] = "حذف";
                   }
                 }
-                console.log(this.dataArray);
+                // console.log(this.dataArray);
                 this.setState({
                   ...this.state,
                   data: this.dataArray,
@@ -607,6 +687,7 @@ class ManageProductsLayout extends React.Component {
         // });
       });
     });
+    // (async () => {})();
   }
   render() {
     const handleChange = (event, value) => {
@@ -726,11 +807,18 @@ class ManageProductsLayout extends React.Component {
                         نام کالا :
                       </label>
                       <input
+                        value={this.state.nameProductValue}
                         name="name"
                         id="productName"
                         type="text"
                         placeholder="نام کالا موردنظر خود را وارد کنید"
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
+                        onChange={(e) => {
+                          this.setState({
+                            ...this.state,
+                            nameProductValue: e.target.value,
+                          });
+                        }}
                       />
 
                       <label
@@ -769,7 +857,7 @@ class ManageProductsLayout extends React.Component {
                       <div className={style.ckeContainer}>
                         <SunEditor
                           id="description"
-                          value={this.state.description}
+                          defaultValue={this.state.editorValue}
                           color={`${colors.primary}`}
                           placeholder="توضیحات موردنظر خود را وارد کنید"
                           onChange={this.handleChangeDescription}
@@ -860,9 +948,31 @@ class ManageProductsLayout extends React.Component {
               input={[false, false, false, false, false, false]}
               hiddenColumn={"id"}
               clickFunc={(x, itemId) => {
-                console.log(x, itemId);
+                // console.log(x, itemId);
                 this.setState({ ...this.state, itemId: itemId }, () => {
                   if (x === "ویرایش") {
+                    getProductById(this.state.itemId).then((res) => {
+                      this.setState(
+                        {
+                          ...this.state,
+                          currentProduct: res,
+                        },
+                        () => {
+                          this.setState(
+                            {
+                              ...this.state,
+
+                              editorValue:
+                                this.state.currentProduct.description,
+                              nameProductValue: this.state.currentProduct.name,
+                            },
+                            () => {
+                              this.editProductHandler();
+                            }
+                          );
+                        }
+                      );
+                    });
                   } else if (x === "حذف") {
                     this.setState({ ...this.state, showDialog: true });
                   }
@@ -973,7 +1083,7 @@ class ManageProductsLayout extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log("map", state.allProducts.products);
+  // console.log("map", state.allProducts.products);
   return {
     products: state.allProducts.products,
   };

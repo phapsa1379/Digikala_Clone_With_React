@@ -300,7 +300,7 @@ class ManageEntitiesLayout extends React.Component {
                       clickOnStoreButtonEvent: true,
                     },
                     () => {
-                      toast.success("با موفقیت ذخیره شد", {
+                      toast.success("تغییرات با موفقیت ذخیره شد", {
                         position: "bottom-left",
                         autoClose: 5000,
                         hideProgressBar: false,
