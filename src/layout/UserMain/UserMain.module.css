@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.userMainContainer {
+  background-color: #f0f0f1;
+  height: 100% !important;
+  flex-grow: 1 !important;
+}
