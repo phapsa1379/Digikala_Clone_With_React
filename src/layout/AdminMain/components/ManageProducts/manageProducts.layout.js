@@ -53,8 +53,11 @@ import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 /**************SweetAlert******************** */
 import swal from "sweetalert";
-/******************************** */
+/***********Global Function******************* */
 import { getProductById } from "globalFunctions";
+/***********Helmet******************** */
+import { Helmet } from "react-helmet";
+/***************************** */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -768,6 +771,9 @@ class ManageProductsLayout extends React.Component {
     };
     return (
       <div className={style.manageProductsContainer}>
+        <Helmet>
+          <title>دیجی‌کالا | مدیریت محصولات</title>
+        </Helmet>
         <div className={style.headerPart}>
           <div className={style.headerPartTitle}>مدیریت کالا ها</div>
           <div className={style.headerPartFilter}>

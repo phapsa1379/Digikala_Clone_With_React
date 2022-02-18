@@ -1,0 +1,266 @@
+*::-webkit-scrollbar {
+  display: none;
+  scroll-behavior: smooth;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.homeContainer {
+  overflow-x: hidden;
+  height: auto;
+  background-color: var(--bg-color);
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.homeContainer.proximity {
+  scroll-snap-type: y proximity;
+}
+.videoBackgroundContainer {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-color: black;
+}
+.scrollChild {
+  scroll-snap-align: start;
+}
+
+.videoBackground {
+  height: 100vh;
+  width: 100vw !important;
+  transform: scaleX(1.5);
+}
+
+.cover {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.sliders {
+  height: 100vh;
+  padding: 5rem auto;
+  overflow: hidden;
+}
+
+.text {
+  font-size: 5rem;
+  color: white;
+}
+
+.coverTitle {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  gap: 2rem;
+  cursor: pointer;
+}
+.titleIconImg {
+  height: 100px;
+  width: 100px;
+}
+.titleText {
+  font-size: 5rem;
+  color: var(--white-color);
+}
+.appleBtn {
+  background-color: #b53471;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 1.2rem 3rem;
+  font-size: 1.8rem;
+  position: absolute;
+  bottom: 50px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.slideShow {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.productsGroup {
+  padding: 5rem 10rem;
+}
+.eachGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 8rem;
+  padding: 5rem 10rem;
+  margin-bottom: 10rem;
+}
+.eachCard {
+  border-radius: 5rem;
+  box-shadow: 1rem 1rem 2rem 0 rgba(0, 0, 0, 0.3);
+  margin: 2rem 0;
+  border: none;
+  transition: 0.8s;
+  cursor: pointer;
+}
+.eachCard:hover {
+  transform: scale(1.2);
+}
+.descriptionOfEachCard {
+  color: #666666;
+  max-height: 90;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+  font-size: 2rem;
+  line-height: 1cm;
+  margin-top: 2rem;
+}
+.priceOfEachCard {
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 3rem 1rem;
+  text-align: left;
+}
+
+.eachGroupTitleLink {
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  margin: 0 2rem;
+  text-decoration: none;
+}
+.moreBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25rem;
+}
+
+.moreBtnGroup {
+  color: var(--white-color);
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 2rem 4rem;
+  width: 35rem !important;
+  text-align: center;
+  /* background-color: var(--primary-color); */
+  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+  border-radius: 2rem;
+  animation: slidebg 2s linear infinite;
+  transition: 1s;
+}
+@keyframes slidebg {
+  to {
+    background-position: 50vw;
+  }
+}
+@keyframes unslidebg {
+  to {
+    background-position: -50vw;
+  }
+}
+.moreBtnGroup:hover {
+  transform: scale(1.2);
+  animation: unslidebg 2s linear infinite;
+}
+
+a {
+  text-decoration: none;
+}
+.eachGroupTitle {
+  text-align: right;
+  margin-bottom: 1rem;
+  margin-top: 5rem;
+
+  cursor: pointer;
+}
+/* .cardImageContainer {
+  object-fit: fill;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+.cardImageContainer:hover {
+  scale: transform(1.1);
+}
+
+.cardImageContainer:hover::after {
+  left: 120%;
+  transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+.cardImageContainer:after {
+  background: #fff;
+  content: "";
+  height: 600px;
+  left: -75px;
+  opacity: 0.2;
+  position: absolute;
+  top: -50px;
+  transform: rotate(35deg);
+  transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+  width: 50px;
+  z-index: -10;
+}
+.imageCard {
+  z-index: 20;
+} */
+.eachCard {
+  position: relative;
+}
+
+.eachCard:before,
+.eachCard:after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(
+    45deg,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000,
+    #fb0094,
+    #0000ff,
+    #00ff00,
+    #ffff00,
+    #ff0000
+  );
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.eachCard:after {
+  filter: blur(50px);
+}

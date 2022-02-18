@@ -32,7 +32,9 @@ import { putProducts } from "api/products.api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProductById } from "globalFunctions";
-
+/***********Helmet******************** */
+import { Helmet } from "react-helmet";
+/***************************** */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -237,6 +239,9 @@ class ManageEntitiesLayout extends React.Component {
     };
     return (
       <div className={style.manageProductsContainer}>
+        <Helmet>
+          <title>دیجی‌کالا | مدیریت موجودی وقیمت‌ها</title>
+        </Helmet>
         <div className={style.headerPart}>
           <div className={style.headerPartTitle}>مدیریت موجودی و قیمت ها</div>
           <div className={style.headerPartFilter}>

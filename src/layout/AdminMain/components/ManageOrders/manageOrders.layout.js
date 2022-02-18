@@ -32,7 +32,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-
+/***********Helmet******************** */
+import { Helmet } from "react-helmet";
+/***************************** */
 const BASE_URL = "http://localhost:3002";
 
 const theme4 = createTheme({
@@ -227,6 +229,9 @@ class ManageOrdersLayout extends React.Component {
     };
     return (
       <div className={style.manageOrdersContainer}>
+        <Helmet>
+          <title>دیجی‌کالا | مدیریت سفارش‌ها</title>
+        </Helmet>
         <div className={style.headerPart}>
           <div className={style.headerPartTitle}>مدیریت سفارش ها</div>
           <div className={style.headerPartFilter}>
