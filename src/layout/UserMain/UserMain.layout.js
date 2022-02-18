@@ -1,23 +1,22 @@
 import React from "react";
 import style from "./UserMain.module.css";
+
 import {
-  // ManageProductsLayout,
   HomeLayout,
-  // ManageEntitiesLayout,
-  // ManageOrdersLayout,
+  ProductsGroupLayout,
+  EachProductLayout,
 } from "./components";
 const UserMainLayout = (props) => {
   let { mainTab } = props;
   return (
     <div className={style.userMainContainer}>
-      <HomeLayout />
-      {/* {mainTab === "mainProducts" ? (
-        <ManageProducts />
-      ) : mainTab === "mainEntities" ? (
-        <ManageEntitiesLayout />
+      {mainTab === "mainHome" ? (
+        <HomeLayout />
+      ) : mainTab === "mainProductsGroup" ? (
+        <ProductsGroupLayout />
       ) : (
-        <ManageOrdersLayout />
-      )} */}
+        <EachProductLayout />
+      )}
     </div>
   );
 };

@@ -113,9 +113,11 @@
   border: none;
   transition: 0.8s;
   cursor: pointer;
+  position: relative;
 }
 .eachCard:hover {
   transform: scale(1.2);
+  z-index: 1000;
 }
 .descriptionOfEachCard {
   color: #666666;
@@ -219,9 +221,6 @@ a {
 .imageCard {
   z-index: 20;
 } */
-.eachCard {
-  position: relative;
-}
 
 .eachCard:before,
 .eachCard:after {

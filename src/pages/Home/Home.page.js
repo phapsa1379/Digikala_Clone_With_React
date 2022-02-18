@@ -9,7 +9,7 @@ const HomePage = (props) => {
         <UserHeaderLayout />
       </div>
       <div className={style.bodyPart}>
-        <UserMainLayout />
+        <UserMainLayout mainTab={"mainHome"} />
       </div>
     </div>
   );
