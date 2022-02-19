@@ -5,12 +5,7 @@ import digikalaIcon from "assets/icons/favicon.svg";
 import Carousel from "react-material-ui-carousel";
 import { Paper, Button, touchRippleClasses } from "@mui/material";
 import CarouselSlide from "react-material-ui-carousel";
-// import Card2 from "@material-ui/core/Card";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import CardContent from "@material-ui/core/CardContent";
-import "uikit/dist/css/uikit-core-rtl.css";
-import "uikit/dist/js/uikit-icons.min.js";
-import "uikit/dist/js/uikit.min.js";
+
 import { colors } from "assets/colors";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -27,6 +22,15 @@ import { s1, s2, s3, s4, s5 } from "assets/images";
 import { getProducts } from "api/products.api";
 import { getCategory } from "api/category.api";
 import { useSearchParams, useNavigate } from "react-router-dom";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+// import required modules
+import { Pagination, Navigation } from "swiper";
+
 const theme = createTheme({
   multilineColor: {
     color: "red",
@@ -62,27 +66,6 @@ const HomeLayout = (props) => {
     });
   }, []);
 
-  // componentDidMount() {
-  //   getProducts().then((allProducts) => {
-  //     this.setState({ allProducts });
-  //     console.log(allProducts);
-  //     getCategory().then((allCategory) => {
-  //       this.setState({ allCategory });
-  //     });
-  //   });
-  // }
-
- 
-
-
-//Scorolling
-  // const init = function () {
-  //   let items = document.querySelectorAll(".scrollChild");
-  //   for (let i = 0; i < items.length; i++) {
-  //     items[i].style.minHeight = "100vh";
-  //   }
-  // };
-  // init();
   const pictures = [
     { image: s1, title: "Iu 1" },
     { image: s2, title: "Iu 2" },
@@ -131,21 +114,6 @@ const HomeLayout = (props) => {
         <Carousel
           sx={{ height: "60%", width: "80%" }}
           navButtonsAlwaysVisible={true}
-          // NavButton={{
-          //   style: {
-          //     margin: "0 10px",
-          //     position: "relative",
-          //     backgroundColor: "#494949",
-          //     top: "calc(50% - 20px) !important",
-          //     color: "white",
-          //     fontSize: "30px",
-          //     transition: "200ms",
-          //     cursor: "pointer",
-          //     "&:hover": {
-          //       opacity: "0.6 !important",
-          //     },
-          //   },
-          // }}
         >
           {pictures.map(({ image, title }) => (
             <CarouselSlide key={image}>
@@ -166,212 +134,104 @@ const HomeLayout = (props) => {
           ))}
         </Carousel>
       </div>
-
-      <div
-        // data-aos="flip-right"
-        // style={{ backgroundColor: "red" }}
-        className={`${style.sliders} ${style.scrollChild} scrollChild`}
-      >
-        <div
-          class="uk-position-relative uk-visible-toggle uk-light"
-          tabindex="-1"
-          uk-slideshow="animation: push"
+      <div className={style.productsSlider}>
+        <Swiper
+          slidesPerView={4}
+          spaceBetween={10}
+          slidesPerGroup={3}
+          loop={true}
+          loopFillGroupWithBlank={true}
+          pagination={{
+            clickable: false,
+          }}
+          autoplay={true}
+          navigation={true}
+          pagination={false}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+          style={{
+            margin: "0 auto",
+            width: "90vw",
+            paddingRight: "5rem",
+            borderRadius: "2rem",
+          }}
         >
-          <ul
-            style={{ width: "100%", height: "100%", margin: "0 auto" }}
-            class="ul uk-slideshow-items"
-          >
-            <li class="li">
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="scale: 1.2,1.2,1"
-              >
-                <img
-                  style={{ height: "100vh" }}
-                  class="img"
-                  src={s1}
-                  alt=""
-                  uk-cover
-                />
-              </div>
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="opacity: 0,0,0.2; backgroundColor: #000,#000"
-              ></div>
-              <div class="uk-position-center uk-position-medium uk-text-center">
-                <div uk-slideshow-parallax="scale: 1,1,0.8">
-                  <h2
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "4rem",
+          {allProducts.map((product, index) => {
+            return (
+              <SwiperSlide>
+                <ThemeProvider theme={theme}>
+                  <Card
+                    sx={{
+                      maxWidth: 350,
+                      border: "none",
+                      padding: "1rem 1rem",
+                      height: "100%!important",
+                      cursor: "pointer",
                     }}
-                    class="h2"
-                    uk-slideshow-parallax="x: 200,0,0"
                   >
-                    تا 70% تخفیف
-                  </h2>
-                  <p
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "2rem",
-                    }}
-                    class="p"
-                    uk-slideshow-parallax="x: 400,0,0;"
-                  >
-                    همین الان خرید کن
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="li">
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="scale: 1.2,1.2,1"
-              >
-                <img
-                  style={{ height: "100vh" }}
-                  class="img"
-                  src={s2}
-                  alt=""
-                  uk-cover
-                />
-              </div>
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="opacity: 0,0,0.2; backgroundColor: #000,#000"
-              ></div>
-              <div class="uk-position-center uk-position-medium uk-text-center">
-                <div uk-slideshow-parallax="scale: 1,1,0.8">
-                  <h2
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "4rem",
-                    }}
-                    class="h2"
-                    uk-slideshow-parallax="x: 200,0,0"
-                  >
-                    تا 70% تخفیف
-                  </h2>
-                  <p
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "2rem",
-                    }}
-                    class="p"
-                    uk-slideshow-parallax="x: 400,0,0;"
-                  >
-                    همین الان خرید کن
-                  </p>
-                </div>
-              </div>
-            </li>{" "}
-            <li class="li">
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="scale: 1.2,1.2,1"
-              >
-                <img
-                  style={{ height: "100vh" }}
-                  class="img"
-                  src={s4}
-                  alt=""
-                  uk-cover
-                />
-              </div>
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="opacity: 0,0,0.2; backgroundColor: #000,#000"
-              ></div>
-              <div class="uk-position-center uk-position-medium uk-text-center">
-                <div uk-slideshow-parallax="scale: 1,1,0.8">
-                  <h2
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "4rem",
-                    }}
-                    class="h2"
-                    uk-slideshow-parallax="x: 200,0,0"
-                  >
-                    تا 70% تخفیف
-                  </h2>
-                  <p
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "2rem",
-                    }}
-                    class="p"
-                    uk-slideshow-parallax="x: 400,0,0;"
-                  >
-                    همین الان خرید کن
-                  </p>
-                </div>
-              </div>
-            </li>{" "}
-            <li class="li">
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="scale: 1.2,1.2,1"
-              >
-                <img
-                  style={{ height: "100vh" }}
-                  class="img"
-                  src={s5}
-                  alt=""
-                  uk-cover
-                />
-              </div>
-              <div
-                class="uk-position-cover"
-                uk-slideshow-parallax="opacity: 0,0,0.2; backgroundColor: #000,#000"
-              ></div>
-              <div class="uk-position-center uk-position-medium uk-text-center">
-                <div uk-slideshow-parallax="scale: 1,1,0.8">
-                  <h2
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "4rem",
-                    }}
-                    class="h2"
-                    uk-slideshow-parallax="x: 200,0,0"
-                  >
-                    تا 70% تخفیف
-                  </h2>
-                  <p
-                    style={{
-                      color: colors.primary,
-                      fontFamily: "vazir",
-                      fontSize: "2rem",
-                    }}
-                    class="p"
-                    uk-slideshow-parallax="x: 400,0,0;"
-                  >
-                    همین الان خرید کن
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
+                    <div
+                      className={style.imgaeProductSliderContainer}
+                      style={{
+                        objectFit: "fill",
+                        height: "300px",
+                        width: "300px",
+                        textAlign: "center",
+                        padding: 0,
+                      }}
+                    >
+                      <img
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "inline-block",
+                          marginRight: "1.5rem",
+                        }}
+                        src={`http://localhost:3002${product.image[0]}`}
+                        alt="محصولات"
+                        className={style.imgaeProductSlider}
+                      />
+                    </div>
 
-          <a
-            class="uk-position-center-left uk-position-small uk-hidden-hover"
-            href="#"
-            uk-slidenav-previous
-            uk-slideshow-item="previous"
-          ></a>
-          <a
-            class="uk-position-center-right uk-position-small uk-hidden-hover"
-            href="#"
-            uk-slidenav-next
-            uk-slideshow-item="next"
-          ></a>
-        </div>
+                    <CardContent>
+                      <Typography
+                        sx={{
+                          textAlign: "center",
+                          fotSize: "2rem",
+                          fontWeight: "bold",
+                          marginTop: "1rem",
+                          color: colors.textColor,
+                        }}
+                        gutterBottom
+                        // variant="h5"
+                        component="div"
+                      >
+                        {product.name}
+                      </Typography>
+
+                      <div className={style.priceOfEachCard}>
+                        {product.price.toLocaleString("fa")} تومان
+                      </div>
+                    </CardContent>
+                    <CardActions sx={{ marginBottom: "2rem" }}>
+                      <Button variant="contained" size="big">
+                        اضافه‌به‌سبد‌خرید
+                      </Button>
+                      <Button
+                        sx={{ marginRight: "2rem" }}
+                        size="small"
+                        onClick={() => {
+                          navigate(`/product-details/?id=${product.id}`);
+                        }}
+                      >
+                        بیشتر...
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </ThemeProvider>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
 
       <div

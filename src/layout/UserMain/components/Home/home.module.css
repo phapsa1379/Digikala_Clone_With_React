@@ -5,6 +5,9 @@
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .homeContainer {
@@ -46,8 +49,9 @@
 }
 
 .sliders {
-  height: 100vh;
+  height: 600px;
   padding: 5rem auto;
+
   overflow: hidden;
 }
 
@@ -262,4 +266,18 @@ a {
 
 .eachCard:after {
   filter: blur(50px);
+}
+.productsSlider {
+  width: 50vw;
+}
+.productsSlider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  width: 95vw;
+  padding-top: 5rem;
+  padding-bottom: 1rem;
+  margin: 0 auto;
+  border-radius: 3rem;
 }
