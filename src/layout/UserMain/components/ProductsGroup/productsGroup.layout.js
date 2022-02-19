@@ -265,20 +265,44 @@ function ProductsGroupLayout() {
                         maxWidth: 450,
                         border: "none",
                         padding: "1rem 1rem",
+                        height: "960px",
+                        position: "relative",
                       }}
                     >
-                      <CardMedia
-                        component="img"
-                        sx={{
-                          bojectFit: "fill",
-                          borderRadius: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                        height="auto"
-                        image={`http://localhost:3002${product.image[0]}`}
-                        alt="green iguana"
-                      />
+                      {/* <CardMedia
+                                component="img"
+                                sx={{
+                                  bojectFit: "fill",
+                                  borderRadius: "2rem",
+                                  marginBottom: "1rem",
+                                }}
+                                height="auto"
+                                image={`http://localhost:3002${product.image[0]}`}
+                                alt="green iguana"
+                              /> */}
 
+                      <div
+                        className={style.cardImageContainer}
+                        style={{
+                          objectFit: "fill",
+                          height: "400px",
+                          width: "400px",
+                          textAlign: "center",
+                          padding: 0,
+                        }}
+                      >
+                        <img
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "inline-block",
+                            marginRight: "1.5rem",
+                          }}
+                          src={`http://localhost:3002${product.image[0]}`}
+                          alt="محصولات"
+                          className={style.imageCard}
+                        />
+                      </div>
                       <CardContent>
                         <Typography
                           sx={{
@@ -302,7 +326,13 @@ function ProductsGroupLayout() {
                           {product.price.toLocaleString("fa")} تومان
                         </div>
                       </CardContent>
-                      <CardActions sx={{ marginBottom: "2rem" }}>
+                      <CardActions
+                        sx={{
+                          marginBottom: "2rem",
+                          position: "absolute",
+                          bottom: "2rem",
+                        }}
+                      >
                         <Button variant="contained" size="big">
                           اضافه‌به‌سبد‌خرید
                         </Button>
