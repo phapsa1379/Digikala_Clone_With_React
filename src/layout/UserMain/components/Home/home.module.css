@@ -105,10 +105,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: center;
+  /* align-items: center; */
   gap: 8rem;
   padding: 5rem 10rem;
   margin-bottom: 10rem;
+  height: auto;
 }
 .eachCard {
   border-radius: 5rem;
@@ -277,7 +278,7 @@ a {
   background-color: var(--primary-color);
   width: 95vw;
   padding-top: 5rem;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
   margin: 0 auto;
   border-radius: 3rem;
 }

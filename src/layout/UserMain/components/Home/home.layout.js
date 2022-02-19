@@ -157,14 +157,16 @@ const HomeLayout = (props) => {
         >
           {allProducts.map((product, index) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide style={{ height: "auto" }}>
                 <ThemeProvider theme={theme}>
                   <Card
                     sx={{
+                      height: "640px",
+                      position: "relative",
                       maxWidth: 350,
                       border: "none",
                       padding: "1rem 1rem",
-                      height: "100%!important",
+
                       cursor: "pointer",
                       borderRadius: "2rem",
                       transition: "0.8s",
@@ -216,7 +218,13 @@ const HomeLayout = (props) => {
                         {product.price.toLocaleString("fa")} تومان
                       </div>
                     </CardContent>
-                    <CardActions sx={{ marginBottom: "2rem" }}>
+                    <CardActions
+                      sx={{
+                        marginBottom: "2rem",
+                        position: "absolute",
+                        bottom: "2rem",
+                      }}
+                    >
                       <Button variant="contained" size="big">
                         اضافه‌به‌سبد‌خرید
                       </Button>
@@ -273,9 +281,11 @@ const HomeLayout = (props) => {
                                 maxWidth: 450,
                                 border: "none",
                                 padding: "1rem 1rem",
+                                height: "960px",
+                                position: "relative",
                               }}
                             >
-                              <CardMedia
+                              {/* <CardMedia
                                 component="img"
                                 sx={{
                                   bojectFit: "fill",
@@ -285,14 +295,30 @@ const HomeLayout = (props) => {
                                 height="auto"
                                 image={`http://localhost:3002${product.image[0]}`}
                                 alt="green iguana"
-                              />
-                              {/* <div className={style.cardImageContainer}>
-                                    <img
-                                      className={style.imageCard}
-                                      src={`http://localhost:3002${product.image[0]}`}
-                                      alt={`${category.name}`}
-                                    />
-                                  </div> */}
+                              /> */}
+
+                              <div
+                                className={style.cardImageContainer}
+                                style={{
+                                  objectFit: "fill",
+                                  height: "400px",
+                                  width: "400px",
+                                  textAlign: "center",
+                                  padding: 0,
+                                }}
+                              >
+                                <img
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    display: "inline-block",
+                                    marginRight: "1.5rem",
+                                  }}
+                                  src={`http://localhost:3002${product.image[0]}`}
+                                  alt="محصولات"
+                                  className={style.imageCard}
+                                />
+                              </div>
                               <CardContent>
                                 <Typography
                                   sx={{
@@ -316,7 +342,13 @@ const HomeLayout = (props) => {
                                   {product.price.toLocaleString("fa")} تومان
                                 </div>
                               </CardContent>
-                              <CardActions sx={{ marginBottom: "2rem" }}>
+                              <CardActions
+                                sx={{
+                                  marginBottom: "2rem",
+                                  position: "absolute",
+                                  bottom: "2rem",
+                                }}
+                              >
                                 <Button variant="contained" size="big">
                                   اضافه‌به‌سبد‌خرید
                                 </Button>
