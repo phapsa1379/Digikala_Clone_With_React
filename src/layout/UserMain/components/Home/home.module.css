@@ -20,7 +20,7 @@
   scroll-snap-type: y proximity;
 }
 .videoBackgroundContainer {
-  height: 100vh;
+  height: 120vh;
   width: 100vw;
   position: relative;
   background-color: black;
@@ -30,7 +30,7 @@
 } */
 
 .videoBackground {
-  height: 100vh;
+  height: 120vh;
   width: 100vw !important;
   transform: scaleX(1.5);
 }
