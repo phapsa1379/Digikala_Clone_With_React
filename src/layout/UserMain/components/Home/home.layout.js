@@ -153,7 +153,6 @@ const HomeLayout = (props) => {
             margin: "0 auto",
             width: "90vw",
             paddingRight: "5rem",
-            borderRadius: "2rem",
           }}
         >
           {allProducts.map((product, index) => {
@@ -167,6 +166,11 @@ const HomeLayout = (props) => {
                       padding: "1rem 1rem",
                       height: "100%!important",
                       cursor: "pointer",
+                      borderRadius: "2rem",
+                      transition: "0.8s",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
                     }}
                   >
                     <div
