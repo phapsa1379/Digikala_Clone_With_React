@@ -72,14 +72,17 @@ const HomeLayout = (props) => {
   //   });
   // }
 
-  // render() {
-  const init = function () {
-    let items = document.querySelectorAll(".scrollChild");
-    for (let i = 0; i < items.length; i++) {
-      items[i].style.minHeight = "100vh";
-    }
-  };
-  init();
+ 
+
+
+//Scorolling
+  // const init = function () {
+  //   let items = document.querySelectorAll(".scrollChild");
+  //   for (let i = 0; i < items.length; i++) {
+  //     items[i].style.minHeight = "100vh";
+  //   }
+  // };
+  // init();
   const pictures = [
     { image: s1, title: "Iu 1" },
     { image: s2, title: "Iu 2" },
@@ -87,7 +90,7 @@ const HomeLayout = (props) => {
     { image: s4, title: "Iu 4" },
     { image: s5, title: "Iu 5" },
   ];
-
+  let numberOfShowingProductsOfEachCategory = 6;
   return (
     <div className={style.homeContainer}>
       <div
@@ -376,6 +379,7 @@ const HomeLayout = (props) => {
       >
         {allCategory ? (
           allCategory.map((category, index) => {
+            let counter = 0;
             return (
               <div className={style.groupContainer}>
                 <div className={style.eachGroupTitle}>
@@ -392,7 +396,11 @@ const HomeLayout = (props) => {
                 </div>
                 <div className={style.eachGroup}>
                   {allProducts.map((product, index) => {
-                    if (category.id === product.categoryId) {
+                    if (
+                      category.id === product.categoryId &&
+                      counter < numberOfShowingProductsOfEachCategory
+                    ) {
+                      counter++;
                       return (
                         <div className={style.eachCard} key={index}>
                           <ThemeProvider theme={theme}>
@@ -415,12 +423,12 @@ const HomeLayout = (props) => {
                                 alt="green iguana"
                               />
                               {/* <div className={style.cardImageContainer}>
-                                  <img
-                                    className={style.imageCard}
-                                    src={`http://localhost:3002${product.image[0]}`}
-                                    alt={`${category.name}`}
-                                  />
-                                </div> */}
+                                    <img
+                                      className={style.imageCard}
+                                      src={`http://localhost:3002${product.image[0]}`}
+                                      alt={`${category.name}`}
+                                    />
+                                  </div> */}
                               <CardContent>
                                 <Typography
                                   sx={{

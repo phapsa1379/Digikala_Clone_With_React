@@ -11,9 +11,9 @@
   overflow-x: hidden;
   height: auto;
   background-color: var(--bg-color);
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+  /* scroll-snap-type: y mandatory;
+  overflow-y: scroll; */
+  /* height: 100vh; */
 }
 
 .homeContainer.proximity {
@@ -25,9 +25,9 @@
   position: relative;
   background-color: black;
 }
-.scrollChild {
+/* .scrollChild {
   scroll-snap-align: start;
-}
+} */
 
 .videoBackground {
   height: 100vh;

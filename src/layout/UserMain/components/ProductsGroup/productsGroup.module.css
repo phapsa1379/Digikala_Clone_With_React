@@ -105,3 +105,9 @@ a {
 .eachCard:after {
   filter: blur(50px);
 }
+.paginationPart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem 0;
+}
