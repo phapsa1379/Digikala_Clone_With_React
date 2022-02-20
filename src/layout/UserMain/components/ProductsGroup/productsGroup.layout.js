@@ -30,8 +30,15 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
+import {
+  SkeletonText,
+  SkeletonBlock,
+  SkeletonImage,
+  SkeletonAvatar,
+} from "skeleton-elements/react";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -252,7 +259,17 @@ function ProductsGroupLayout() {
               className={style.eachGroupTitleLink}
               href={`/products-list/?categoryId=${categoryId}`}
             >
-              {getCategoryNameByCategoryId(categoryId) + ":"}
+              {getCategoryNameByCategoryId(categoryId) ? (
+                getCategoryNameByCategoryId(categoryId) + ":"
+              ) : (
+                <SkeletonBlock tag="h1" width="100px" effect="wave" />
+                // <Skeleton
+                //   animation="wave"
+                //   variant="rectangular"
+                //   width={210}
+                //   height={50}
+                // />
+              )}
             </a>
           </div>
           <div className={style.eachGroup}>
@@ -291,17 +308,26 @@ function ProductsGroupLayout() {
                           padding: 0,
                         }}
                       >
-                        <img
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            display: "inline-block",
-                            marginRight: "1.5rem",
-                          }}
-                          src={`http://localhost:3002${product.image[0]}`}
-                          alt="محصولات"
-                          className={style.imageCard}
-                        />
+                        {productsArray.length === 0 ? (
+                          <Skeleton
+                            animation="wave"
+                            variant="square"
+                            width={40}
+                            height={40}
+                          />
+                        ) : (
+                          <img
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display: "inline-block",
+                              marginRight: "1.5rem",
+                            }}
+                            src={`http://localhost:3002${product.image[0]}`}
+                            alt="محصولات"
+                            className={style.imageCard}
+                          />
+                        )}
                       </div>
                       <CardContent>
                         <Typography

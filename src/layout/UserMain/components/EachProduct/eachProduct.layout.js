@@ -107,6 +107,7 @@ function EachProductLayout(props) {
   let navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  let [numberOfGood, setNumberOfGood] = useState(1);
 
   let [productsArray, setProductsArray] = useState([]);
 
@@ -122,6 +123,9 @@ function EachProductLayout(props) {
     });
 
     setCategoryNames(categoryNames);
+  };
+  const handleChangeNumber = (e) => {
+    setNumberOfGood(e.target.value);
   };
 
   useEffect(() => {
@@ -380,6 +384,8 @@ function EachProductLayout(props) {
                   <CacheProvider value={cacheRtl}>
                     <ThemeProvider theme={theme}>
                       <TextField
+                        value={numberOfGood}
+                        onChangeCapture={handleChangeNumber}
                         id="outlined-number"
                         label="Number"
                         type="number"
