@@ -88,3 +88,13 @@
   margin: 3rem 1rem;
   text-align: left;
 }
+/* .imgOfSelfProduct {
+  transition: 1s;
+}
+.imgOfSelfProduct:hover {
+  transform: scale(3);
+} */
+.innerZoom {
+  object-fit: fill;
+  height: 100%;
+}

@@ -45,7 +45,11 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
+/******************image magnify */
+import InnerImageZoom from "react-inner-image-zoom";
+import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 
+/********************** */
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -257,7 +261,7 @@ function EachProductLayout(props) {
                   // marginRight: "5rem",
                   width: "100%",
                   margin: "0 auto",
-                  height: "630px",
+                  height: "auto",
                   borderRadius: "5rem",
                 }}
                 spaceBetween={10}
@@ -267,33 +271,60 @@ function EachProductLayout(props) {
                 className="mySwiper2"
               >
                 <SwiperSlide style={{ objectFit: "fill" }}>
-                  <img
+                  {/* <img
+                    className={style.imgOfSelfProduct}
                     src={`http://localhost:3002${currentProduct.image[0]}`}
                     style={{
                       height: "100%",
                       width: "100%",
                       display: "inline-block",
                     }}
+                  /> */}
+
+                  <InnerImageZoom
+                    src={`http://localhost:3002${currentProduct.image[0]}`}
+                    zoomSrc={`http://localhost:3002${currentProduct.image[0]}`}
+                    zoomScale={2}
+                    zoomType="hover"
+                    height="100%"
+                    width="100%"
+                    className={style.innerZoom}
                   />
                 </SwiperSlide>
                 <SwiperSlide style={{ objectFit: "fill" }}>
-                  <img
+                  {/* <img
+                    className={style.imgOfSelfProduct}
                     src={`http://localhost:3002${currentProduct.image[1]}`}
                     style={{
                       height: "100%",
                       width: "100%",
                       display: "inline-block",
                     }}
+                  /> */}
+                  <InnerImageZoom
+                    src={`http://localhost:3002${currentProduct.image[1]}`}
+                    zoomSrc={`http://localhost:3002${currentProduct.image[1]}`}
+                    zoomScale={2}
+                    zoomType="hover"
+                    className={style.innerZoom}
                   />
                 </SwiperSlide>
                 <SwiperSlide style={{ objectFit: "fill" }}>
-                  <img
+                  {/* <img
+                    className={style.imgOfSelfProduct}
                     src={`http://localhost:3002${currentProduct.image[2]}`}
                     style={{
                       height: "100%",
                       width: "100%",
                       display: "inline-block",
                     }}
+                  /> */}
+                  <InnerImageZoom
+                    src={`http://localhost:3002${currentProduct.image[2]}`}
+                    zoomSrc={`http://localhost:3002${currentProduct.image[2]}`}
+                    zoomScale={2}
+                    zoomType="hover"
+                    className={style.innerZoom}
                   />
                 </SwiperSlide>
               </Swiper>
@@ -308,8 +339,8 @@ function EachProductLayout(props) {
               >
                 <SwiperSlide
                   style={{
-                    width: "190px",
-                    height: "190px",
+                    width: "120px",
+                    height: "120px",
                     objectFit: "fill",
                     cursor: "pointer",
                     borderRadius: "2rem",
@@ -322,13 +353,14 @@ function EachProductLayout(props) {
                       width: "100%",
                       display: "inline-block",
                       borderRadius: "2rem",
+                      border: "1px solid #D1D1D1",
                     }}
                   />
                 </SwiperSlide>
                 <SwiperSlide
                   style={{
-                    width: "190px",
-                    height: "190px",
+                    width: "120px",
+                    height: "120px",
                     objectFit: "fill",
                     cursor: "pointer",
                     borderRadius: "2rem",
@@ -341,13 +373,14 @@ function EachProductLayout(props) {
                       width: "100%",
                       display: "inline-block",
                       borderRadius: "2rem",
+                      border: "1px solid #D1D1D1",
                     }}
                   />
                 </SwiperSlide>
                 <SwiperSlide
                   style={{
-                    width: "190px",
-                    height: "190px",
+                    width: "120px",
+                    height: "120px",
                     objectFit: "fill",
                     cursor: "pointer",
                     borderRadius: "2rem",
@@ -360,6 +393,7 @@ function EachProductLayout(props) {
                       width: "100%",
                       display: "inline-block",
                       borderRadius: "2rem",
+                      border: "1px solid #D1D1D1",
                     }}
                   />
                 </SwiperSlide>

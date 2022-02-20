@@ -67,10 +67,10 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
     "react-helmet": "^6.1.0",
+    "react-inner-image-zoom": "^3.0.0",
     "react-material-ui-carousel": "^3.2.0",
     "react-select": "^5.2.2",
     "react-toastify": "^8.1.1",
-    "react-zoomify": "^1.0.9",
     "sweetalert": "^2.1.2"
   }
 }
