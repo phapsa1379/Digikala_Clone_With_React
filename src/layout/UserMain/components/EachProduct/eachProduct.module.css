@@ -45,10 +45,11 @@
 .tabProduct {
   margin-top: 5rem;
   padding-bottom: 10rem;
+  min-height: 40rem;
 }
 .descriptionText {
   line-height: 1.3cm;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
 
   color: var(--text-color);
 }
@@ -56,4 +57,34 @@
   color: var(--primary-color);
   font-size: 2.5rem;
   display: block;
+}
+
+.similarProducts {
+  margin: 3rem 0;
+}
+
+.similarProductsTitle {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 2rem 0;
+  margin-bottom: 5rem;
+}
+
+.productsSlider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  width: 95vw;
+  padding: 5rem 0;
+  margin: 0 auto;
+  border-radius: 3rem;
+}
+.priceOfEachCard {
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 3rem 1rem;
+  text-align: left;
 }

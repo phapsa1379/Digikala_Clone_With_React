@@ -132,7 +132,7 @@ function EachProductLayout(props) {
     getCategory().then((res) => {
       setAllCategory(res);
     });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     allProducts.map((product, index) => {
@@ -410,9 +410,10 @@ function EachProductLayout(props) {
                         "&:hover": {
                           backgroundColor: colors.ligthPrimary,
                         },
+                        boxShadow: "5px 5px 8px 0 rgba(0,0,0,0.6)",
                       }}
                     >
-                      خرید
+                      افزودن به سبد خرید
                     </Button>
                   </ThemeProvider>
                 </div>
@@ -452,29 +453,17 @@ function EachProductLayout(props) {
                       />
                     </Tabs>
                   </Box>
-                  <TabPanel
-                    value={value}
-                    index={0}
-                    sx={{ padding: "3rem 0", lineHeight: "2cm!important" }}
-                  >
+                  <TabPanel value={value} index={0} sx={{ padding: "3rem 0" }}>
                     <div className={style.descriptionText}>
                       {currentProduct.description}
                     </div>
                   </TabPanel>
-                  <TabPanel
-                    value={value}
-                    index={1}
-                    sx={{ padding: "3rem 0", lineHeight: "2cm!important" }}
-                  >
+                  <TabPanel value={value} index={1} sx={{ padding: "3rem 0" }}>
                     <div className={style.descriptionText}>
                       دیدگاهی وجود ندارد
                     </div>
                   </TabPanel>
-                  <TabPanel
-                    value={value}
-                    index={2}
-                    sx={{ padding: "3rem 0", lineHeight: "2cm!important" }}
-                  >
+                  <TabPanel value={value} index={2} sx={{ padding: "3rem 0" }}>
                     <div className={style.descriptionText}>
                       پرسشی وجود ندارد
                     </div>
@@ -487,6 +476,124 @@ function EachProductLayout(props) {
       ) : (
         <></>
       )}
+      <div className={style.similarProducts}>
+        <div className={style.similarProductsTitle}>محصولات مشابه</div>
+        <div className={style.productsSlider}>
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={10}
+            slidesPerGroup={1}
+            loop={true}
+            loopFillGroupWithBlank={true}
+            pagination={{
+              clickable: false,
+            }}
+            navigation={true}
+            modules={[Navigation]}
+            className="mySwiper"
+            style={{
+              margin: "0 auto",
+              width: "90vw",
+              paddingRight: "5rem",
+            }}
+          >
+            {allProducts && currentProduct ? (
+              allProducts.map((product, index) => {
+                if (currentProduct.categoryId === product.categoryId) {
+                  return (
+                    <SwiperSlide style={{ height: "auto" }} key={index}>
+                      <ThemeProvider theme={theme}>
+                        <Card
+                          sx={{
+                            height: "640px",
+                            position: "relative",
+                            maxWidth: 350,
+                            border: "none",
+                            padding: "1rem 1rem",
+
+                            cursor: "pointer",
+                            borderRadius: "2rem",
+                            transition: "0.8s",
+                            "&:hover": {
+                              transform: "scale(1.1)",
+                            },
+                          }}
+                        >
+                          <div
+                            className={style.imgaeProductSliderContainer}
+                            style={{
+                              objectFit: "fill",
+                              height: "300px",
+                              width: "300px",
+                              textAlign: "center",
+                              padding: 0,
+                            }}
+                          >
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                display: "inline-block",
+                                marginRight: "1.5rem",
+                              }}
+                              src={`http://localhost:3002${product.image[0]}`}
+                              alt="محصولات"
+                              className={style.imgaeProductSlider}
+                            />
+                          </div>
+
+                          <CardContent>
+                            <Typography
+                              sx={{
+                                textAlign: "center",
+                                fotSize: "2rem",
+                                fontWeight: "bold",
+                                marginTop: "1rem",
+                                color: colors.textColor,
+                              }}
+                              gutterBottom
+                              // variant="h5"
+                              component="div"
+                            >
+                              {product.name}
+                            </Typography>
+
+                            <div className={style.priceOfEachCard}>
+                              {product.price.toLocaleString("fa")} تومان
+                            </div>
+                          </CardContent>
+                          <CardActions
+                            sx={{
+                              marginBottom: "2rem",
+                              position: "absolute",
+                              bottom: "2rem",
+                            }}
+                          >
+                            <Button variant="contained" size="big">
+                              اضافه‌به‌سبد‌خرید
+                            </Button>
+                            <Button
+                              sx={{ marginRight: "2rem" }}
+                              size="small"
+                              onClick={() => {
+                                navigate(`/product-details/?id=${product.id}`);
+                              }}
+                            >
+                              بیشتر...
+                            </Button>
+                          </CardActions>
+                        </Card>
+                      </ThemeProvider>
+                    </SwiperSlide>
+                  );
+                }
+              })
+            ) : (
+              <></>
+            )}
+          </Swiper>
+        </div>
+      </div>
     </div>
   );
 }

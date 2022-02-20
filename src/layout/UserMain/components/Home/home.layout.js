@@ -138,7 +138,7 @@ const HomeLayout = (props) => {
         <Swiper
           slidesPerView={4}
           spaceBetween={10}
-          slidesPerGroup={3}
+          slidesPerGroup={1}
           loop={true}
           loopFillGroupWithBlank={true}
           pagination={{
