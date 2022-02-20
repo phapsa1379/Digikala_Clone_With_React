@@ -35,6 +35,9 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -49,9 +52,87 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
 
-/********************** */
-const BASE_URL = "http://localhost:3002";
+/*********Share Product********* */
+import {
+  EmailShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PocketShareButton,
+  TelegramShareButton,
+  TwitterShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton,
+} from "react-share";
+import {
+  EmailIcon,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  HatenaIcon,
+  InstapaperIcon,
+  LineIcon,
+  LinkedinIcon,
+  LivejournalIcon,
+  MailruIcon,
+  OKIcon,
+  PinterestIcon,
+  PocketIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  VKIcon,
+  WeiboIcon,
+  WhatsappIcon,
+  WorkplaceIcon,
+} from "react-share";
+/***************************** */
 
+const BASE_URL = "http://localhost:3002";
+const actions = [
+  {
+    key: "telegram",
+    icon: (
+      <TelegramShareButton url={window.location.href}>
+        <TelegramIcon size={40} round={true} />
+      </TelegramShareButton>
+    ),
+    name: "تلگرام",
+  },
+  {
+    key: "whatsapp",
+    icon: (
+      <WhatsappShareButton url={window.location.href}>
+        <WhatsappIcon size={40} round={true} />
+      </WhatsappShareButton>
+    ),
+    name: "واتس اپ",
+  },
+  {
+    key: "twitter",
+    icon: (
+      <TwitterShareButton url={window.location.href}>
+        {" "}
+        <TwitterIcon size={40} round={true} />
+      </TwitterShareButton>
+    ),
+    name: "توییتر",
+  },
+  {
+    key: "email",
+    icon: (
+      <EmailShareButton url={window.location.href}>
+        <EmailIcon size={40} round={true} />
+      </EmailShareButton>
+    ),
+    name: "ایمیل",
+  },
+];
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -65,6 +146,21 @@ const theme = createTheme({
   typography: {
     fontFamily: "vazir",
     fontSize: 30,
+  },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
+});
+const shareTheme = createTheme({
+  multilineColor: {
+    color: "red",
+  },
+  direction: "rtl",
+  typography: {
+    fontFamily: "vazir",
+    fontSize: 40,
   },
   palette: {
     primary: {
@@ -457,6 +553,42 @@ function EachProductLayout(props) {
                     </Button>
                   </ThemeProvider>
                 </div>
+              </div>
+            </div>
+            <div className={style.sideTools}>
+              <div className={style.shareProduct}>
+                <CacheProvider value={cacheRtl}>
+                  <ThemeProvider theme={shareTheme}>
+                    <Box
+                      sx={{
+                        // height: "auto",
+                        height: "200px",
+                        transform: "translateZ(0px)",
+
+                        backgroundColor: "#000",
+                      }}
+                    >
+                      <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{
+                          position: "absolute",
+                          top: "12rem",
+                          right: "-10rem",
+                        }}
+                        icon={<ShareIcon />}
+                        direction="down"
+                      >
+                        {actions.map((action) => (
+                          <SpeedDialAction
+                            key={action.key}
+                            icon={action.icon}
+                            tooltipTitle={action.name}
+                          />
+                        ))}
+                      </SpeedDial>
+                    </Box>
+                  </ThemeProvider>
+                </CacheProvider>
               </div>
             </div>
           </div>
