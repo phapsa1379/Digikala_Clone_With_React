@@ -91,8 +91,12 @@ import {
   WhatsappIcon,
   WorkplaceIcon,
 } from "react-share";
-/***************************** */
-
+/************Swal***************** */
+import swal from "sweetalert";
+/*****Toastify *****/
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+/**************************** */
 const BASE_URL = "http://localhost:3002";
 const actions = [
   {
@@ -216,7 +220,7 @@ function EachProductLayout(props) {
   let [allCategory, setAllCategory] = useState([]);
   let [categoryNames, setCategoryNames] = useState([]);
   let [currentProduct, setCurrentProduct] = useState(null);
-
+  let [basket, setBasket] = useState(null);
   const setCategoryName = () => {
     categoryNames = allCategory.map((category, index) => {
       return category.name;
@@ -225,7 +229,21 @@ function EachProductLayout(props) {
     setCategoryNames(categoryNames);
   };
   const handleChangeNumber = (e) => {
-    setNumberOfGood(e.target.value);
+    if (e.target.value < 1) {
+      swal({
+        title: "خطا",
+        text: `تعداد محصول نمی‌تواند کمتر از یک باشد.`,
+        icon: "error",
+      });
+    } else if (e.target.value <= currentProduct.count) {
+      setNumberOfGood(e.target.value);
+    } else {
+      swal({
+        title: "خطا",
+        text: `از این محصول فقط به تعداد ${currentProduct.count} عدد در انبار موجود است.`,
+        icon: "error",
+      });
+    }
   };
 
   useEffect(() => {
@@ -548,6 +566,79 @@ function EachProductLayout(props) {
                         },
                         boxShadow: "5px 5px 8px 0 rgba(0,0,0,0.6)",
                       }}
+                      onClick={(e) => {
+                        basket = localStorage.getItem("basket");
+                        basket = JSON.parse(basket);
+                        if (!basket) {
+                          basket = {};
+                          basket.basketProducts = [];
+                          basket.numberOfProductsInBasket = 0;
+                          basket.sumPrices = 0;
+                        }
+                        setBasket(basket);
+                        let existFlag = false;
+                        let processStatus = true;
+                        numberOfGood = Number(numberOfGood);
+                        basket.basketProducts.map((item) => {
+                          if (item.id === currentProduct.id) {
+                            existFlag = true;
+                            item.number += numberOfGood;
+                            if (item.number <= currentProduct.count) {
+                              basket.numberOfProductsInBasket += numberOfGood;
+                              item.totalPriceOfThisProduct +=
+                                currentProduct.price * numberOfGood;
+                              basket.sumPrices +=
+                                currentProduct.price * numberOfGood;
+                            } else {
+                              processStatus = false;
+                              swal({
+                                title: "خطا",
+                                text: `از این محصول فقط به تعداد ${currentProduct.count} عدد در انبار موجود است. تعداد مورد درخواستی شما بیش از موجودی است!`,
+                                icon: "error",
+                              });
+                            }
+                          }
+                        });
+                        if (!existFlag) {
+                          basket.numberOfProductsInBasket =
+                            Number(basket.numberOfProductsInBasket) +
+                            Number(numberOfGood);
+
+                          let basketProduct = { ...currentProduct };
+                          basketProduct.number = Number(numberOfGood);
+                          basketProduct.totalPriceOfThisProduct =
+                            Number(currentProduct.price) * Number(numberOfGood);
+                          basket.basketProducts.push(basketProduct);
+                          basket.sumPrices +=
+                            basketProduct.totalPriceOfThisProduct;
+                        }
+
+                        // basket.basketProducts = [
+                        //   ...basket.basketProducts,
+                        //   { ...basketProduct },
+                        // ];
+                        if (processStatus) {
+                          setBasket(basket);
+                          console.log(basket);
+                          localStorage.setItem(
+                            "basket",
+                            JSON.stringify(basket)
+                          );
+                          toast.success(
+                            "محصول با موفقیت به سبد خرید شما اضافه شد.",
+                            {
+                              position: "bottom-left",
+                              autoClose: 5000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "colored",
+                            }
+                          );
+                        }
+                      }}
                     >
                       افزودن به سبد خرید
                     </Button>
@@ -592,6 +683,18 @@ function EachProductLayout(props) {
               </div>
             </div>
           </div>
+          <ToastContainer
+            bodyClassName={() => style.toastify}
+            position="bottom-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={true}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <div className={style.tabProduct}>
             <CacheProvider value={cacheRtl}>
               <ThemeProvider theme={theme}>

@@ -100,3 +100,6 @@
   object-fit: fill;
   height: 100%;
 }
+.toastify {
+  font-size: 1.8rem;
+}

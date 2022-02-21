@@ -29,3 +29,6 @@
 html {
   font-size: 62.5%;
 }
+.swal-modal .swal-text {
+  text-align: center;
+}
