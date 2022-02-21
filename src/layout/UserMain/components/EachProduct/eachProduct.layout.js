@@ -98,45 +98,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 /**************************** */
 const BASE_URL = "http://localhost:3002";
-const actions = [
-  {
-    key: "telegram",
-    icon: (
-      <TelegramShareButton url={window.location.href}>
-        <TelegramIcon size={40} round={true} />
-      </TelegramShareButton>
-    ),
-    name: "تلگرام",
-  },
-  {
-    key: "whatsapp",
-    icon: (
-      <WhatsappShareButton url={window.location.href}>
-        <WhatsappIcon size={40} round={true} />
-      </WhatsappShareButton>
-    ),
-    name: "واتس اپ",
-  },
-  {
-    key: "twitter",
-    icon: (
-      <TwitterShareButton url={window.location.href}>
-        {" "}
-        <TwitterIcon size={40} round={true} />
-      </TwitterShareButton>
-    ),
-    name: "توییتر",
-  },
-  {
-    key: "email",
-    icon: (
-      <EmailShareButton url={window.location.href}>
-        <EmailIcon size={40} round={true} />
-      </EmailShareButton>
-    ),
-    name: "ایمیل",
-  },
-];
+
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
@@ -209,6 +171,7 @@ function EachProductLayout(props) {
   let id = param.get("id");
   id = Number(id);
   let navigate = useNavigate();
+
   const [value, setValue] = React.useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   let [numberOfGood, setNumberOfGood] = useState(1);
@@ -221,6 +184,7 @@ function EachProductLayout(props) {
   let [categoryNames, setCategoryNames] = useState([]);
   let [currentProduct, setCurrentProduct] = useState(null);
   let [basket, setBasket] = useState(null);
+  let [currentURL, setCurrentURL] = useState(null);
   const setCategoryName = () => {
     categoryNames = allCategory.map((category, index) => {
       return category.name;
@@ -254,6 +218,7 @@ function EachProductLayout(props) {
     getCategory().then((res) => {
       setAllCategory(res);
     });
+    setCurrentURL(window.location.href);
   }, [id]);
 
   useEffect(() => {
@@ -268,6 +233,45 @@ function EachProductLayout(props) {
   useEffect(() => {
     setCategoryName();
   }, [allCategory]);
+  const actions = [
+    {
+      key: "telegram",
+      icon: (
+        <TelegramShareButton url={currentURL}>
+          <TelegramIcon size={40} round={true} />
+        </TelegramShareButton>
+      ),
+      name: "تلگرام",
+    },
+    {
+      key: "whatsapp",
+      icon: (
+        <WhatsappShareButton url={currentURL}>
+          <WhatsappIcon size={40} round={true} />
+        </WhatsappShareButton>
+      ),
+      name: "واتس اپ",
+    },
+    {
+      key: "twitter",
+      icon: (
+        <TwitterShareButton url={currentURL}>
+          {" "}
+          <TwitterIcon size={40} round={true} />
+        </TwitterShareButton>
+      ),
+      name: "توییتر",
+    },
+    {
+      key: "email",
+      icon: (
+        <EmailShareButton url={currentURL}>
+          <EmailIcon size={40} round={true} />
+        </EmailShareButton>
+      ),
+      name: "ایمیل",
+    },
+  ];
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -619,7 +623,7 @@ function EachProductLayout(props) {
                         // ];
                         if (processStatus) {
                           setBasket(basket);
-                          console.log(basket);
+                          // console.log(basket);
                           localStorage.setItem(
                             "basket",
                             JSON.stringify(basket)
