@@ -7,15 +7,28 @@ import IconButton from "@mui/material/IconButton";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import Badge from "@mui/material/Badge";
+import { colors } from "assets/colors";
+import { useSearchParams, useNavigate } from "react-router-dom";
+/*************React-Redux-Hooks****************** */
+import { useDispatch, useSelector } from "react-redux";
+/*************************************************** */
 const navBar2 = React.createRef();
 const theme = createTheme({
+  multilineColor: {
+    color: "red",
+  },
+  direction: "rtl",
   typography: {
     fontFamily: "vazir",
     fontSize: 30,
   },
+  palette: {
+    primary: {
+      main: colors.primary,
+    },
+  },
 });
-
 const handleClickMenu = () => {
   navBar2.current.style.display === "flex"
     ? (navBar2.current.style.display = "none")
@@ -23,6 +36,39 @@ const handleClickMenu = () => {
 };
 
 const UserHeaderLayout = () => {
+  // let [param, setParam] = useSearchParams();
+  // let id = Number(param.get("id"));
+
+  let numberOfProductsInBasketRedux = useSelector(
+    (state) => state.numberOfProductsInBasketState.numberOfProductsInBasket
+  );
+
+  let [basket, setBasket] = useState(
+    JSON.parse(localStorage.getItem("basket"))
+      ? JSON.parse(localStorage.getItem("basket"))
+      : {}
+  );
+
+  // console.log("number:", basket.numberOfProductsInBasket);
+  let [numberOfProductsInBasket, setNumberOfProductsInBasket] = useState(
+    basket.numberOfProductsInBasket ? basket.numberOfProductsInBasket : 0
+  );
+  useEffect(() => {
+    if (JSON.stringify(basket) !== "{}" && basket !== null) {
+      setNumberOfProductsInBasket(basket.numberOfProductsInBasket);
+    } else {
+      setNumberOfProductsInBasket(0);
+    }
+  }, [basket]);
+  useEffect(() => {
+    // console.log("redux", numberOfProductsInBasketRedux);
+    setBasket(
+      JSON.parse(localStorage.getItem("basket"))
+        ? JSON.parse(localStorage.getItem("basket"))
+        : {}
+    );
+  }, [numberOfProductsInBasketRedux]);
+
   const [login, setLogin] = useState(false);
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUser");
@@ -84,7 +130,12 @@ const UserHeaderLayout = () => {
                     <IconButton>
                       <span className={style.navIcon}>
                         {" "}
-                        <FaShoppingCart />
+                        <Badge
+                          badgeContent={numberOfProductsInBasket}
+                          color="primary"
+                        >
+                          <FaShoppingCart />
+                        </Badge>
                       </span>
                     </IconButton>
                   </Tooltip>

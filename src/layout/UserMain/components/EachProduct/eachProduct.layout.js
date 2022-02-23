@@ -96,7 +96,11 @@ import swal from "sweetalert";
 /*****Toastify *****/
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-/**************************** */
+/***************Redux Hooks*********** */
+import { useSelector, useDispatch } from "react-redux";
+/************Actions*************** */
+import { setNumberOfProductsInBasket } from "redux/actions";
+/****************************** */
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -171,6 +175,9 @@ function EachProductLayout(props) {
   let id = param.get("id");
   id = Number(id);
   let navigate = useNavigate();
+  // let numberOfProductsInBasketRedux = useSelector(
+  //   (state) => state.numberOfProductsInBasketState.numberOfProductsInBasket
+  // );
 
   const [value, setValue] = React.useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -183,7 +190,7 @@ function EachProductLayout(props) {
   let [allCategory, setAllCategory] = useState([]);
   let [categoryNames, setCategoryNames] = useState([]);
   let [currentProduct, setCurrentProduct] = useState(null);
-  let [basket, setBasket] = useState(null);
+  let [basket, setBasket] = useState({});
   let [currentURL, setCurrentURL] = useState(null);
   const setCategoryName = () => {
     categoryNames = allCategory.map((category, index) => {
@@ -192,6 +199,8 @@ function EachProductLayout(props) {
 
     setCategoryNames(categoryNames);
   };
+
+  const dispatch = useDispatch();
   const handleChangeNumber = (e) => {
     if (e.target.value < 1) {
       swal({
@@ -213,7 +222,7 @@ function EachProductLayout(props) {
   useEffect(() => {
     getProducts().then((res) => {
       setAllProducts(res);
-      console.log(allProducts);
+      //console.log(allProducts);
     });
     getCategory().then((res) => {
       setAllCategory(res);
@@ -233,6 +242,10 @@ function EachProductLayout(props) {
   useEffect(() => {
     setCategoryName();
   }, [allCategory]);
+
+  useEffect(() => {
+    dispatch(setNumberOfProductsInBasket(basket.numberOfProductsInBasket));
+  }, [basket.numberOfProductsInBasket]);
   const actions = [
     {
       key: "telegram",
@@ -571,8 +584,7 @@ function EachProductLayout(props) {
                         boxShadow: "5px 5px 8px 0 rgba(0,0,0,0.6)",
                       }}
                       onClick={(e) => {
-                        basket = localStorage.getItem("basket");
-                        basket = JSON.parse(basket);
+                        basket = JSON.parse(localStorage.getItem("basket"));
                         if (!basket) {
                           basket = {};
                           basket.basketProducts = [];
@@ -580,15 +592,18 @@ function EachProductLayout(props) {
                           basket.sumPrices = 0;
                         }
                         setBasket(basket);
+
                         let existFlag = false;
                         let processStatus = true;
                         numberOfGood = Number(numberOfGood);
+
                         basket.basketProducts.map((item) => {
                           if (item.id === currentProduct.id) {
                             existFlag = true;
                             item.number += numberOfGood;
                             if (item.number <= currentProduct.count) {
                               basket.numberOfProductsInBasket += numberOfGood;
+
                               item.totalPriceOfThisProduct +=
                                 currentProduct.price * numberOfGood;
                               basket.sumPrices +=
