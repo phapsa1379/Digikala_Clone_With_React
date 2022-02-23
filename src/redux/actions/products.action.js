@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const BASE_URL = "http://localhost:3002";
+import { getProducts } from "api/products.api";
 
 export const setProducts = (data) => {
   return { type: "PRODUCTS_SET_ALL_PRODUCTS", payload: data };
@@ -8,12 +6,11 @@ export const setProducts = (data) => {
 
 export const fetchProducts = () => {
   return (dispatch, getState) => {
-    return axios
-      .get(`${BASE_URL}/products`)
+    return getProducts()
       .then((response) => {
-        // console.log("reducer:", response.data);
-        dispatch(setProducts(response.data));
-        return response.data;
+        console.log("reducer:", response);
+        dispatch(setProducts(response));
+        return response;
       })
       .catch((error) => {
         // throw new Error('error')

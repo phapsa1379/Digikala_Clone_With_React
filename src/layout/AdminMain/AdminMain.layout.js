@@ -4,7 +4,7 @@ import {
   // ManageProductsLayout,
   ManageProducts,
   ManageEntitiesLayout,
-  ManageOrdersLayout,
+  ManageOrders,
 } from "./components";
 const AdminMainLayout = (props) => {
   let { mainTab } = props;
@@ -15,7 +15,7 @@ const AdminMainLayout = (props) => {
       ) : mainTab === "mainEntities" ? (
         <ManageEntitiesLayout />
       ) : (
-        <ManageOrdersLayout />
+        <ManageOrders />
       )}
     </div>
   );

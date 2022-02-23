@@ -2,4 +2,4 @@
 export { ManageProducts } from "./ManageProducts/manageProducts.layout";
 
 export { ManageEntitiesLayout } from "./ManageEntities/manageEntities.layout";
-export { ManageOrdersLayout } from "./ManageOrders/manageOrders.layout";
+export { ManageOrders } from "./ManageOrders/manageOrders.layout";

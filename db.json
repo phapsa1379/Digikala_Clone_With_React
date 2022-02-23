@@ -662,7 +662,8 @@
       "buyingProducts": [
         {
           "id": 12,
-          "number": 2
+          "number": 2,
+          "price": 30450000
         }
       ]
     },
@@ -678,11 +679,13 @@
       "buyingProducts": [
         {
           "id": 11,
-          "number": 1
+          "number": 1,
+          "price": 13450000
         },
         {
           "id": 13,
-          "number": 1
+          "number": 1,
+          "price": 27250000
         }
       ]
     },
@@ -691,18 +694,20 @@
       "name": "ندا خرم",
       "address": "ایران تهران داراباد خیابان شهید بهشتی شرقی",
       "phoneNumber": "09125224826",
-      "totalPrice": 130000000,
+      "totalPrice": 6840000,
       "orderDate": "1400/011/6",
       "registerationDate": "1400/10/29",
       "deliveryDate": "1400/11/4",
       "buyingProducts": [
         {
           "id": 19,
-          "number": 1
+          "number": 1,
+          "price": 480000
         },
         {
-          "id": 1,
-          "number": 3
+          "id": 41,
+          "number": 3,
+          "price": 2120000
         }
       ]
     },
@@ -718,11 +723,13 @@
       "buyingProducts": [
         {
           "id": 10,
-          "number": 2
+          "number": 2,
+          "price": 10000000
         },
         {
           "id": 6,
-          "number": 1
+          "number": 1,
+          "price": 22000000
         }
       ]
     },
@@ -738,11 +745,13 @@
       "buyingProducts": [
         {
           "id": 10,
-          "number": 3
+          "number": 3,
+          "price": 10000000
         },
         {
           "id": 3,
-          "number": 1
+          "number": 1,
+          "price": 35000000
         }
       ]
     }

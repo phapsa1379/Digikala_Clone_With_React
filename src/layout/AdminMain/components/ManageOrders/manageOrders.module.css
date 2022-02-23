@@ -42,6 +42,19 @@
   margin: 5rem 0;
 }
 
+.closeModalBtn {
+  font-size: 4rem;
+  color: var(--primary-color);
+  display: inline-block;
+  margin-right: auto;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  cursor: pointer;
+}
+.toastify {
+  font-size: 1.8rem;
+}
 @media (min-width: 700px) {
   .headerPart {
     flex-direction: column;
@@ -58,4 +71,34 @@
   .headerPartFilter {
     margin: 5rem auto;
   }
+}
+.ordderInfoName,
+.ordderInfoAddress,
+.ordderInfoPhone,
+.ordderInfoDeliveryDate,
+.ordderInfoOrderDate {
+  margin: 2rem 0;
+  font-size: 2rem;
+  /* font-weight: bold; */
+  color: var(--primary-color);
+}
+.modalText {
+  font-size: 2rem;
+  color: var(--text-color);
+  display: inline-block;
+}
+.ordderInfoProducts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+}
+.ordderInfo {
+  margin: 0 2rem;
+}
+.deliveryButtonContainer {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
