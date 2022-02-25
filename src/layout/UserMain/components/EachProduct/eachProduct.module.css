@@ -16,21 +16,24 @@
   width: 630px;
 }
 .productName {
-  font-size: 3.2rem;
+  font-size: 2.5rem;
   font-weight: 900;
-  color: var(--primary-color);
-  max-width: 600px;
+  color: var(--text-color);
+  max-width: 800px;
+  margin: 2rem 0;
 }
 .productCategory {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  color: var(--primary-color);
+  color: var(--text-color);
+  margin: 2rem 0;
 }
 
 .productPrice {
   font-size: 2.5rem;
-  color: var(--primary-color);
+  color: var(--text-color);
   font-weight: bold;
+  margin: 2rem 0;
 }
 .eachProductContainerTextPart {
   display: flex;
@@ -55,7 +58,7 @@
   color: var(--text-color);
 }
 .countBuying {
-  color: var(--primary-color);
+  color: var(--text-color);
   font-size: 2.5rem;
   display: block;
   margin-bottom: 1rem;

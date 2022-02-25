@@ -7,6 +7,7 @@ const TableComponent = (props) => {
     perPage,
     titlesArray,
     data,
+    initialData,
     titleBgColor,
     titleColor,
     oddColor,
@@ -45,20 +46,40 @@ const TableComponent = (props) => {
     row = Number(row);
     col = Number(col);
     console.log("row is: ", row, "col is : ", col);
+    // data[row][col] = Number(e.target.value);
+
     data[row][col] = Number(e.target.value);
     // rowsThatChange.push(row);
     // setRowsThatChange(rowsThatChange);
     setInputChanges([...inputChanges, e.target]);
-    setChangesArray([...changesArray, data[row]]);
+    setChangesArray([...changesArray, [...data[row]]]);
     changeFlag = true;
     checkChangeFlag(changeFlag);
+  };
+  const keyDownInputHandler = (e) => {
+    if (e.keyCode === 27) {
+      let row = e.target.getAttribute("data-row");
+      let col = e.target.getAttribute("data-col");
+      data[row][col] = initialData[row][col];
+
+      console.log(
+        "text",
+        document.getElementById(`td${row}-${col}`).childNodes[1]
+      );
+      document.getElementById(`td${row}-${col}`).childNodes[1].nodeValue =
+        String(initialData[row][col]);
+      console.log("text", document.getElementById(`td${row}-${col}`).text);
+      // e.target.parentNode.textContent = initialData[row][col];
+      e.target.style.visibility = "hidden";
+      console.log("shit", e.target);
+    }
   };
 
   if (transferData) {
     // getDataFromTable({ data: data, rowsThatChange: rowsThatChange });
     getDataFromTable(changesArray);
     inputChanges.forEach((input) => {
-      input.style.display = "none";
+      input.style.visibility = "hidden";
     });
   }
   return (
@@ -107,6 +128,7 @@ const TableComponent = (props) => {
                     {row.map((column, cindex) => {
                       return cindex !== hiddenIdCol ? (
                         <td
+                          id={`td${rindex}-${cindex}`}
                           className={style.eachColumn}
                           key={cindex}
                           style={{
@@ -118,7 +140,7 @@ const TableComponent = (props) => {
                               ? "#3867d6"
                               : doubleClickable[cindex]
                               ? colors.greenButton
-                              : "black",
+                              : colors.text,
                           }}
                           onClick={() => {
                             if (clickable[cindex]) {
@@ -131,13 +153,19 @@ const TableComponent = (props) => {
                           }}
                           onDoubleClick={(e) => {
                             if (doubleClickable[cindex]) {
-                              e.target.childNodes[0].style.display = "block";
-                              e.target.childNodes[0].value = column;
+                              let currentInput = document.getElementById(
+                                `input${rindex}-${cindex}`
+                              );
+                              console.log("child", currentInput);
+                              currentInput.style.visibility = "visible";
+                              currentInput.value = column;
                             }
                           }}
                         >
                           {input[cindex] ? (
                             <input
+                              id={`input${rindex}-${cindex}`}
+                              onKeyDown={keyDownInputHandler}
                               data-row={rindex}
                               data-col={cindex}
                               type={inputType}

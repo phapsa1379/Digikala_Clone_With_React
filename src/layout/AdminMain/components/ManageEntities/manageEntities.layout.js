@@ -89,7 +89,7 @@ const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
 });
-
+let dataCopy = [];
 class ManageEntitiesLayout extends React.Component {
   state = {
     allProducts: [],
@@ -190,6 +190,7 @@ class ManageEntitiesLayout extends React.Component {
 
                     for (let i = 0; i < length; i++) {
                       this.dataArray[i] = [];
+                      dataCopy[i] = [];
                     }
 
                     for (let index = 0; index < length; index++) {
@@ -197,14 +198,22 @@ class ManageEntitiesLayout extends React.Component {
                         if (property === "id") {
                           this.dataArray[index][0] =
                             this.state.products[index][property];
+                          dataCopy[index][0] =
+                            this.state.products[index][property];
                         } else if (property === "name") {
                           this.dataArray[index][1] =
+                            this.state.products[index][property];
+                          dataCopy[index][1] =
                             this.state.products[index][property];
                         } else if (property === "price") {
                           this.dataArray[index][2] =
                             this.state.products[index][property];
+                          dataCopy[index][2] =
+                            this.state.products[index][property];
                         } else if (property === "count") {
                           this.dataArray[index][3] =
+                            this.state.products[index][property];
+                          dataCopy[index][3] =
                             this.state.products[index][property];
                         }
                       }
@@ -212,7 +221,7 @@ class ManageEntitiesLayout extends React.Component {
 
                     this.setState({
                       ...this.state,
-                      data: this.dataArray,
+                      data: [...this.dataArray],
                     });
                   }
                 );
@@ -351,7 +360,8 @@ class ManageEntitiesLayout extends React.Component {
             <TableComponent
               titleBgColor={colors.primary}
               titleColor={colors.white}
-              data={this.state.data}
+              data={[...this.state.data]}
+              initialData={[...dataCopy]}
               titlesArray={titleArray}
               perPage={false}
               clickable={[false, false, false, false]}
