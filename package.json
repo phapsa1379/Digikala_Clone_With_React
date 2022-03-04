@@ -16,6 +16,7 @@
     "ckeditor5": "^31.1.0",
     "default-props": "^0.1.1",
     "env-cmd": "^10.1.0",
+    "formik": "^2.2.9",
     "jalali-moment": "^3.3.11",
     "jss-rtl": "^0.3.0",
     "prop-types": "^15.8.1",

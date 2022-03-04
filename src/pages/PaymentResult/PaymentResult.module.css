@@ -1,0 +1,37 @@
+.resultPage {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+.mainPart {
+  padding: 5rem 10rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.mainPart .title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+}
+.messageText {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  width: 50rem;
+}
+
+.messageLogo {
+  margin-left: 2rem;
+}

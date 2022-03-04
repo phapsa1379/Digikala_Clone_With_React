@@ -12,7 +12,9 @@ import { colors } from "assets/colors";
 import { useSearchParams, useNavigate } from "react-router-dom";
 /*************React-Redux-Hooks****************** */
 import { useDispatch, useSelector } from "react-redux";
-/*************************************************** */
+/*****************Prop Types and Props Default********************************** */
+import PropTypes from "prop-types";
+/***************************************** */
 const navBar2 = React.createRef();
 const theme = createTheme({
   multilineColor: {
@@ -35,9 +37,10 @@ const handleClickMenu = () => {
     : (navBar2.current.style.display = "flex");
 };
 
-const UserHeaderLayout = () => {
+const UserHeaderLayout = (props) => {
   // let [param, setParam] = useSearchParams();
   // let id = Number(param.get("id"));
+  let result = props.result;
 
   let numberOfProductsInBasketRedux = useSelector(
     (state) => state.numberOfProductsInBasketState.numberOfProductsInBasket
@@ -49,6 +52,15 @@ const UserHeaderLayout = () => {
       : {}
   );
 
+  if (result === "success") {
+    //post request to server.........
+    basket = {};
+    basket.basketProducts = [];
+    basket.numberOfProductsInBasket = 0;
+    basket.sumPrices = 0;
+
+    localStorage.setItem("basket", JSON.stringify(basket));
+  }
   // console.log("number:", basket.numberOfProductsInBasket);
   let [numberOfProductsInBasket, setNumberOfProductsInBasket] = useState(
     basket.numberOfProductsInBasket ? basket.numberOfProductsInBasket : 0
@@ -123,25 +135,32 @@ const UserHeaderLayout = () => {
                 </ThemeProvider>
               </a>
             </li>
-            <li className={style.navItem}>
-              <a className={`${style.navLink} ${style.cartLink}`} href="/cart">
-                <ThemeProvider theme={theme}>
-                  <Tooltip title="سبد خرید">
-                    <IconButton>
-                      <span className={style.navIcon}>
-                        {" "}
-                        <Badge
-                          badgeContent={numberOfProductsInBasket}
-                          color="primary"
-                        >
-                          <FaShoppingCart />
-                        </Badge>
-                      </span>
-                    </IconButton>
-                  </Tooltip>
-                </ThemeProvider>
-              </a>
-            </li>
+            {result !== "success" ? (
+              <li className={style.navItem}>
+                <a
+                  className={`${style.navLink} ${style.cartLink}`}
+                  href="/cart"
+                >
+                  <ThemeProvider theme={theme}>
+                    <Tooltip title="سبد خرید">
+                      <IconButton>
+                        <span className={style.navIcon}>
+                          {" "}
+                          <Badge
+                            badgeContent={numberOfProductsInBasket}
+                            color="primary"
+                          >
+                            <FaShoppingCart />
+                          </Badge>
+                        </span>
+                      </IconButton>
+                    </Tooltip>
+                  </ThemeProvider>
+                </a>
+              </li>
+            ) : (
+              <></>
+            )}
           </ul>
         </nav>
         <nav className={style.navBar2}>
@@ -178,3 +197,11 @@ const UserHeaderLayout = () => {
 };
 
 export { UserHeaderLayout };
+
+UserHeaderLayout.propTypes = {
+  result: PropTypes.bool,
+};
+
+UserHeaderLayout.defaultProps = {
+  result: false,
+};

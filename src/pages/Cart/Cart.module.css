@@ -1,0 +1,55 @@
+.CartPage {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  height: 100%;
+}
+.mainPart {
+  padding: 5rem 10rem;
+}
+.mainPart .title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+}
+.tableContainer {
+  margin: 3rem 10rem;
+}
+.sumAndBuy {
+  margin: 3rem 10rem;
+  flex-direction: row-reverse;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buyingBtn {
+  padding: 1.5rem 3rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  border-radius: 1.5rem;
+  font-size: 2.5rem;
+  cursor: pointer;
+  box-shadow: 0.5rem 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.5);
+}
+.sumPrices {
+  font-size: 3rem;
+  color: var(--text-color);
+}
+.mainPart2 {
+  margin: 3rem 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; */
+  height: 100%;
+  flex-grow: 1;
+}
+
+.mainPart2 .title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+}

@@ -1,0 +1,36 @@
+.finalaizePage {
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.mainPart {
+  padding: 5rem 10rem;
+  flex-grow: 1;
+}
+.mainPart .title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-color);
+  margin-bottom: 3rem;
+}
+.textAria {
+  border: 3px solid var(--primary-color);
+  border-radius: 1.5rem;
+}
+.textAria:focus {
+  border: 3px solid var(--primary-color);
+  outline: none;
+}
+.showErrorValidation {
+  font-size: 1.6rem;
+  color: var(--primary-color);
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+.buyingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
