@@ -51,6 +51,8 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 /******************image magnify */
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";
+/*************Helmet********************* */
+import { Helmet } from "react-helmet";
 
 /*********Share Product********* */
 import {
@@ -358,6 +360,15 @@ function EachProductLayout(props) {
   );
   return (
     <div className={style.productEachContainer}>
+      <Helmet>
+        <title>
+          {currentProduct
+            ? getCategoryNameByCategoryId(currentProduct.categoryId) +
+              " | " +
+              currentProduct.name
+            : ""}
+        </title>
+      </Helmet>
       {["left"].map((anchor) => (
         <div className={style.menu}>
           <CacheProvider value={cacheRtl}>

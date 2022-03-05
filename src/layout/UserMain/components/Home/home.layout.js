@@ -30,7 +30,9 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 // import required modules
 import { Pagination, Navigation } from "swiper";
-
+/***************Helmet*********************** */
+import { Helmet } from "react-helmet";
+/*********************************************** */
 const theme = createTheme({
   multilineColor: {
     color: "red",
@@ -76,6 +78,9 @@ const HomeLayout = (props) => {
   let numberOfShowingProductsOfEachCategory = 6;
   return (
     <div className={style.homeContainer}>
+      <Helmet>
+        <title>فروشگاه اینترنتی دیجی‌کالا</title>
+      </Helmet>
       <div
         className={`${style.videoBackgroundContainer}  ${style.scrollChild} scrollChild`}
       >

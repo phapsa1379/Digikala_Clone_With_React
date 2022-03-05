@@ -47,7 +47,9 @@ import { getOrderById, getProductById } from "globalFunctions";
 import { connect } from "react-redux";
 import store from "redux/store";
 import { fetchProducts } from "redux/actions/products.action";
-/****************************** */
+/*********Jalali Date**************** */
+import moment from "jalali-moment";
+/************************************************ */
 const BASE_URL = "http://localhost:3002";
 const modalTheme = createTheme({
   multilineColor: {
@@ -179,6 +181,30 @@ class ManageOrdersLayout extends React.Component {
   deliverButtonHandler = () => {
     this.setState({ ...this.state, openModal: false }, () => {
       //set current Order as a is delivered
+      let currentDate =
+        new Date().getFullYear() +
+        "/" +
+        (new Date().getMonth() + 1) +
+        "/" +
+        new Date().getDate();
+      currentDate = moment(currentDate, "YYYY/MM/DD")
+        .locale("fa")
+        .format("YYYY/MM/DD");
+      // alert(currentDate);
+      // console.log(this.state.currentOrder);
+      this.setState(
+        {
+          ...this.state,
+          currentOrder: {
+            ...this.state.currentOrder,
+            deliveryDate: currentDate,
+          },
+        },
+        () => {
+          putOrders(this.state.currentOrder.id, this.state.currentOrder);
+          this.componentDidMount();
+        }
+      );
     });
   };
   findCategoryNameById = (id) => {

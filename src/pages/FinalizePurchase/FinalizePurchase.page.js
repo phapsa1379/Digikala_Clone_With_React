@@ -23,7 +23,9 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import moment from "jalali-moment";
 /*******************react-router-dom************************** */
 import { useNavigate } from "react-router-dom";
-/*********************************************** */
+/*********************Helmet-************************** */
+import { Helmet } from "react-helmet";
+/********************************************* */
 
 const useStyles = makeStyles({
   root: {
@@ -152,6 +154,9 @@ function FinalizePurchasePage(props) {
   }, [currentCustomer]);
   return (
     <div className={style.finalaizePage}>
+      <Helmet>
+        <title>پرداخت نهایی</title>
+      </Helmet>
       <div className={style.header}>
         <UserHeaderLayout />
       </div>

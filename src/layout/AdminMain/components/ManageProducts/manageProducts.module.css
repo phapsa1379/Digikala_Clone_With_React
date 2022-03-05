@@ -3,7 +3,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  min-height: 100vh;
   /* justify-content: center;
   align-items: center; */
 }
@@ -25,6 +25,7 @@
 }
 .tablePart {
   margin: 1rem 10rem 5rem 10rem;
+  flex-grow: 1;
 }
 .paginationPart {
   display: flex;

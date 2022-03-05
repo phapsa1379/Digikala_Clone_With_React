@@ -33,6 +33,9 @@ import PaginationItem from "@mui/material/PaginationItem";
 import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
+/***********Helmet******************** */
+import { Helmet } from "react-helmet";
+/***************************** */
 import {
   SkeletonText,
   SkeletonBlock,
@@ -231,6 +234,11 @@ function ProductsGroupLayout() {
   );
   return (
     <div className={style.productsGroupContainer}>
+      <Helmet>
+        <title>
+          {"گروه محصولات" + " | " + getCategoryNameByCategoryId(categoryId)}
+        </title>
+      </Helmet>
       {["left"].map((anchor) => (
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={theme}>
