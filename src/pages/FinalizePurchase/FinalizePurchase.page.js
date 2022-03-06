@@ -23,7 +23,13 @@ import TextareaAutosize from "@mui/material/TextareaAutosize";
 import moment from "jalali-moment";
 /*******************react-router-dom************************** */
 import { useNavigate } from "react-router-dom";
-/*********************************************** */
+/*********************Helmet-************************** */
+import { Helmet } from "react-helmet";
+/****************Persian Date picker************************** */
+import { DatePicker } from "jalali-react-datepicker";
+import { RangeDatePicker } from "jalali-react-datepicker";
+
+/************************************************** */
 
 const useStyles = makeStyles({
   root: {
@@ -114,15 +120,17 @@ const validate = (values) => {
     errors.phone = "شماره تلفن نامعتبر است";
   }
 
-  if (!values.date) {
-    errors.date = "این فیلد نمی‌تواند خالی باشد";
-  }
+  // if (!values.date) {
+  //   console.log("bad", values.date);
+  //   errors.date = "این فیلد نمی‌تواند خالی باشد";
+  // }
   return errors;
 };
 
 function FinalizePurchasePage(props) {
   let [currentCustomer, setCurrentCustomer] = useState({});
   let [basket, setBasket] = useState({});
+  let [dateValue, setDateValue] = useState(null);
   let navigate = useNavigate();
   const classes = useStyles();
   const formik = useFormik({
@@ -135,10 +143,26 @@ function FinalizePurchasePage(props) {
     },
     validate,
     onSubmit: (values) => {
-      let objectOfInput = JSON.stringify(values, null, 2);
-      setCurrentCustomer({ ...JSON.parse(objectOfInput) });
-      console.log("form object", JSON.parse(objectOfInput));
-      alert(objectOfInput);
+      values.date = dateValue;
+      // console.log("values:", values);
+
+      // let objectOfInput = values;
+      // objectOfInput.date = moment(values.date, "YYYY/MM/DD")
+      //   .locale("fa")
+      //   .format("YYYY/MM/DD");
+      let registerationDate =
+        new Date().getFullYear() +
+        "/" +
+        (new Date().getMonth() + 1) +
+        "/" +
+        new Date().getDate();
+      registerationDate = moment(registerationDate, "YYYY/MM/DD")
+        .locale("fa")
+        .format("YYYY/MM/DD");
+      values.registerationDate = registerationDate;
+      setCurrentCustomer({ ...values });
+      // console.log("form object", values);
+      // alert(values);
       window.location.href =
         "http://localhost/paymentPage/dargah.html?totalPrice=" +
         basket.sumPrices;
@@ -152,6 +176,9 @@ function FinalizePurchasePage(props) {
   }, [currentCustomer]);
   return (
     <div className={style.finalaizePage}>
+      <Helmet>
+        <title>پرداخت نهایی</title>
+      </Helmet>
       <div className={style.header}>
         <UserHeaderLayout />
       </div>
@@ -275,7 +302,7 @@ function FinalizePurchasePage(props) {
                 {" "}
                 {formik.errors.phone ? <div>{formik.errors.phone}</div> : null}
               </div>
-              <TextField
+              {/* <TextField
                 className={classes.root}
                 name="date"
                 size="small"
@@ -289,7 +316,7 @@ function FinalizePurchasePage(props) {
                   width: "35rem",
                   margin: "2rem",
                   marginBottom: "1rem",
-                  backgroundColor: colors.white,
+                  // backgroundColor: colors.white,
                 }}
                 type="date"
                 // className={style.TextField}
@@ -298,6 +325,70 @@ function FinalizePurchasePage(props) {
                 variant="outlined"
                 onChange={formik.handleChange}
                 value={formik.values.date}
+              /> */}
+              <DatePicker
+                name="date"
+                onClickSubmitButton={({ value }) => {
+                  let date = value._d;
+                  let currentDate =
+                    date.getFullYear() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getDate();
+                  currentDate = moment(currentDate, "YYYY/MM/DD")
+                    .locale("fa")
+                    .format("YYYY/MM/DD");
+                  console.log("submit date is called", currentDate);
+                  setDateValue(currentDate);
+                }}
+                timePicker={false}
+                label="تاریخ تحویل"
+                className={style.dataPicker}
+                theme={{
+                  backColor: "#FFFFFF",
+                  // head
+                  headBackColor: colors.primary,
+                  headTitleColor: colors.white,
+
+                  headArrowColor: "#000",
+                  headRangeBackColor: "#D6D6D6",
+                  headRangeColor: "#000",
+
+                  // weekdays color
+                  weekDaysColor: "#3F3F3F",
+
+                  // days
+                  daysColor: "#000",
+                  daysBackColor: "#FFFFFF",
+                  holidaysColor: colors.red,
+                  holidaysBackColor: "#FFFFFF",
+                  daysRound: "50%",
+
+                  selectDayColor: "#fff",
+                  selectDayBackColor: colors.primary,
+
+                  // buttons
+                  submitBackColor: colors.primary,
+                  submitHoverBackColor: colors.ligthPrimary,
+                  submitColor: colors.white,
+                  submitHoverColor: colors.white,
+                  cancelBackColor: colors.primary,
+                  cancelHoverBackColor: colors.ligthPrimary,
+                  cancelColor: colors.white,
+                  cancelHoverColor: colors.white,
+                  changeViewButtonBackColor: "#D6D6D6",
+                  changeViewButtonHoverBackColor: "#fff",
+                  changeViewButtonColor: "#000",
+                  changeViewButtonHoverColor: colors.primary,
+                  // time
+                  timeBackColor: "#f0f0f0",
+                  timeNumberColor: "#000",
+                  handBackColor: "#617fdf",
+                  handCircleColor: "#617fdf",
+                  selectedNumberColor: "#fff",
+                  headTimeTitleColor: colors.primary,
+                }}
               />
 
               <div className={style.showErrorValidation}>

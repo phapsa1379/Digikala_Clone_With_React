@@ -36,3 +36,16 @@
 .messageLogo {
   margin-left: 2rem;
 }
+.backBtn {
+  margin: 3rem auto;
+  padding: 1.5rem 3rem;
+  font-size: 2rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 1s;
+}
+.backBtn:hover {
+  background-color: var(--lightPrimary-color);
+}

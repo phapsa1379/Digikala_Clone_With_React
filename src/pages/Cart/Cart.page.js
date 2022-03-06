@@ -23,7 +23,9 @@ import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 /************Actions*************** */
 import { setNumberOfProductsInBasket } from "redux/actions";
-/****************************** */
+/************Helmet****************** */
+import { Helmet } from "react-helmet";
+/****************************************** */
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -126,6 +128,9 @@ function CartPage(props) {
   };
   return (
     <div className={style.CartPage}>
+      <Helmet>
+        <title>سبد خرید</title>
+      </Helmet>
       <div className={style.header}>
         <UserHeaderLayout />
       </div>

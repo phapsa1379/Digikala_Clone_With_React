@@ -14,7 +14,9 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { useEffect } from "react";
 import axios from "axios";
-
+/*************Helmet***************** */
+import { Helmet } from "react-helmet";
+/*********************************************** */
 let navigate;
 const cacheRtl = createCache({
   key: "muirtl",
@@ -79,6 +81,9 @@ const LoginPage = (props) => {
 
   return (
     <div className={style.loginPageContainer}>
+      <Helmet>
+        <title>ورود</title>
+      </Helmet>
       <div className={style.loginFormContainer}>
         <div className={style.title}>ورود به پنل مدیریت فروشگاه دیجیکالا</div>
         <form className={style.form} onSubmit={submitHandler}>

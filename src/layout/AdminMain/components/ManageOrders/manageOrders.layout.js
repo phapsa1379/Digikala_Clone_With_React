@@ -47,7 +47,9 @@ import { getOrderById, getProductById } from "globalFunctions";
 import { connect } from "react-redux";
 import store from "redux/store";
 import { fetchProducts } from "redux/actions/products.action";
-/****************************** */
+/*********Jalali Date**************** */
+import moment from "jalali-moment";
+/************************************************ */
 const BASE_URL = "http://localhost:3002";
 const modalTheme = createTheme({
   multilineColor: {
@@ -179,6 +181,30 @@ class ManageOrdersLayout extends React.Component {
   deliverButtonHandler = () => {
     this.setState({ ...this.state, openModal: false }, () => {
       //set current Order as a is delivered
+      let currentDate =
+        new Date().getFullYear() +
+        "/" +
+        (new Date().getMonth() + 1) +
+        "/" +
+        new Date().getDate();
+      currentDate = moment(currentDate, "YYYY/MM/DD")
+        .locale("fa")
+        .format("YYYY/MM/DD");
+      // alert(currentDate);
+      // console.log(this.state.currentOrder);
+      this.setState(
+        {
+          ...this.state,
+          currentOrder: {
+            ...this.state.currentOrder,
+            deliveryDate: currentDate,
+          },
+        },
+        () => {
+          putOrders(this.state.currentOrder.id, this.state.currentOrder);
+          this.componentDidMount();
+        }
+      );
     });
   };
   findCategoryNameById = (id) => {
@@ -250,6 +276,17 @@ class ManageOrdersLayout extends React.Component {
               : "deliveryDate=null"
           }`,
         };
+        let deliverdArray = [],
+          undeliverdArray = [];
+        this.state.allOrders.forEach((order) => {
+          if (order.deliveryDate === "null") {
+            undeliverdArray.push(order);
+          } else {
+            deliverdArray.push(order);
+          }
+        });
+        console.log("delivery", deliverdArray);
+        console.log("undelivery", undeliverdArray);
         axios
           .get(`${BASE_URL}/orders${howGet[this.state.filter]}`)
           .then((res) => {
@@ -259,9 +296,12 @@ class ManageOrdersLayout extends React.Component {
               let length = this.state.orders.length;
               let totalLength = this.state.allOrders.length;
 
-              this.numberOfPage = Math.ceil(length / this.state.inPerPage);
+              this.numberOfPage = Math.ceil(
+                (this.state.radio === "delivered"
+                  ? deliverdArray.length
+                  : undeliverdArray.length) / this.state.inPerPage
+              );
               this.dataArray = [];
-
               for (let i = 0; i < length; i++) {
                 this.dataArray[i] = [];
               }
@@ -311,8 +351,11 @@ class ManageOrdersLayout extends React.Component {
       });
     };
     const handleChangeRadioButton = (event) => {
-      this.setState({ ...this.state, radio: event.target.value });
-      this.componentDidMount();
+      this.setState({ ...this.state, pageNumber: 1 }, () => {
+        this.setState({ ...this.state, radio: event.target.value }, () => {
+          this.componentDidMount();
+        });
+      });
     };
     return (
       <div className={style.manageOrdersContainer}>
@@ -613,6 +656,7 @@ class ManageOrdersLayout extends React.Component {
               <ThemeProvider theme={theme2}>
                 <Stack spacing={2}>
                   <Pagination
+                    page={this.state.pageNumber}
                     count={this.numberOfPage}
                     color="primary"
                     size="large"

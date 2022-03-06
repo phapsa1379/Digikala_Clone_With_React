@@ -14,7 +14,8 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 /*****************Prop Types and Props Default********************************** */
 import PropTypes from "prop-types";
-/***************************************** */
+/***************api************************ */
+import { postOrders } from "api/orders.api";
 const navBar2 = React.createRef();
 const theme = createTheme({
   multilineColor: {
@@ -52,15 +53,6 @@ const UserHeaderLayout = (props) => {
       : {}
   );
 
-  if (result === "success") {
-    //post request to server.........
-    basket = {};
-    basket.basketProducts = [];
-    basket.numberOfProductsInBasket = 0;
-    basket.sumPrices = 0;
-
-    localStorage.setItem("basket", JSON.stringify(basket));
-  }
   // console.log("number:", basket.numberOfProductsInBasket);
   let [numberOfProductsInBasket, setNumberOfProductsInBasket] = useState(
     basket.numberOfProductsInBasket ? basket.numberOfProductsInBasket : 0
@@ -95,6 +87,40 @@ const UserHeaderLayout = (props) => {
       setLogin(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (props.result === "success") {
+      //post request to server.........
+      let currentCustomer = JSON.parse(localStorage.getItem("currentCustomer"));
+      let currentOrder = {};
+      currentOrder.name =
+        currentCustomer.firstName + " " + currentCustomer.lastName;
+      currentOrder.phoneNumber = currentCustomer.phone;
+      currentOrder.address = currentCustomer.address;
+      currentOrder.orderDate = currentCustomer.date;
+      currentOrder.deliveryDate = "null";
+      currentOrder.registerationDate = currentCustomer.registerationDate;
+      currentOrder.totalPrice = basket.sumPrices;
+      currentOrder.buyingProducts = [];
+      basket.basketProducts.forEach((product) => {
+        currentOrder.buyingProducts.push({
+          id: product.id,
+          price: product.price, //price of each product
+          number: product.number,
+        });
+      });
+      postOrders(currentOrder).then(() => {
+        basket = {};
+        basket.basketProducts = [];
+        basket.numberOfProductsInBasket = 0;
+        basket.sumPrices = 0;
+
+        localStorage.setItem("basket", JSON.stringify(basket));
+        localStorage.setItem("currentCustomer", JSON.stringify({}));
+      });
+      /************************** */
+    }
+  }, [props.result]);
   return (
     <header className={style.header}>
       <div className={style.menu} onClick={handleClickMenu}>
