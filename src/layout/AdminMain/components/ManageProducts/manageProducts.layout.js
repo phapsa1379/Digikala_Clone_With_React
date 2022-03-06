@@ -272,8 +272,9 @@ const boxStyle = {
   border: `5px solid ${colors.primary}`,
   boxShadow: 24,
   borderRadius: "2rem",
-  // display: "flex",
-  // justifyContent: "space-between",
+  maxHeight: "90vh",
+  overflow: "scroll",
+
   p: 4,
 };
 const getTextFromEditor = (content) => {
@@ -343,7 +344,8 @@ class ManageProductsLayout extends React.Component {
     editorValue: "",
     addOrEdit: null,
     nameProductValue: "",
-
+    priceProductValue: 0,
+    numberProductValue: 0,
     currentProduct: null,
     itemId: null,
   };
@@ -396,7 +398,8 @@ class ManageProductsLayout extends React.Component {
               let urlImage = res.data.filename;
               urlImage = "/files/" + urlImage;
               const nameOfProduct = e.target[1].value;
-
+              const priceOfProduct = e.target[2].value;
+              const countOfProduct = e.target[3].value;
               const categoryName = this.state.selectInputModal.label;
 
               const description = this.state.editorValue;
@@ -409,8 +412,8 @@ class ManageProductsLayout extends React.Component {
                   this.findCategoryIdByName(categoryName)
                 );
                 productObj.brand = "";
-                productObj.price = 0;
-                productObj.count = 0;
+                productObj.price = priceOfProduct;
+                productObj.count = countOfProduct;
                 productObj.description = description;
                 productObj.thumbnail = urlImage;
                 productObj.image = [];
@@ -610,6 +613,8 @@ class ManageProductsLayout extends React.Component {
         ...this.state,
         editorValue: "",
         nameProductValue: "",
+        priceProductValue: 0,
+        numberProductValue: 0,
         selectInputModal: { label: "", value: "" },
       },
       () => {
@@ -891,7 +896,50 @@ class ManageProductsLayout extends React.Component {
                           });
                         }}
                       />
-
+                      {this.state.addOrEdit === "add" ? (
+                        <div className={style.belongToAddPart}>
+                          <label
+                            className={style.labelFormModal}
+                            htmlFor="productPrice"
+                          >
+                            قیمت کالا :
+                          </label>
+                          <input
+                            value={this.state.priceProductValue}
+                            name="price"
+                            id="productPrice"
+                            type="number"
+                            placeholder="قیمت کالا  را وارد کنید"
+                            className={`${style.inputFormModal} ${style.imageNameInput}`}
+                            onChange={(e) => {
+                              this.setState({
+                                ...this.state,
+                                priceProductValue: e.target.value,
+                              });
+                            }}
+                          />
+                          <label
+                            className={style.labelFormModal}
+                            htmlFor="productNumber"
+                          >
+                            تعداد کالا :
+                          </label>
+                          <input
+                            value={this.state.numberProductValue}
+                            name="number"
+                            id="productNumber"
+                            type="number"
+                            placeholder="تعداد کالا  را وارد کنید"
+                            className={`${style.inputFormModal} ${style.imageNameInput}`}
+                            onChange={(e) => {
+                              this.setState({
+                                ...this.state,
+                                numberProductValue: e.target.value,
+                              });
+                            }}
+                          />
+                        </div>
+                      ) : null}
                       <label
                         className={style.labelFormModal}
                         htmlFor="category"
@@ -918,6 +966,7 @@ class ManageProductsLayout extends React.Component {
                         placeholder="دسته بندی موردنظر خود را انتخاب کنید"
                         options={options}
                       />
+
                       <label
                         ref={this.selectReference}
                         className={style.labelFormModal}

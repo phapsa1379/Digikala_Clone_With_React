@@ -137,8 +137,8 @@ const boxStyle = {
   border: `5px solid ${colors.primary}`,
   boxShadow: 24,
   borderRadius: "2rem",
-  // display: "flex",
-  // justifyContent: "space-between",
+  maxHeight: "90vh",
+  overflow: "scroll",
   p: 4,
 };
 const titleArray = [

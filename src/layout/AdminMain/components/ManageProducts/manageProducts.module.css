@@ -139,3 +139,8 @@
     padding: 5rem 5rem;
   }
 } */
+.belongToAddPart {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
