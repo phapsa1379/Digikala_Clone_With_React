@@ -25,11 +25,15 @@ import moment from "jalali-moment";
 import { useNavigate } from "react-router-dom";
 /*********************Helmet-************************** */
 import { Helmet } from "react-helmet";
+<<<<<<< HEAD
 /****************Persian Date picker************************** */
 import { DatePicker } from "jalali-react-datepicker";
 import { RangeDatePicker } from "jalali-react-datepicker";
 
 /************************************************** */
+=======
+/********************************************* */
+>>>>>>> 69915f05af13ac2349e018876f7e50f25287b472
 
 const useStyles = makeStyles({
   root: {
