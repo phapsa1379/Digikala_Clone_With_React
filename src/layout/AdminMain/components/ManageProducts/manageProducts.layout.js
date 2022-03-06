@@ -57,7 +57,10 @@ import swal from "sweetalert";
 import { getProductById } from "globalFunctions";
 /***********Helmet******************** */
 import { Helmet } from "react-helmet";
-/***************************** */
+/*************Upload multi Image**************** */
+import { RMIUploader } from "react-multiple-image-uploader";
+
+/************************************************ */
 const BASE_URL = "http://localhost:3002";
 
 const theme = createTheme({
@@ -277,6 +280,7 @@ const boxStyle = {
 
   p: 4,
 };
+
 const getTextFromEditor = (content) => {
   return content.replace(/<[^>]*>/g, "");
 };
@@ -326,7 +330,7 @@ const getTextFromEditor = (content) => {
 // });
 
 let options;
-
+let arrayFile = [];
 class ManageProductsLayout extends React.Component {
   state = {
     allProducts: [],
@@ -348,26 +352,77 @@ class ManageProductsLayout extends React.Component {
     numberProductValue: 0,
     currentProduct: null,
     itemId: null,
+    visible: false,
   };
-  selectReference = React.createRef();
 
-  onFileUpload = (e) => {
+  /***********Upload Image************** */
+  handleSetVisible = () => {
+    this.setState({ ...this.state, visible: true });
+  };
+  hideModal = () => {
+    this.setState({ ...this.state, visible: false });
+  };
+  onUpload = (data) => {
+    console.log("Upload files", data);
     //Create an object of formData
     const formData = new FormData();
     // console.log("selectedFile", this.state.selectedFile);
     // Update the formData object
+    arrayFile = [];
+    data.forEach((file) => {
+      arrayFile.push(file.file);
+    });
+    this.setState({ ...this.state, selectedFile: [...arrayFile] }, () => {
+      let formDatas = [];
+      if (this.state.selectedFile !== null) {
+        console.log("arrayFile", arrayFile);
+        arrayFile.forEach((file, index) => {
+          let formData = new FormData();
+          formData.append("image", file, file.name);
+          formDatas[index] = formData;
+        });
+        console.log("fromDatas", formDatas);
+        return formDatas;
+      } else if (this.state.addOrEdit === "add") {
+        swal({
+          title: "خطا",
+          text: `فیلد عکس نمیتواند خالی باشد.`,
+          icon: "error",
+        });
+        return false;
+      }
+    });
+  };
+  onSelect = (event) => {
+    console.log("Select files", event);
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+  onRemove = (id) => {
+    console.log("Remove image id", id);
+  };
+  /*************************** */
+  selectReference = React.createRef();
 
+  onFileUpload = (e) => {
+    //Create an object of formData
+
+    // console.log("selectedFile", this.state.selectedFile);
+    // Update the formData object
+    console.log("selectdFile", this.state.selectedFile);
+    let formDatas = [];
     if (this.state.selectedFile !== null) {
-      formData.append(
-        "image",
-        this.state.selectedFile,
-        this.state.selectedFile.name
-      );
+      arrayFile.forEach((file, index) => {
+        console.log("arrayFile", file, file.name);
+        let formData = new FormData();
+        formData.append("image", file, file.name);
+        formDatas[index] = formData;
+      });
+      console.log("fromDatas", formDatas);
+      return formDatas;
       // Details of the uploaded file
 
       // Request made to the backend api
       // Send formData object
-      return formData;
     } else if (this.state.addOrEdit === "add") {
       swal({
         title: "خطا",
@@ -379,6 +434,7 @@ class ManageProductsLayout extends React.Component {
   };
   onFileChange = (event) => {
     // Update the state
+    console.log("change", event.target.files[0]);
     this.setState({ selectedFile: event.target.files[0] });
   };
   submitButtonHandler = (e) => {
@@ -388,74 +444,93 @@ class ManageProductsLayout extends React.Component {
     // const categoryName = this.state.selectInputModal.label;
     // const description = this.state.editorValue;
     // console.log(categoryName, description);
+
     if (this.state.addOrEdit === "add") {
+      let status = true;
       let formData = this.onFileUpload();
       if (formData !== false) {
-        axios
-          .post(`${BASE_URL}/upload`, formData)
-          .then((res) => {
-            if (this.state.selectedFile.size < 2000000) {
-              let urlImage = res.data.filename;
-              urlImage = "/files/" + urlImage;
-              const nameOfProduct = e.target[1].value;
-              const priceOfProduct = e.target[2].value;
-              const countOfProduct = e.target[3].value;
-              const categoryName = this.state.selectInputModal.label;
+        let productObj = {};
+        let urlImage;
+        productObj.image = [];
 
-              const description = this.state.editorValue;
-              // console.log(res);
-              if (urlImage && nameOfProduct && categoryName && description) {
-                // alert("با موفقیت ثبت شد");
-                let productObj = {};
-                productObj.name = nameOfProduct;
-                productObj.categoryId = Number(
-                  this.findCategoryIdByName(categoryName)
-                );
-                productObj.brand = "";
-                productObj.price = priceOfProduct;
-                productObj.count = countOfProduct;
-                productObj.description = description;
-                productObj.thumbnail = urlImage;
-                productObj.image = [];
-                productObj.image[0] = urlImage;
-                postProducts(productObj).then((res) => {
-                  toast.success("محصول جدید با موفقیت ثبت شد", {
-                    position: "bottom-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                  });
-                  this.setState({ ...this.state, openModal: false }, () => {
-                    this.componentDidMount();
-                  });
-                });
-              } else {
-                swal({
-                  title: "خطا",
-                  text: `لطفا تمامی  فیلد هار پر کنید`,
-                  icon: "error",
-                });
-              }
-            } else {
+        formData.forEach((item, index) => {
+          axios
+            .post(`${BASE_URL}/upload`, item)
+            .then((res) => {
+              urlImage = res.data.filename;
+              urlImage = "/files/" + urlImage;
+              productObj.thumbnail = urlImage;
+              productObj.image[index] = urlImage;
+            })
+            .catch((err) => {
+              status = false;
               swal({
                 title: "خطا",
-                text: `حجم فایل بیشتر از 2 مگابایت است`,
+                text: `خطایی در آپلود عکس رخ داده است`,
                 icon: "error",
               });
-            }
-            // console.log(nameOfProduct, categoryName, description);
-          })
-          .catch((err) => {
+            });
+        });
+
+        if (status) {
+          //this.state.selectedFile.size < 2000000
+
+          const nameOfProduct = this.state.nameProductValue;
+          const priceOfProduct = this.state.priceProductValue;
+          const countOfProduct = this.state.numberProductValue;
+          const categoryName = this.state.selectInputModal.label;
+
+          const description = this.state.editorValue;
+          // console.log(res);
+          console.log("lists : ");
+          console.log("urlImage", urlImage);
+          console.log("name", nameOfProduct);
+          console.log("price", priceOfProduct);
+          console.log("count", countOfProduct);
+          console.log(categoryName);
+          console.log(description);
+          if (nameOfProduct && categoryName && description) {
+            // alert("با موفقیت ثبت شد");
+
+            productObj.name = nameOfProduct;
+            productObj.categoryId = Number(
+              this.findCategoryIdByName(categoryName)
+            );
+            productObj.brand = "";
+            productObj.price = priceOfProduct;
+            productObj.count = countOfProduct;
+            productObj.description = description;
+
+            postProducts(productObj).then((res) => {
+              toast.success("محصول جدید با موفقیت ثبت شد", {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              this.setState({ ...this.state, openModal: false }, () => {
+                this.componentDidMount();
+              });
+            });
+          } else {
             swal({
               title: "خطا",
-              text: `خطایی در آپلود عکس رخ داده است`,
+              text: `لطفا تمامی  فیلد هار پر کنید`,
               icon: "error",
             });
+          }
+        } else {
+          swal({
+            title: "خطا",
+            text: `حجم فایل بیشتر از 2 مگابایت است`,
+            icon: "error",
           });
+        }
+        // console.log(nameOfProduct, categoryName, description);
       }
     } else if (this.state.addOrEdit === "edit") {
       let formData = this.onFileUpload();
@@ -464,7 +539,8 @@ class ManageProductsLayout extends React.Component {
           axios
             .post(`${BASE_URL}/upload`, formData)
             .then((res) => {
-              if (this.state.selectedFile.size < 2000000) {
+              if (true) {
+                //this.state.selectedFile.size < 2000000
                 let urlImage = res.data.filename;
                 urlImage = "/files/" + urlImage;
                 const nameOfProduct = e.target[1].value;
@@ -870,11 +946,21 @@ class ManageProductsLayout extends React.Component {
                         placeholder="تصویر کالا موردنظر خود را انتخاب کنید"
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
                       /> */}
-                      <input
+                      {/* <input
                         id="imageName"
                         type="file"
                         onChange={this.onFileChange}
                         className={`${style.inputFormModal} ${style.imageNameInput}`}
+                      /> */}
+                      <button onClick={this.handleSetVisible}>Show Me</button>
+                      <RMIUploader
+                        isOpen={this.state.visible}
+                        hideModal={this.hideModal}
+                        onSelect={this.onSelect}
+                        onUpload={this.onUpload}
+                        onRemove={this.onRemove}
+                        onChange={this.onFileChange}
+                        dataSources={[]}
                       />
                       <label
                         className={style.labelFormModal}
