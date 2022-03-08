@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import style from "./Table.module.css";
 import { colors } from "assets/colors";
-
+import { PropTypes } from "prop-types";
 const TableComponent = (props) => {
   const {
     perPage,
@@ -108,155 +108,91 @@ const TableComponent = (props) => {
           </tr>
         </thead>
         <tbody className={style.bodyTable}>
-          {perPage === false
-            ? data.map((row, rindex) => {
-                return (
-                  <tr
-                    className={style.eachRow}
-                    key={rindex}
-                    style={{
-                      backgroundColor:
-                        rindex % 2 === 0
-                          ? oddColor
-                            ? oddColor
-                            : "#EEEEEE"
-                          : evenColor
-                          ? evenColor
-                          : "#FFFFFF",
-                    }}
-                  >
-                    {row.map((column, cindex) => {
-                      return cindex !== hiddenIdCol ? (
-                        <td
-                          id={`td${rindex}-${cindex}`}
-                          className={style.eachColumn}
-                          key={cindex}
+          {data.map((row, rindex) => {
+            return (
+              <tr
+                className={style.eachRow}
+                key={rindex}
+                style={{
+                  backgroundColor:
+                    rindex % 2 === 0
+                      ? oddColor
+                        ? oddColor
+                        : "#EEEEEE"
+                      : evenColor
+                      ? evenColor
+                      : "#FFFFFF",
+                }}
+              >
+                {row.map((column, cindex) => {
+                  return cindex !== hiddenIdCol ? (
+                    <td
+                      id={`td${rindex}-${cindex}`}
+                      className={style.eachColumn}
+                      key={cindex}
+                      style={{
+                        cursor:
+                          clickable[cindex] || doubleClickable[cindex]
+                            ? "pointer"
+                            : "default",
+                        color: clickable[cindex]
+                          ? "#3867d6"
+                          : doubleClickable[cindex]
+                          ? colors.greenButton
+                          : colors.text,
+                      }}
+                      onClick={() => {
+                        if (clickable[cindex]) {
+                          let itemId = getIdWithRowAndColumn(rindex, cindex);
+                          clickFunc(column, itemId);
+                        }
+                      }}
+                      onDoubleClick={(e) => {
+                        if (doubleClickable[cindex]) {
+                          let currentInput = document.getElementById(
+                            `input${rindex}-${cindex}`
+                          );
+                          console.log("child", currentInput);
+                          currentInput.style.visibility = "visible";
+                          currentInput.value = column;
+                        }
+                      }}
+                    >
+                      {input[cindex] ? (
+                        <input
+                          id={`input${rindex}-${cindex}`}
+                          onKeyDown={keyDownInputHandler}
+                          data-row={rindex}
+                          data-col={cindex}
+                          type={inputType}
+                          className={style.inputInTd}
+                          onChange={handleChangeInput}
                           style={{
-                            cursor:
-                              clickable[cindex] || doubleClickable[cindex]
-                                ? "pointer"
-                                : "default",
-                            color: clickable[cindex]
-                              ? "#3867d6"
-                              : doubleClickable[cindex]
-                              ? colors.greenButton
-                              : colors.text,
+                            color: titleBgColor,
                           }}
-                          onClick={() => {
-                            if (clickable[cindex]) {
-                              let itemId = getIdWithRowAndColumn(
-                                rindex,
-                                cindex
-                              );
-                              clickFunc(column, itemId);
-                            }
-                          }}
-                          onDoubleClick={(e) => {
-                            if (doubleClickable[cindex]) {
-                              let currentInput = document.getElementById(
-                                `input${rindex}-${cindex}`
-                              );
-                              console.log("child", currentInput);
-                              currentInput.style.visibility = "visible";
-                              currentInput.value = column;
-                            }
-                          }}
-                        >
-                          {input[cindex] ? (
-                            <input
-                              id={`input${rindex}-${cindex}`}
-                              onKeyDown={keyDownInputHandler}
-                              data-row={rindex}
-                              data-col={cindex}
-                              type={inputType}
-                              className={style.inputInTd}
-                              onChange={handleChangeInput}
-                              style={{
-                                color: titleBgColor,
-                              }}
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {img[cindex] ? (
-                            <img
-                              className={style.imageInTable}
-                              src={`http://localhost:3002${column}`}
-                              alt="img"
-                            />
-                          ) : priceType[cindex] ? (
-                            column.toLocaleString("fa")
-                          ) : (
-                            column
-                          )}
-                        </td>
+                        />
                       ) : (
                         ""
-                      );
-                    })}
-                  </tr>
-                );
-              })
-            : data.slice(0, perPage).map((row, index) => {
-                return (
-                  <tr
-                    className={style.eachRow}
-                    key={index}
-                    style={{
-                      backgroundColor:
-                        index % 2 === 0
-                          ? oddColor
-                            ? oddColor
-                            : "#EEEEEE"
-                          : evenColor
-                          ? evenColor
-                          : "#FFFFFF",
-                    }}
-                  >
-                    {row.map((column, index) => {
-                      return (
-                        <td
-                          className={style.eachColumn}
-                          key={index}
-                          style={{
-                            cursor:
-                              clickable[index] || doubleClickable[index]
-                                ? "pointer"
-                                : "default",
-                            color: clickable[index]
-                              ? "#3867d6"
-                              : doubleClickable[index]
-                              ? colors.greenButton
-                              : "black",
-                          }}
-                          onClick={() => {
-                            if (clickable[index]) {
-                              clickFunc(column);
-                            }
-                          }}
-                          onDoubleClick={() => {
-                            if (doubleClickable[index]) {
-                              doubleClickFunc(column);
-                            }
-                          }}
-                        >
-                          {img[index] ? (
-                            <img
-                              className={style.imageInTable}
-                              src={`http://localhost:3002${column}`}
-                              alt="img"
-                            />
-                          ) : priceType[index] ? (
-                            column.toLocaleString("fa")
-                          ) : (
-                            column
-                          )}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
+                      )}
+                      {img[cindex] ? (
+                        <img
+                          className={style.imageInTable}
+                          src={`http://localhost:3002${column}`}
+                          alt="img"
+                        />
+                      ) : priceType[cindex] ? (
+                        column.toLocaleString("fa")
+                      ) : (
+                        column
+                      )}
+                    </td>
+                  ) : (
+                    ""
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -264,3 +200,33 @@ const TableComponent = (props) => {
 };
 
 export { TableComponent };
+
+TableComponent.propTypes = {
+  data: PropTypes.array.isRequired,
+  titlesArray: PropTypes.array.isRequired,
+  clickable: PropTypes.array.isRequired,
+  doubleClickable: PropTypes.array.isRequired,
+  img: PropTypes.array.isRequired,
+  priceType: PropTypes.array.isRequired,
+  inputType: PropTypes.string,
+  input: PropTypes.array.isRequired,
+  titleBgColor: PropTypes.string,
+  titleColor: PropTypes.string,
+  oddColor: PropTypes.string,
+  evenColor: PropTypes.string,
+  hiddenColumn: PropTypes.string,
+  clickFunc: PropTypes.func,
+  getDataFromTable: PropTypes.func,
+  transferData: PropTypes.bool,
+};
+TableComponent.defaultProps = {
+  inputType: "text",
+  titleBgColor: "#C1C1C1",
+  titleColor: "#000",
+  oddColor: "#EEEEEE",
+  evenColor: "#FFFFFF",
+  hiddenColumn: "",
+  clickFunc: () => {},
+  getDataFromTable: () => {},
+  transferData: false,
+};
