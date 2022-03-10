@@ -33,3 +33,6 @@ html {
 .swal-modal .swal-text {
   text-align: center;
 }
+#outlined-adornment-password-in-login {
+  color: var(--text-color);
+}

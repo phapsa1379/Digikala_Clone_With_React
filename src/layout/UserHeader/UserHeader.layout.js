@@ -150,7 +150,7 @@ const UserHeaderLayout = (props) => {
                 href={login === true ? "/manage-products" : "/login"}
               >
                 <ThemeProvider theme={theme}>
-                  <Tooltip title="مدیریت">
+                  <Tooltip title="ورود">
                     <IconButton>
                       <span className={style.navIcon}>
                         {" "}
@@ -196,7 +196,7 @@ const UserHeaderLayout = (props) => {
                 className={`${style.navLink} ${style.adminLinkLogin}`}
                 href={login === true ? "/manage-products" : "/login"}
               >
-                مدیریت
+                ورود
               </a>
             </li>
             <li className={style.navItem}>
