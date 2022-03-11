@@ -102,7 +102,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 /************Actions*************** */
 import { setNumberOfProductsInBasket } from "redux/actions";
-
+/************************************* */
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+/********************************************* */
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -172,6 +176,7 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
 function EachProductLayout(props) {
   let [param, setParam] = useSearchParams();
   let id = param.get("id");
@@ -203,6 +208,15 @@ function EachProductLayout(props) {
     setCategoryNames(categoryNames);
   };
 
+  function productHandleClick(event) {
+    event.preventDefault();
+    navigate("/");
+  }
+
+  function categoryHandleClick(event) {
+    event.preventDefault();
+    navigate(`/products-list/?categoryId=${currentProduct.categoryId}`);
+  }
   const dispatch = useDispatch();
   const handleChangeNumber = (e) => {
     if (e.target.value < 1) {
@@ -249,6 +263,7 @@ function EachProductLayout(props) {
   useEffect(() => {
     dispatch(setNumberOfProductsInBasket(basket.numberOfProductsInBasket));
   }, [basket.numberOfProductsInBasket]);
+
   const actions = [
     {
       key: "telegram",
@@ -314,6 +329,31 @@ function EachProductLayout(props) {
 
     setState({ ...state, [anchor]: open });
   };
+  const breadcrumbs = [
+    <Link
+      underline="hover"
+      key="1"
+      color="inherit"
+      href={`${BASE_URL}/`}
+      onClick={productHandleClick}
+    >
+      محصولات
+    </Link>,
+    <Link
+      underline="hover"
+      key="2"
+      color="inherit"
+      href="/getting-started/installation/"
+      onClick={categoryHandleClick}
+    >
+      {currentProduct
+        ? getCategoryNameByCategoryId(currentProduct.categoryId)
+        : ""}
+    </Link>,
+    <Typography key="3" color="text.primary">
+      {currentProduct ? currentProduct.name : ""}
+    </Typography>,
+  ];
 
   const list = (anchor) => (
     <CacheProvider value={cacheRtl}>
@@ -393,6 +433,25 @@ function EachProductLayout(props) {
           </CacheProvider>
         </div>
       ))}
+      <div className={style.path}>
+        <CacheProvider value={cacheRtl}>
+          <ThemeProvider theme={theme}>
+            <Stack spacing={2}>
+              <Breadcrumbs
+                separator={
+                  <NavigateBeforeIcon
+                    fontSize="large"
+                    // sx={{ color: colors.primary }}
+                  />
+                }
+                aria-label="breadcrumb"
+              >
+                {breadcrumbs}
+              </Breadcrumbs>
+            </Stack>
+          </ThemeProvider>
+        </CacheProvider>
+      </div>
       {currentProduct ? (
         <div className={style.productPart}>
           <div className={style.detailsProduct}>
