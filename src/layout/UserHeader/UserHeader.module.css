@@ -9,6 +9,11 @@
   background-color: white;
   display: flex;
   flex-direction: column;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 5px 0 5px 0 rgba(0, 0, 0, 0.2);
 }
 .logo {
   width: 20rem;
@@ -167,6 +172,9 @@
   .header {
     padding: 2rem;
   }
+  .virtualHeader {
+    height: 94px !important;
+  }
   .logo {
     max-width: 15rem;
   }
@@ -236,4 +244,8 @@
   .navItem {
     flex-direction: row;
   }
+}
+.virtualHeader {
+  height: 153px;
+  background-color: var(--bg-color);
 }

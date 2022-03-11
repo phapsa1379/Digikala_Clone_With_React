@@ -284,17 +284,23 @@ function ProductsGroupLayout() {
             {productsArray.map((product, index) => {
               return (
                 <div className={style.eachCard} key={index}>
-                  <ThemeProvider theme={theme}>
-                    <Card
-                      sx={{
-                        maxWidth: 450,
-                        border: "none",
-                        padding: "1rem 1rem",
-                        height: "960px",
-                        position: "relative",
-                      }}
-                    >
-                      {/* <CardMedia
+                  <div
+                    className={style.eachCardDiv}
+                    onClick={() => {
+                      navigate(`/product-details/?id=${product.id}`);
+                    }}
+                  >
+                    <ThemeProvider theme={theme}>
+                      <Card
+                        sx={{
+                          maxWidth: 450,
+                          border: "none",
+                          padding: "1rem 1rem",
+                          height: "960px",
+                          position: "relative",
+                        }}
+                      >
+                        {/* <CardMedia
                                 component="img"
                                 sx={{
                                   bojectFit: "fill",
@@ -306,82 +312,83 @@ function ProductsGroupLayout() {
                                 alt="green iguana"
                               /> */}
 
-                      <div
-                        className={style.cardImageContainer}
-                        style={{
-                          objectFit: "fill",
-                          height: "400px",
-                          width: "400px",
-                          textAlign: "center",
-                          padding: 0,
-                        }}
-                      >
-                        {productsArray.length === 0 ? (
-                          <Skeleton
-                            animation="wave"
-                            variant="square"
-                            width={40}
-                            height={40}
-                          />
-                        ) : (
-                          <img
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              display: "inline-block",
-                              marginRight: "1.5rem",
-                            }}
-                            src={`http://localhost:3002${product.image[0]}`}
-                            alt="محصولات"
-                            className={style.imageCard}
-                          />
-                        )}
-                      </div>
-                      <CardContent>
-                        <Typography
-                          sx={{
+                        <div
+                          className={style.cardImageContainer}
+                          style={{
+                            objectFit: "fill",
+                            height: "400px",
+                            width: "400px",
                             textAlign: "center",
-                            fotSize: "2rem",
-                            fontWeight: "bold",
-                            marginTop: "1rem",
-                            color: colors.textColor,
+                            padding: 0,
                           }}
-                          gutterBottom
-                          // variant="h5"
-                          component="div"
                         >
-                          {product.name}
-                        </Typography>
+                          {productsArray.length === 0 ? (
+                            <Skeleton
+                              animation="wave"
+                              variant="square"
+                              width={40}
+                              height={40}
+                            />
+                          ) : (
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                display: "inline-block",
+                                marginRight: "1.5rem",
+                              }}
+                              src={`http://localhost:3002${product.image[0]}`}
+                              alt="محصولات"
+                              className={style.imageCard}
+                            />
+                          )}
+                        </div>
+                        <CardContent>
+                          <Typography
+                            sx={{
+                              textAlign: "center",
+                              fotSize: "2rem",
+                              fontWeight: "bold",
+                              marginTop: "1rem",
+                              color: colors.textColor,
+                            }}
+                            gutterBottom
+                            // variant="h5"
+                            component="div"
+                          >
+                            {product.name}
+                          </Typography>
 
-                        <div className={style.descriptionOfEachCard}>
-                          {product.description}
-                        </div>
-                        <div className={style.priceOfEachCard}>
-                          {product.price.toLocaleString("fa")} تومان
-                        </div>
-                      </CardContent>
-                      <CardActions
-                        sx={{
-                          marginBottom: "2rem",
-                          position: "absolute",
-                          bottom: "2rem",
-                        }}
-                      >
-                        <Button variant="contained" size="big">
-                          اضافه‌به‌سبد‌خرید
-                        </Button>
-                        <Button
-                          sx={{ marginRight: "2rem" }}
-                          size="small"
-                          onClick={() => {
-                            navigate(`/product-details/?id=${product.id}`);
+                          <div className={style.descriptionOfEachCard}>
+                            {product.description}
+                          </div>
+                          <div className={style.priceOfEachCard}>
+                            {product.price.toLocaleString("fa")} تومان
+                          </div>
+                        </CardContent>
+                        <CardActions
+                          sx={{
+                            marginBottom: "2rem",
+                            position: "absolute",
+                            bottom: "2rem",
                           }}
                         >
-                          بیشتر...
-                        </Button>
-                      </CardActions>
-                    </Card>
-                  </ThemeProvider>
+                          <Button variant="contained" size="big">
+                            اضافه‌به‌سبد‌خرید
+                          </Button>
+                          <Button
+                            sx={{ marginRight: "2rem" }}
+                            size="small"
+                            onClick={() => {
+                              navigate(`/product-details/?id=${product.id}`);
+                            }}
+                          >
+                            بیشتر...
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </ThemeProvider>
+                  </div>
                 </div>
               );
             })}

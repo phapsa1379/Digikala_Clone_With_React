@@ -102,7 +102,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 /************Actions*************** */
 import { setNumberOfProductsInBasket } from "redux/actions";
-/****************************** */
+
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -194,6 +194,7 @@ function EachProductLayout(props) {
   let [currentProduct, setCurrentProduct] = useState(null);
   let [basket, setBasket] = useState({});
   let [currentURL, setCurrentURL] = useState(null);
+
   const setCategoryName = () => {
     categoryNames = allCategory.map((category, index) => {
       return category.name;
@@ -807,88 +808,97 @@ function EachProductLayout(props) {
                 if (currentProduct.categoryId === product.categoryId) {
                   return (
                     <SwiperSlide style={{ height: "auto" }} key={index}>
-                      <ThemeProvider theme={theme}>
-                        <Card
-                          sx={{
-                            height: "640px",
-                            position: "relative",
-                            maxWidth: 350,
-                            border: "none",
-                            padding: "1rem 1rem",
-
-                            cursor: "pointer",
-                            borderRadius: "2rem",
-                            transition: "0.8s",
-                            "&:hover": {
-                              transform: "scale(1.1)",
-                            },
-                          }}
-                        >
-                          <div
-                            className={style.imgaeProductSliderContainer}
-                            style={{
-                              objectFit: "fill",
-                              height: "300px",
-                              width: "300px",
-                              textAlign: "center",
-                              padding: 0,
-                            }}
-                          >
-                            <img
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                display: "inline-block",
-                                marginRight: "1.5rem",
-                              }}
-                              src={`http://localhost:3002${product.image[0]}`}
-                              alt="محصولات"
-                              className={style.imgaeProductSlider}
-                            />
-                          </div>
-
-                          <CardContent>
-                            <Typography
-                              sx={{
-                                textAlign: "center",
-                                fotSize: "2rem",
-                                fontWeight: "bold",
-                                marginTop: "1rem",
-                                color: colors.textColor,
-                              }}
-                              gutterBottom
-                              // variant="h5"
-                              component="div"
-                            >
-                              {product.name}
-                            </Typography>
-
-                            <div className={style.priceOfEachCard}>
-                              {product.price.toLocaleString("fa")} تومان
-                            </div>
-                          </CardContent>
-                          <CardActions
+                      <div
+                        className={style.eachCardDiv}
+                        onClick={() => {
+                          navigate(`/product-details/?id=${product.id}`);
+                        }}
+                      >
+                        <ThemeProvider theme={theme}>
+                          <Card
                             sx={{
-                              marginBottom: "2rem",
-                              position: "absolute",
-                              bottom: "2rem",
+                              height: "640px",
+                              position: "relative",
+                              maxWidth: 350,
+                              border: "none",
+                              padding: "1rem 1rem",
+
+                              cursor: "pointer",
+                              borderRadius: "2rem",
+                              transition: "0.8s",
+                              "&:hover": {
+                                transform: "scale(1.1)",
+                              },
                             }}
                           >
-                            <Button variant="contained" size="big">
-                              اضافه‌به‌سبد‌خرید
-                            </Button>
-                            <Button
-                              sx={{ marginRight: "2rem" }}
-                              size="small"
-                              onClick={() => {
-                                navigate(`/product-details/?id=${product.id}`);
+                            <div
+                              className={style.imgaeProductSliderContainer}
+                              style={{
+                                objectFit: "fill",
+                                height: "300px",
+                                width: "300px",
+                                textAlign: "center",
+                                padding: 0,
                               }}
                             >
-                              بیشتر...
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </ThemeProvider>
+                              <img
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  display: "inline-block",
+                                  marginRight: "1.5rem",
+                                }}
+                                src={`http://localhost:3002${product.image[0]}`}
+                                alt="محصولات"
+                                className={style.imgaeProductSlider}
+                              />
+                            </div>
+
+                            <CardContent>
+                              <Typography
+                                sx={{
+                                  textAlign: "center",
+                                  fotSize: "2rem",
+                                  fontWeight: "bold",
+                                  marginTop: "1rem",
+                                  color: colors.textColor,
+                                }}
+                                gutterBottom
+                                // variant="h5"
+                                component="div"
+                              >
+                                {product.name}
+                              </Typography>
+
+                              <div className={style.priceOfEachCard}>
+                                {product.price.toLocaleString("fa")} تومان
+                              </div>
+                            </CardContent>
+                            <CardActions
+                              sx={{
+                                marginBottom: "2rem",
+                                position: "absolute",
+                                bottom: "2rem",
+                              }}
+                            >
+                              <Button variant="contained" size="big">
+                                اضافه‌به‌سبد‌خرید
+                              </Button>
+                              <Button
+                                sx={{ marginRight: "2rem" }}
+                                size="small"
+                                onClick={() => {
+                                  navigate(
+                                    `/product-details/?id=${product.id}`
+                                  );
+                                }}
+                              >
+                                بیشتر...
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </ThemeProvider>
+                      </div>
                     </SwiperSlide>
                   );
                 }

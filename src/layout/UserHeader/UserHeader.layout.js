@@ -16,6 +16,13 @@ import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 /***************api************************ */
 import { postOrders } from "api/orders.api";
+
+/*****************Progress bar ************************** */
+import Box from "@mui/material/Box";
+
+import LinearProgress from "@mui/material/LinearProgress";
+import { render } from "react-dom";
+/****************************** */
 const navBar2 = React.createRef();
 const theme = createTheme({
   multilineColor: {
@@ -41,8 +48,12 @@ const handleClickMenu = () => {
 const UserHeaderLayout = (props) => {
   // let [param, setParam] = useSearchParams();
   // let id = Number(param.get("id"));
+  const [isLoading, setIsLoading] = useState(true);
+  let [param, setParam] = useSearchParams();
+  let id = param.get("id");
+  let categoryId = param.get("categoryId");
   let result = props.result;
-
+  const [progress, setProgress] = useState(0);
   let numberOfProductsInBasketRedux = useSelector(
     (state) => state.numberOfProductsInBasketState.numberOfProductsInBasket
   );
@@ -73,6 +84,26 @@ const UserHeaderLayout = (props) => {
     );
   }, [numberOfProductsInBasketRedux]);
 
+  /***********Progressbar use effect */
+  useEffect(() => {
+    setIsLoading(true);
+    let counter = 0;
+
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          clearInterval(timer);
+          setIsLoading(false);
+          return 0;
+        }
+        const diff = Math.random() * 80;
+
+        return Math.min(oldProgress + diff, 100);
+      });
+      counter++;
+      console.log("counter1", counter);
+    }, 500);
+  }, [id, categoryId]);
   const [login, setLogin] = useState(false);
   useEffect(() => {
     let currentUser = localStorage.getItem("currentUser");
@@ -122,92 +153,120 @@ const UserHeaderLayout = (props) => {
     }
   }, [props.result]);
   return (
-    <header className={style.header}>
-      <div className={style.menu} onClick={handleClickMenu}>
-        <FiMenu />
-      </div>
-      <div className={style.headerTop} ref={navBar2}>
-        <div className={style.logo}>
-          <Link to="/">
-            <img src={digikalaLogo} alt="logo" className={style.logo} />
-          </Link>
+    <>
+      <div className={style.virtualHeader}></div>
+      <header className={style.header}>
+        {isLoading ? (
+          <ThemeProvider theme={theme}>
+            <Box
+              sx={{
+                width: "100%",
+                position: "absolute",
+                right: 0,
+                top: 0,
+                flexGrow: 1,
+
+                // boxShadow: `0px 0px 0 5px #eb3b5a`,
+              }}
+            >
+              <LinearProgress
+                variant="determinate"
+                value={progress}
+                sx={{ height: "6px" }}
+
+                // color={colors.primary}
+              />
+            </Box>
+          </ThemeProvider>
+        ) : null}
+        <div className={style.menu} onClick={handleClickMenu}>
+          <FiMenu />
         </div>
-        <div className={style.serachBar}>
-          <span className={style.serachBarIcon}>
-            <BiSearch />
-          </span>
-          <input
-            type="search"
-            placeholder="جستجو در دیجیکالا ..."
-            className={style.serachBarInput}
-          />
-        </div>
-        <nav className={style.navBar}>
-          <ul className={style.navList}>
-            <li className={style.navItem}>
-              <a
-                className={`${style.navLink} ${style.adminLinkLogin}`}
-                href={login === true ? "/manage-products" : "/login"}
-              >
-                <ThemeProvider theme={theme}>
-                  <Tooltip title="ورود">
-                    <IconButton>
-                      <span className={style.navIcon}>
-                        {" "}
-                        <FaUser />
-                      </span>
-                    </IconButton>
-                  </Tooltip>
-                </ThemeProvider>
-              </a>
-            </li>
-            {result !== "success" ? (
+        <div className={style.headerTop} ref={navBar2}>
+          <div className={style.logo}>
+            <Link to="/">
+              <img src={digikalaLogo} alt="logo" className={style.logo} />
+            </Link>
+          </div>
+          <div className={style.serachBar}>
+            <span className={style.serachBarIcon}>
+              <BiSearch />
+            </span>
+            <input
+              type="search"
+              placeholder="جستجو در دیجیکالا ..."
+              className={style.serachBarInput}
+            />
+          </div>
+          <nav className={style.navBar}>
+            <ul className={style.navList}>
               <li className={style.navItem}>
                 <a
-                  className={`${style.navLink} ${style.cartLink}`}
-                  href="/cart"
+                  className={`${style.navLink} ${style.adminLinkLogin}`}
+                  href={login === true ? "/manage-products" : "/login"}
                 >
                   <ThemeProvider theme={theme}>
-                    <Tooltip title="سبد خرید">
+                    <Tooltip title="ورود">
                       <IconButton>
                         <span className={style.navIcon}>
                           {" "}
-                          <Badge
-                            badgeContent={numberOfProductsInBasket}
-                            color="primary"
-                          >
-                            <FaShoppingCart />
-                          </Badge>
+                          <FaUser />
                         </span>
                       </IconButton>
                     </Tooltip>
                   </ThemeProvider>
                 </a>
               </li>
-            ) : (
-              <></>
-            )}
-          </ul>
-        </nav>
-        <nav className={style.navBar2}>
-          <ul className={style.navList}>
-            <li className={style.navItem}>
-              <a
-                className={`${style.navLink} ${style.adminLinkLogin}`}
-                href={login === true ? "/manage-products" : "/login"}
-              >
-                ورود
-              </a>
-            </li>
-            <li className={style.navItem}>
-              <a className={`${style.navLink} ${style.cartLink}`} href="/cart">
-                سبد خرید
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      {/* <div className={style.headerBottom}>
+              {result !== "success" ? (
+                <li className={style.navItem}>
+                  <a
+                    className={`${style.navLink} ${style.cartLink}`}
+                    href="/cart"
+                  >
+                    <ThemeProvider theme={theme}>
+                      <Tooltip title="سبد خرید">
+                        <IconButton>
+                          <span className={style.navIcon}>
+                            {" "}
+                            <Badge
+                              badgeContent={numberOfProductsInBasket}
+                              color="primary"
+                            >
+                              <FaShoppingCart />
+                            </Badge>
+                          </span>
+                        </IconButton>
+                      </Tooltip>
+                    </ThemeProvider>
+                  </a>
+                </li>
+              ) : (
+                <></>
+              )}
+            </ul>
+          </nav>
+          <nav className={style.navBar2}>
+            <ul className={style.navList}>
+              <li className={style.navItem}>
+                <a
+                  className={`${style.navLink} ${style.adminLinkLogin}`}
+                  href={login === true ? "/manage-products" : "/login"}
+                >
+                  ورود
+                </a>
+              </li>
+              <li className={style.navItem}>
+                <a
+                  className={`${style.navLink} ${style.cartLink}`}
+                  href="/cart"
+                >
+                  سبد خرید
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        {/* <div className={style.headerBottom}>
         <div className={style.slider}></div>
         <div className={style.advertisments}>
           <div className={style.adv1}>
@@ -218,7 +277,8 @@ const UserHeaderLayout = (props) => {
           </div>
         </div>
       </div> */}
-    </header>
+      </header>
+    </>
   );
 };
 
