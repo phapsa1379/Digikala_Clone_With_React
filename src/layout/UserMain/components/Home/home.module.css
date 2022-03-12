@@ -124,7 +124,13 @@
   transform: scale(1.1);
   z-index: 999;
 }
-
+.priceOfEachCard {
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 3rem 1rem;
+  text-align: left;
+}
 .eachGroupTitleLink {
   font-size: 5rem;
   font-weight: 900;

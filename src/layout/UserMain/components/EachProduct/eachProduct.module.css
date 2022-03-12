@@ -127,3 +127,10 @@
   flex-direction: column;
   gap: 8rem;
 }
+.priceOfEachCard {
+  color: var(--primary-color);
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 3rem 1rem;
+  text-align: left;
+}
