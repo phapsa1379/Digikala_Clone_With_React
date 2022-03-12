@@ -1,0 +1,22 @@
+.skeletonCardContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3.5rem;
+  border: 2px solid rgb(184, 182, 182);
+  border-radius: 2rem;
+  padding: 1rem;
+  cursor: pointer;
+  box-shadow: 0.5rem 0.5rem 0.5rem 0.5rem rgb(184, 182, 182);
+}
+.skeletonButtons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}

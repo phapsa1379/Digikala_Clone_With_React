@@ -36,13 +36,13 @@ import Stack from "@mui/material/Stack";
 /***********Helmet******************** */
 import { Helmet } from "react-helmet";
 /***************************** */
-import {
-  SkeletonText,
-  SkeletonBlock,
-  SkeletonImage,
-  SkeletonAvatar,
-} from "skeleton-elements/react";
+import { SkeletonImage } from "skeleton-elements/react";
+import { SkeletonBlock } from "skeleton-elements/react";
+// import "./styles.css";
+import "skeleton-elements/css";
 
+/*********************************** */
+import { SkeletonCard } from "components";
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -270,7 +270,9 @@ function ProductsGroupLayout() {
               {getCategoryNameByCategoryId(categoryId) ? (
                 getCategoryNameByCategoryId(categoryId) + ":"
               ) : (
-                <SkeletonBlock tag="h1" width="100px" effect="wave" />
+                <div className={style.titleSkeleton}>
+                  <SkeletonBlock tag="p" width="250px" effect={"wave"} />
+                </div>
                 // <Skeleton
                 //   animation="wave"
                 //   variant="rectangular"
@@ -281,26 +283,27 @@ function ProductsGroupLayout() {
             </a>
           </div>
           <div className={style.eachGroup}>
-            {productsArray.map((product, index) => {
-              return (
-                <div className={style.eachCard} key={index}>
-                  <div
-                    className={style.eachCardDiv}
-                    onClick={() => {
-                      navigate(`/product-details/?id=${product.id}`);
-                    }}
-                  >
-                    <ThemeProvider theme={theme}>
-                      <Card
-                        sx={{
-                          maxWidth: 450,
-                          border: "none",
-                          padding: "1rem 1rem",
-                          height: "960px",
-                          position: "relative",
-                        }}
-                      >
-                        {/* <CardMedia
+            {productsArray.length ? (
+              productsArray.map((product, index) => {
+                return (
+                  <div className={style.eachCard} key={index}>
+                    <div
+                      className={style.eachCardDiv}
+                      onClick={() => {
+                        navigate(`/product-details/?id=${product.id}`);
+                      }}
+                    >
+                      <ThemeProvider theme={theme}>
+                        <Card
+                          sx={{
+                            maxWidth: 450,
+                            border: "none",
+                            padding: "1rem 1rem",
+                            height: "960px",
+                            position: "relative",
+                          }}
+                        >
+                          {/* <CardMedia
                                 component="img"
                                 sx={{
                                   bojectFit: "fill",
@@ -312,86 +315,92 @@ function ProductsGroupLayout() {
                                 alt="green iguana"
                               /> */}
 
-                        <div
-                          className={style.cardImageContainer}
-                          style={{
-                            objectFit: "fill",
-                            height: "400px",
-                            width: "400px",
-                            textAlign: "center",
-                            padding: 0,
-                          }}
-                        >
-                          {productsArray.length === 0 ? (
-                            <Skeleton
-                              animation="wave"
-                              variant="square"
-                              width={40}
-                              height={40}
-                            />
-                          ) : (
-                            <img
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                display: "inline-block",
-                                marginRight: "1.5rem",
-                              }}
-                              src={`http://localhost:3002${product.image[0]}`}
-                              alt="محصولات"
-                              className={style.imageCard}
-                            />
-                          )}
-                        </div>
-                        <CardContent>
-                          <Typography
-                            sx={{
+                          <div
+                            className={style.cardImageContainer}
+                            style={{
+                              objectFit: "fill",
+                              height: "400px",
+                              width: "400px",
                               textAlign: "center",
-                              fotSize: "2rem",
-                              fontWeight: "bold",
-                              marginTop: "1rem",
-                              color: colors.textColor,
+                              padding: 0,
                             }}
-                            gutterBottom
-                            // variant="h5"
-                            component="div"
                           >
-                            {product.name}
-                          </Typography>
+                            {productsArray.length === 0 ? (
+                              <Skeleton
+                                animation="wave"
+                                variant="square"
+                                width={40}
+                                height={40}
+                              />
+                            ) : (
+                              <img
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  display: "inline-block",
+                                  marginRight: "1.5rem",
+                                }}
+                                src={`http://localhost:3002${product.image[0]}`}
+                                alt="محصولات"
+                                className={style.imageCard}
+                              />
+                            )}
+                          </div>
+                          <CardContent>
+                            <Typography
+                              sx={{
+                                textAlign: "center",
+                                fotSize: "2rem",
+                                fontWeight: "bold",
+                                marginTop: "1rem",
+                                color: colors.textColor,
+                              }}
+                              gutterBottom
+                              // variant="h5"
+                              component="div"
+                            >
+                              {product.name}
+                            </Typography>
 
-                          <div className={style.descriptionOfEachCard}>
-                            {product.description}
-                          </div>
-                          <div className={style.priceOfEachCard}>
-                            {product.price.toLocaleString("fa")} تومان
-                          </div>
-                        </CardContent>
-                        <CardActions
-                          sx={{
-                            marginBottom: "2rem",
-                            position: "absolute",
-                            bottom: "2rem",
-                          }}
-                        >
-                          <Button variant="contained" size="big">
-                            اضافه‌به‌سبد‌خرید
-                          </Button>
-                          <Button
-                            sx={{ marginRight: "2rem" }}
-                            size="small"
-                            onClick={() => {
-                              navigate(`/product-details/?id=${product.id}`);
+                            <div className={style.descriptionOfEachCard}>
+                              {product.description}
+                            </div>
+                            <div className={style.priceOfEachCard}>
+                              {product.price.toLocaleString("fa")} تومان
+                            </div>
+                          </CardContent>
+                          <CardActions
+                            sx={{
+                              marginBottom: "2rem",
+                              position: "absolute",
+                              bottom: "2rem",
                             }}
                           >
-                            بیشتر...
-                          </Button>
-                        </CardActions>
-                      </Card>
-                    </ThemeProvider>
+                            <Button variant="contained" size="big">
+                              اضافه‌به‌سبد‌خرید
+                            </Button>
+                            <Button
+                              sx={{ marginRight: "2rem" }}
+                              size="small"
+                              onClick={() => {
+                                navigate(`/product-details/?id=${product.id}`);
+                              }}
+                            >
+                              بیشتر...
+                            </Button>
+                          </CardActions>
+                        </Card>
+                      </ThemeProvider>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className={style.skeletonCards}>
+                <SkeletonCard /> <SkeletonCard /> <SkeletonCard />{" "}
+                <SkeletonCard /> <SkeletonCard /> <SkeletonCard />
+              </div>
+            )}
           </div>
         </div>
       </div>

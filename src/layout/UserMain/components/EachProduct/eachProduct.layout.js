@@ -106,7 +106,13 @@ import { setNumberOfProductsInBasket } from "redux/actions";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-/********************************************* */
+/********************Skeleton************************* */
+import { SkeletonImage } from "skeleton-elements/react";
+import { SkeletonBlock } from "skeleton-elements/react";
+// import "./styles.css";
+import "skeleton-elements/css";
+
+/*********************************** */
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -839,7 +845,37 @@ function EachProductLayout(props) {
           </div>
         </div>
       ) : (
-        <></>
+        <div className={style.skeletonMode}>
+          <div className={style.skeletonImagePart}>
+            <SkeletonImage effect={"wave"} width="630" height="630" />
+          </div>
+          <div className={style.skeletonTextPart}>
+            <SkeletonBlock
+              tag="p"
+              height="40px"
+              width="500px"
+              effect={"wave"}
+            />
+            <SkeletonBlock
+              tag="p"
+              height="40px"
+              width="300px"
+              effect={"wave"}
+            />
+            <SkeletonBlock
+              tag="p"
+              height="40px"
+              width="250px"
+              effect={"wave"}
+            />
+            <SkeletonBlock
+              tag="p"
+              height="40px"
+              width="200px"
+              effect={"wave"}
+            />
+          </div>
+        </div>
       )}
       <div className={style.similarProducts}>
         <div className={style.similarProductsTitle}>محصولات مشابه</div>

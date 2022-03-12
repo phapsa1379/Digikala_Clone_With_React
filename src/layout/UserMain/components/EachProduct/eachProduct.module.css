@@ -109,3 +109,21 @@
 .path {
   margin-bottom: 4rem;
 }
+
+.skeletonMode {
+  display: flex;
+  justify-content: space-center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 8rem;
+}
+.skeletonImagePart {
+  height: 630px;
+  width: 630px;
+}
+.skeletonTextPart {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+}

@@ -112,3 +112,15 @@ a {
   margin-top: 5rem;
   padding-bottom: 5rem;
 }
+.titleSkeleton {
+  margin-right: 10rem;
+}
+.skeletonCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 8rem;
+  padding: 5rem 10rem;
+  margin-bottom: 10rem;
+}
