@@ -122,25 +122,7 @@
 }
 .eachCard:hover {
   transform: scale(1.1);
-  z-index: 1000;
-}
-.descriptionOfEachCard {
-  color: #666666;
-  max-height: 90;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
-  overflow: hidden;
-  font-size: 2rem;
-  line-height: 1cm;
-  margin-top: 2rem;
-}
-.priceOfEachCard {
-  color: var(--primary-color);
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 3rem 1rem;
-  text-align: left;
+  z-index: 999;
 }
 
 .eachGroupTitleLink {
