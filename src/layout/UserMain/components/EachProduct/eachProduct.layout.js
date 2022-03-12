@@ -847,7 +847,12 @@ function EachProductLayout(props) {
       ) : (
         <div className={style.skeletonMode}>
           <div className={style.skeletonImagePart}>
-            <SkeletonImage effect={"wave"} width="630" height="630" />
+            <SkeletonImage
+              effect={"wave"}
+              width="630"
+              height="630"
+              borderRadius="20px"
+            />
           </div>
           <div className={style.skeletonTextPart}>
             <SkeletonBlock
@@ -855,24 +860,28 @@ function EachProductLayout(props) {
               height="40px"
               width="500px"
               effect={"wave"}
+              borderRadius="20px"
             />
             <SkeletonBlock
               tag="p"
               height="40px"
               width="300px"
               effect={"wave"}
+              borderRadius="20px"
             />
             <SkeletonBlock
               tag="p"
               height="40px"
               width="250px"
               effect={"wave"}
+              borderRadius="20px"
             />
             <SkeletonBlock
               tag="p"
               height="40px"
               width="200px"
               effect={"wave"}
+              borderRadius="20px"
             />
           </div>
         </div>

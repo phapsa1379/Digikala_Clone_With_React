@@ -271,7 +271,12 @@ function ProductsGroupLayout() {
                 getCategoryNameByCategoryId(categoryId) + ":"
               ) : (
                 <div className={style.titleSkeleton}>
-                  <SkeletonBlock tag="p" width="250px" effect={"wave"} />
+                  <SkeletonBlock
+                    tag="p"
+                    width="250px"
+                    effect={"wave"}
+                    borderRadius="20px"
+                  />
                 </div>
                 // <Skeleton
                 //   animation="wave"
