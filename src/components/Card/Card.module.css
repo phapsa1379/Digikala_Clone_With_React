@@ -16,3 +16,42 @@
   margin: 3rem 1rem;
   text-align: left;
 }
+.counterWarning {
+  margin: 3rem 0;
+  text-align: right;
+}
+.countText {
+  color: var(--orangeRed-color);
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+.countPart {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+.countIcon {
+  color: var(--orangeRed-color);
+  font-size: 2rem;
+  margin-left: 0.7rem;
+  margin-top: 0.5rem;
+}
+.ratePart {
+  margin: 3rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+}
+.rateIcon {
+  color: var(--gold-color);
+  font-size: 2.5rem;
+
+  margin-top: 0.5rem;
+}
+.rateNumber {
+  color: var(--text-color);
+  font-size: 2rem;
+  font-weight: bold;
+}

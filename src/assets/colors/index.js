@@ -9,4 +9,6 @@ export const colors = {
   red: "#EA2027",
   ligthPrimary: "#fc5c65",
   bgColor: "#f0f0f1",
+  orangeRed: "#c23616",
+  gold: "#ffa801",
 };

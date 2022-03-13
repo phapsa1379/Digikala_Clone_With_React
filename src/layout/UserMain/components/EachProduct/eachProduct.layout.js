@@ -12,7 +12,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import TextField from "@mui/material/TextField";
-import { getProducts } from "api/products.api";
+import { getProducts, putProducts } from "api/products.api";
 import { getCategory } from "api/category.api";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { colors } from "assets/colors";
@@ -40,6 +40,7 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
+import Rating from "@mui/material/Rating";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -111,8 +112,11 @@ import { SkeletonImage } from "skeleton-elements/react";
 import { SkeletonBlock } from "skeleton-elements/react";
 // import "./styles.css";
 import "skeleton-elements/css";
-
-/*********************************** */
+/******************Images****************** */
+import { userComment } from "assets/images";
+/*****************Jalali moment****************** */
+import moment from "jalali-moment";
+/******************************************** */
 const BASE_URL = "http://localhost:3002";
 
 const cacheRtl = createCache({
@@ -192,6 +196,10 @@ function EachProductLayout(props) {
   //   (state) => state.numberOfProductsInBasketState.numberOfProductsInBasket
   // );
 
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  currentUser = currentUser ? currentUser.user : {};
+
+  const [star, setStar] = useState(0);
   const [value, setValue] = React.useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   let [numberOfGood, setNumberOfGood] = useState(1);
@@ -218,7 +226,67 @@ function EachProductLayout(props) {
     event.preventDefault();
     navigate("/");
   }
+  function submitCommentHandler(e) {
+    e.preventDefault();
+    // let currentUser = JSON.parse(localStorage.getItem("currentUser")).user;
+    if (e.target[0].value && e.target[1].value) {
+      if (!star) {
+        swal({
+          title: "توجه!",
+          text: "به کالا از 1 تا 5 امتیاز دهید ⭐",
+          icon: "warning",
+        });
+      } else {
+        let currentDate =
+          new Date().getFullYear() +
+          "/" +
+          (new Date().getMonth() + 1) +
+          "/" +
+          new Date().getDate();
+        currentDate = moment(currentDate, "YYYY/MM/DD")
+          .locale("fa")
+          .format("YYYY/MM/DD");
+        currentProduct.sumRate = +currentProduct.sumRate + Number(star);
+        currentProduct.rateNumber += 1;
+        let comment = {
+          productId: currentProduct.id,
+          userId: currentUser.id,
+          username: currentUser.username,
+          comment: e.target[1].value,
+          titleComment: e.target[0].value,
+          star: star,
+          date: currentDate,
+          id: +(String(currentProduct.id) + String(currentUser.id)),
+        };
+        currentProduct.comments.unshift(comment);
 
+        putProducts(currentProduct.id, currentProduct)
+          .then((response) => {
+            console.log(response.data);
+            toast.success("دیدگاه شما با موفقیت ثبت شد.", {
+              position: "bottom-left",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            setCurrentProduct({ ...currentProduct });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else {
+      swal({
+        title: "توجه!",
+        text: "لطفا تمامی فیلد ها را پر کنید",
+        icon: "warning",
+      });
+    }
+  }
   function categoryHandleClick(event) {
     event.preventDefault();
     navigate(`/products-list/?categoryId=${currentProduct.categoryId}`);
@@ -813,13 +881,18 @@ function EachProductLayout(props) {
                         sx={{ fontSize: "2.5rem", fontWeight: "bold" }}
                       />
                       <Tab
-                        label="دیدگاه ها"
+                        label="مشخصات کالا"
                         {...a11yProps(1)}
                         sx={{ fontSize: "2.5rem", fontWeight: "bold" }}
                       />
                       <Tab
-                        label="پرسش ها"
+                        label="دیدگاه ها"
                         {...a11yProps(2)}
+                        sx={{ fontSize: "2.5rem", fontWeight: "bold" }}
+                      />
+                      <Tab
+                        label="پرسش ها"
+                        {...a11yProps(3)}
                         sx={{ fontSize: "2.5rem", fontWeight: "bold" }}
                       />
                     </Tabs>
@@ -830,11 +903,149 @@ function EachProductLayout(props) {
                     </div>
                   </TabPanel>
                   <TabPanel value={value} index={1} sx={{ padding: "3rem 0" }}>
-                    <div className={style.descriptionText}>
-                      دیدگاهی وجود ندارد
+                    <div className={style.property}>مشخصات کالا</div>
+                  </TabPanel>
+                  <TabPanel
+                    value={value}
+                    // sx={{ backgroundColor: colors.bgColor }}
+                    index={2}
+                    sx={{ padding: "3rem 0" }}
+                  >
+                    <div className={style.commentPart}>
+                      {localStorage.getItem("isLoggedIn") ? (
+                        currentProduct.comments.some((comment) => {
+                          console.log(currentUser.id);
+                          return comment.userId === currentUser.id;
+                        }) ? (
+                          <div className={style.alreadyComment}>
+                            شما قبلا نظر خود را راجع به این کالا ثبت کرده اید 😉
+                          </div>
+                        ) : (
+                          <div className={style.showCommentPart}>
+                            <div className={style.titleCommentText}>
+                              ثبت دیدگاه
+                            </div>
+                            <form
+                              className={style.commentForm}
+                              onSubmit={submitCommentHandler}
+                            >
+                              <input
+                                type="text"
+                                name="title"
+                                placeholder="عنوان دیدگاه"
+                                className={style.titleCommentInput}
+                              />
+                              <textarea
+                                placeholder="دیدگاه خود را بنویسید ..."
+                                className={style.explainComment}
+                              ></textarea>
+                              <div className={style.bottomCommentPart}>
+                                <div className={style.starPart}>
+                                  <div className={style.starTitle}>
+                                    امتیاز دادن به کالا :{" "}
+                                  </div>
+                                  <Stack spacing={1} sx={{ direction: "ltr" }}>
+                                    <Rating
+                                      sx={{ direction: "ltr" }}
+                                      name="size-medium"
+                                      defaultValue={0}
+                                      size="large"
+                                      onChange={(e) => {
+                                        setStar(e.target.value);
+                                      }}
+                                    />
+                                  </Stack>
+                                </div>
+                                <button
+                                  className={style.commentSubmitBtn}
+                                  type="submit"
+                                >
+                                  ثبت دیدگاه
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        )
+                      ) : (
+                        <div className={style.unShowCommentPart}>
+                          <div className={style.unShowCommentPartText}>
+                            برای ثبت دیدگاه باید وارد حساب کاربری خود شوید
+                          </div>
+                          <div
+                            className={style.unShowCommentPartButton}
+                            onClick={() => {
+                              navigate("/login");
+                            }}
+                          >
+                            ورود
+                          </div>
+                        </div>
+                      )}
+                      <div className={style.commentList}>
+                        {currentProduct ? (
+                          currentProduct.comments.length ? (
+                            <div className={style.userCommentsTitle}>
+                              سایر نظرات
+                            </div>
+                          ) : (
+                            <div className={style.noComment}>
+                              تاکنون هیچ نظری ثبت نشده است 🥲
+                            </div>
+                          )
+                        ) : (
+                          ""
+                        )}
+                        <ul className={style.commentUl}>
+                          {currentProduct
+                            ? currentProduct.comments.map((comment) => (
+                                <li
+                                  className={style.commentLi}
+                                  key={comment.id}
+                                >
+                                  <div className={style.headerComment}>
+                                    <div
+                                      className={style.commentUserIconContainer}
+                                    >
+                                      <img
+                                        className={style.commentUserIcon}
+                                        src={userComment}
+                                        alt="userIcon"
+                                      />
+                                    </div>
+                                    <div className={style.commentUserName}>
+                                      {comment.username === currentUser.username
+                                        ? "شما"
+                                        : comment.username + "@"}
+                                    </div>
+                                    <div className={style.commentDate}>
+                                      {comment.date}
+                                    </div>
+                                  </div>
+                                  <div className={style.commentTitle}>
+                                    {comment.titleComment}
+                                  </div>
+                                  <div className={style.commentExplain}>
+                                    {comment.comment}
+                                  </div>
+                                  <div className={style.commentStar}>
+                                    <div className={style.textStar}>
+                                      امتیاز داده شده به کالا :{" "}
+                                    </div>
+                                    <Rating
+                                      name="size-small"
+                                      defaultValue={comment.star}
+                                      size="small"
+                                      readOnly
+                                    />
+                                  </div>
+                                </li>
+                              ))
+                            : ""}
+                        </ul>
+                      </div>
                     </div>
                   </TabPanel>
-                  <TabPanel value={value} index={2} sx={{ padding: "3rem 0" }}>
+                  <TabPanel value={value} index={3} sx={{ padding: "3rem 0" }}>
                     <div className={style.descriptionText}>
                       پرسشی وجود ندارد
                     </div>

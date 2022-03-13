@@ -134,3 +134,149 @@
   margin: 3rem 1rem;
   text-align: left;
 }
+.unShowCommentPart {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+.unShowCommentPartButton {
+  padding: 0.5rem 3rem;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  /* font-weight: bold; */
+  border-radius: 1.5rem;
+  cursor: pointer;
+}
+
+.commentPart {
+  /* background-color: var(--bg-color); */
+}
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 60rem;
+  margin: 2rem 0;
+}
+
+.titleCommentInput {
+  width: 100%;
+  height: 5rem;
+  font-size: 1.8rem;
+  border: 3px dashed var(--primary-color);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  text-indent: 1rem;
+  color: var(--text-color);
+}
+.titleCommentInput:focus,
+.explainComment:focus {
+  outline: none;
+}
+
+.explainComment {
+  width: 100%;
+  padding: 1.8rem;
+  border-radius: 1rem;
+  border: 3px dashed var(--primary-color);
+  font-size: 1.8rem;
+  height: 30rem;
+  color: var(--text-color);
+}
+.commentSubmitBtn {
+  cursor: pointer;
+  padding: 1rem 3rem;
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 1.5rem;
+  border: none;
+  font-size: 2rem;
+  transition: 1s;
+}
+.commentSubmitBtn:hover {
+  background-color: var(--lightPrimary-color);
+}
+.starPart {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.bottomCommentPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.starTitle {
+  font-size: 2rem;
+  color: var(--text-color);
+}
+.commentUl {
+  list-style: none;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 80%;
+}
+.commentLi {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  padding: 3rem 2rem;
+  border-radius: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.headerComment {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.commentUserIcon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+.commentDate,
+.commentUserName {
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.commentTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+.commentExplain {
+  font-size: 1.8rem;
+  margin-right: 2rem;
+}
+.commentStar {
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.5rem;
+}
+.userCommentsTitle {
+  margin-top: 5rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  width: 100%;
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.alreadyComment {
+  padding: 3rem 0;
+  font-weight: bold;
+  color: var(--text-color);
+  font-size: 2rem;
+}
+.noComment {
+  margin-top: 10rem;
+}

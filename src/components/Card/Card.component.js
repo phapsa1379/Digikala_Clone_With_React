@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import { MdOutlineInventory, MdStarRate } from "assets/icons";
 const theme = createTheme({
   multilineColor: {
     color: "red",
@@ -43,7 +43,7 @@ function CardComponent(props) {
             maxWidth: 450,
             border: "none",
             padding: "1rem 1rem",
-            height: "960px",
+            height: "1050px",
             position: "relative",
           }}
         >
@@ -100,6 +100,30 @@ function CardComponent(props) {
             <div className={style.descriptionOfEachCard}>
               {product.description}
             </div>
+            <div className={style.ratePart}>
+              <div className={style.rateIcon}>
+                <MdStarRate />
+              </div>
+              <div className={style.rateNumber}>
+                {product.rateNumber ? product.sumRate / product.rateNumber : 0}
+              </div>
+            </div>
+            <div className={style.counterWarning}>
+              {product.count <= 5 ? (
+                <div className={style.countPart}>
+                  <div className={style.countIcon}>
+                    <MdOutlineInventory />
+                  </div>
+                  <div className={style.countText}>
+                    {" "}
+                    تنها {product.count} عدد در انبار باقی مانده
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+
             <div className={style.priceOfEachCard}>
               {product.price.toLocaleString("fa")} تومان
             </div>
